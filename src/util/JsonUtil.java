@@ -20,6 +20,7 @@ public class JsonUtil {
 
     public String readJsonStrFromHttpRequest(HttpServletRequest request) throws IOException {
         BufferedReader reader = request.getReader();
+
         StringBuilder sb = new StringBuilder();
         String line = reader.readLine();
         while (line != null) {

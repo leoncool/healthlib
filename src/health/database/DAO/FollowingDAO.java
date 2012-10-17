@@ -43,7 +43,16 @@ public class FollowingDAO extends BaseDAO {
         } finally {
         }
     }
-
+    public void deleteFollower(Follower follower) {
+        try {
+            Session session = HibernateUtil.beginTransaction();
+            session.delete(follower);
+            HibernateUtil.commitTransaction();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        }
+    }
     public List<Follower> getFollowers(String loginID, String followerID) {
         Session session = HibernateUtil.beginTransaction();
         List<Follower> followerList = new ArrayList<Follower>();

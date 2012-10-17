@@ -33,6 +33,7 @@ public interface AllConstants {
         public static final String api_datablocks = "datablocks";
         public static final String requset_api_callback = "jsonpCallback";
         public static final String request_api_loginid = "loginid";
+        public static final String request_api_targetid = "targetid";
         public static final String request_api_start = "start";
         public static final String request_devicetemplateID = "devicetemplateid";
         public static final String request_api_end = "end";
@@ -108,6 +109,7 @@ public interface AllConstants {
         public static final String following_exist = "following_exist";
         public static final String already_exist_wildcard_subject = "subject_wildcard_exist";
         public static final String already_exist_subject_datastream = "subject_datastream_follow_exist";
+        public static final String Not_exist_follow = "follow_not_exist";
         public static final String Invalid_date_format = "invalid_date_input_format";
     }
 
