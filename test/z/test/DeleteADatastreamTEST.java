@@ -42,10 +42,11 @@ public class DeleteADatastreamTEST {
             java.lang.String str = br.readLine();
             while (str != null) {
                 sb.append(str);
+                System.out.println(str);
                 str = br.readLine();
             }
             br.close();
-
+            
             java.lang.String responseString = sb.toString();
             HttpURLConnection httpConnection = (HttpURLConnection) connection;
             int code = httpConnection.getResponseCode();

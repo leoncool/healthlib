@@ -14,8 +14,8 @@ public class JsonUserInfo {
     protected JsonUser user;
     protected String total_followers;
     protected String total_followings;
-    protected String is_follower;
-    protected String is_following;
+    protected boolean is_follower;
+    protected boolean is_following;
     public JsonUserAvatar getAvatar() {
         return avatar;
     }
@@ -48,21 +48,23 @@ public class JsonUserInfo {
         this.total_followings = total_followings;
     }
 
-	public String getIs_follower() {
+	public boolean isIs_follower() {
 		return is_follower;
 	}
 
-	public void setIs_follower(String is_follower) {
+	public void setIs_follower(boolean is_follower) {
 		this.is_follower = is_follower;
 	}
 
-	public String getIs_following() {
+	public boolean isIs_following() {
 		return is_following;
 	}
 
-	public void setIs_following(String is_following) {
+	public void setIs_following(boolean is_following) {
 		this.is_following = is_following;
 	}
+
+
     
     
 }

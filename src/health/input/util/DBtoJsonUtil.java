@@ -67,20 +67,20 @@ public class DBtoJsonUtil {
         JsonUserInfo juserinfo = new JsonUserInfo();
         if(followerMap!=null&&followingMap!=null)
         {
-        	juserinfo.setIs_follower("null");
-        	juserinfo.setIs_following("null");
+//        	juserinfo.setIs_follower(false);
+//        	juserinfo.setIs_following("null");
         	if(followerMap.containsKey((String)userinfo.getUser().getLoginID()))
         	{
-        		juserinfo.setIs_follower("true");
+        		juserinfo.setIs_follower(true);
         	}
         	else{
-        		juserinfo.setIs_follower("false");
+        		juserinfo.setIs_follower(false);
         	}
         	if(followingMap.containsKey((String)userinfo.getUser().getLoginID()))
         	{
-        		juserinfo.setIs_following("true");
+        		juserinfo.setIs_following(true);
         	}else{
-        		juserinfo.setIs_following("false");
+        		juserinfo.setIs_following(false);
         	}
         }
         juserinfo.setUser(convert_a_user(userinfo.getUser()));

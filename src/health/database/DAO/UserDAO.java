@@ -9,6 +9,8 @@ import health.database.models.Users;
 import health.database.models.merge.UserInfo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -30,7 +32,7 @@ public class UserDAO extends BaseDAO {
     public static void main(String args[]) {
         UserDAO userDao = new UserDAO();
 
-        System.out.println(userDao.searchUserInfo("li", 0).size());
+      //  System.out.println(userDao.searchUserInfo("li", 0).size());
     }
 
     public boolean existLogin(String idLogins) {
@@ -122,7 +124,7 @@ public class UserDAO extends BaseDAO {
         return userInfoList;
     }
 
-    public List<UserInfo> searchUserInfo(String keywords, int startFrom) {
+    public List<UserInfo> searchUserInfo(String keywords, int startFrom,Map<String,String> ignoreMap) {
         Session session = HibernateUtil.beginTransaction();
         Query query = session.createQuery("from Users u,UserAvatar a where u.loginID =a.loginID AND"
                 + "(u.loginID like :keywords OR u.screenname like:keywords OR u.email like :keywords)");
@@ -139,6 +141,8 @@ public class UserDAO extends BaseDAO {
         }
         for (Object[] result : list) {
             Users user = (Users) result[0];
+            if(!ignoreMap.containsKey(user.getLoginID()))
+            {
             UserAvatar avatar = null;
             if (result[1] != null) {
                 avatar = (UserAvatar) result[1];
@@ -148,6 +152,7 @@ public class UserDAO extends BaseDAO {
             userinfo.setUser(user);
             userinfo.setAvatar(avatar);
             userInfoList.add(userinfo);
+            }
         }
 
         return userInfoList;

@@ -22,7 +22,7 @@ public class DeleteASubjectTest {
 
     public static void main(String args[]) {
         try {
-            URL url = new URL("http://localhost:8080/healthbook/v1/subjects/623");
+            URL url = new URL("http://localhost:8080/healthbook/v1/subjects/646");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 //            connection.setDoOutput(true);
 
