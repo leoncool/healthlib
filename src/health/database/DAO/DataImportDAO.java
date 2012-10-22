@@ -59,7 +59,7 @@ public class DataImportDAO extends BaseDAO {
     private final String str_unassignBlockID = "noid";
     private final byte[] unassignBlockID = Bytes.toBytes(str_unassignBlockID);
 
-    public DataImportDAO() throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
+    public DataImportDAO() throws IOException {
         HBaseConfig hbaseconfig = new HBaseConfig();
         Configuration config = hbaseconfig.getConfig();
         HBaseAdmin admin = new HBaseAdmin(config);
