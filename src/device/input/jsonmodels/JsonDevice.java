@@ -4,14 +4,9 @@
  */
 package device.input.jsonmodels;
 
-import health.input.jsonmodels.*;
-import java.util.Date;
+import health.input.jsonmodels.JsonDatastreamUnits;
+
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *

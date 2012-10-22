@@ -1,10 +1,7 @@
 package server.conf;
 
 import java.util.List;
-
-
 //import com.google.gwt.user.client.Random;
-import java.util.Random;
 
 public class Utils {
 

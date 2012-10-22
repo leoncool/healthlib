@@ -7,6 +7,7 @@ package health.database.DAO;
 import health.database.models.UserAvatar;
 import health.database.models.Users;
 import health.database.models.merge.UserInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+
 import util.AllConstants;
 import util.HibernateUtil;
 
@@ -209,7 +211,7 @@ public class UserDAO extends BaseDAO {
     }
 
     public boolean EmailExists(String Email) {
-        List objects = null;
+        List<Users> objects = null;
         Session session = HibernateUtil.beginTransaction();
         Users user = new Users();
         Criteria criteria = session.createCriteria(Users.class);

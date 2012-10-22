@@ -5,20 +5,21 @@
 package health.database.DAO;
 
 import health.hbase.models.HBaseDataImport;
-import health.input.jsonmodels.JsonDataImport;
 import health.input.jsonmodels.JsonDataPoints;
 import health.input.jsonmodels.JsonDataValues;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.Set;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
@@ -37,12 +38,10 @@ import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
-import org.hibernate.Session;
+
 import server.exception.ErrorCodeException;
 import util.DateUtil;
 import util.HBaseConfig;
-import util.HibernateUtil;
 
 /**
  *
@@ -228,7 +227,7 @@ public class DataImportDAO extends BaseDAO {
     public List<JsonDataValues> toJsonDatavaluesModel(Result res, HashMap<String, String> dsUnitsList) {
         NavigableMap<byte[], byte[]> familyMap = res.getFamilyMap(VALUE_COL);
         Set<Map.Entry<byte[], byte[]>> entries = (Set<Map.Entry<byte[], byte[]>>) (Set<Map.Entry<byte[], byte[]>>) familyMap.entrySet();
-        Iterator itrFamily = entries.iterator();
+        Iterator<Entry<byte[], byte[]>> itrFamily = entries.iterator();
         List<JsonDataValues> valueList = new ArrayList<JsonDataValues>();
         while (itrFamily.hasNext()) {
             Map.Entry<byte[], byte[]> data = (Map.Entry<byte[], byte[]>) itrFamily.next();
@@ -254,24 +253,6 @@ public class DataImportDAO extends BaseDAO {
         }
 //        System.out.println("valueList size:" + valueList.size());
         return valueList;
-    }
-
-    public String createDatastream(JsonDataImport dataimport) {
-        try {
-            Session session = HibernateUtil.beginTransaction();
-//            session.save(object);
-            HibernateUtil.commitTransaction();
-            return "";
-//            if (object.getStreamId() != null) {
-//                return object.getStreamId();
-//            } else {
-//                return null;
-//            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        } finally {
-        }
     }
 
     public static void main(String args[]) throws MasterNotRunningException, IOException, ParseException, ErrorCodeException {

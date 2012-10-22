@@ -4,17 +4,20 @@
  */
 package health.database.DAO;
 
-import com.google.gson.Gson;
-import device.input.jsonmodels.JsonDeviceTemplate;
-import health.database.models.DatastreamUnits;
-import health.database.models.DeviceBinding;
 import health.database.models.DeviceTemplate;
 import health.input.jsonmodels.JsonDatastreamUnits;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import org.hibernate.Session;
+
 import util.HibernateUtil;
+
+import com.google.gson.Gson;
+
+import device.input.jsonmodels.JsonDeviceTemplate;
 
 /**
  *

@@ -5,7 +5,6 @@
 package device.input.jsonmodels;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *

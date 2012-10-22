@@ -4,11 +4,12 @@
  */
 package health.database.DAO;
 
-import health.database.models.Users;
 import java.io.Serializable;
 import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
+
 import util.HibernateUtil;
 
 /**
@@ -17,9 +18,7 @@ import util.HibernateUtil;
  */
 public class BaseDAO {
 
-    private static final String PROP_FILE = "BillingConfigs.properties";
-
-    public Object getObjectByID(Class clazz, Serializable id) throws InstantiationException, IllegalAccessException {
+    public Object getObjectByID(Class<?> clazz, Serializable id) throws InstantiationException, IllegalAccessException {
 
         try {
             Object obj = new Object();
@@ -35,8 +34,8 @@ public class BaseDAO {
         }
     }
 
-    public List findAll(Class clazz) {
-        List objects = null;
+    public List<?> findAll(Class<?> clazz) {
+        List<?> objects = null;
         try {
             Session session = HibernateUtil.beginTransaction();
             Query query = session.createQuery("from " + clazz.getName());
@@ -52,8 +51,8 @@ public class BaseDAO {
         return null;
     }
 
-    public List findAllOrderby(Class clazz, String propertyName, String orderType) {
-        List objects = null;
+    public List<?> findAllOrderby(Class<?> clazz, String propertyName, String orderType) {
+        List<?> objects = null;
         try {
             String ordertype;
             if (orderType.equals("desc")) {
@@ -77,8 +76,8 @@ public class BaseDAO {
         return objects;
     }
 
-    public List findAllByProperty(Class clazz, String propertyName, String propertyValue, String orderBy, String orderType) {
-        List objects = null;
+    public List<?> findAllByProperty(Class<?> clazz, String propertyName, String propertyValue, String orderBy, String orderType) {
+        List<?> objects = null;
         try {
             String ordertype;
             if (orderType.equals("desc")) {
@@ -103,8 +102,8 @@ public class BaseDAO {
         return objects;
     }
 
-    public List findAllByPropertyOrderBy(Class clazz, String propertyName, String propertyValue) {
-        List objects = null;
+    public List<?> findAllByPropertyOrderBy(Class<?> clazz, String propertyName, String propertyValue) {
+        List<?> objects = null;
         try {
             Session session = HibernateUtil.beginTransaction();
             Query query = session.createQuery("from " + clazz.getName() + " where " + propertyName + " = " + propertyValue);

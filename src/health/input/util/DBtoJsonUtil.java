@@ -4,7 +4,6 @@
  */
 package health.input.util;
 
-import device.input.jsonmodels.JsonDevice;
 import health.database.DAO.DatastreamDAO;
 import health.database.models.Datastream;
 import health.database.models.DatastreamBlocks;
@@ -12,24 +11,27 @@ import health.database.models.DatastreamUnits;
 import health.database.models.DeviceBinding;
 import health.database.models.Follower;
 import health.database.models.Subject;
-import health.input.jsonmodels.JsonDatastream;
-import health.input.jsonmodels.JsonDatastreamBlock;
-import health.input.jsonmodels.JsonDatastreamUnits;
-import device.input.jsonmodels.JsonDeviceBinding;
 import health.database.models.UserAvatar;
 import health.database.models.Users;
 import health.database.models.merge.UserInfo;
+import health.input.jsonmodels.JsonDatastream;
+import health.input.jsonmodels.JsonDatastreamBlock;
+import health.input.jsonmodels.JsonDatastreamUnits;
 import health.input.jsonmodels.JsonFollower;
 import health.input.jsonmodels.JsonSubject;
 import health.input.jsonmodels.JsonUser;
 import health.input.jsonmodels.JsonUserAvatar;
 import health.input.jsonmodels.JsonUserInfo;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import util.DateUtil;
+import device.input.jsonmodels.JsonDevice;
+import device.input.jsonmodels.JsonDeviceBinding;
 
 /**
  *

@@ -4,13 +4,16 @@ package z.test.device;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.google.gson.Gson;
-import device.input.jsonmodels.JsonDeviceBinding;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+
 import util.AllConstants;
+
+import com.google.gson.Gson;
+
+import device.input.jsonmodels.JsonDeviceBinding;
 
 /**
  *

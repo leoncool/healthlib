@@ -1,15 +1,15 @@
 package util;
 
 import java.io.IOException;
-import server.exception.ErrorCodeException;
-import server.conf.Constants;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTablePool;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
+
+import server.exception.ErrorCodeException;
 
 public class HBaseConfig {
 

@@ -1,9 +1,10 @@
 package health.database.DAO;
 
+import health.database.models.JobsTable;
+
 import org.hibernate.Session;
 
 import util.HibernateUtil;
-import health.database.models.JobsTable;
 
 public class JobDAO {
 public JobsTable createJob(JobsTable job)

@@ -5,13 +5,16 @@
 package health.database.DAO;
 
 import health.database.models.DeviceBinding;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
 import util.HibernateUtil;
 
 /**

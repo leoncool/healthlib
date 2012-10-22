@@ -1,8 +1,5 @@
 package util;
 
-import java.io.File;
-import java.io.IOException;
-
 import health.database.models.Datastream;
 import health.database.models.DatastreamBlocks;
 import health.database.models.DatastreamTriggers;
@@ -15,6 +12,9 @@ import health.database.models.JobsTable;
 import health.database.models.Subject;
 import health.database.models.UserAvatar;
 import health.database.models.Users;
+
+import java.io.File;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;

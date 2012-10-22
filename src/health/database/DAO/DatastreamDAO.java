@@ -12,13 +12,9 @@ import health.database.models.JobsTable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 
-import org.apache.hadoop.hdfs.server.datanode.DataBlockScanner;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -159,7 +155,7 @@ public class DatastreamDAO extends BaseDAO {
 	}
 
 	public List<DatastreamBlocks> getDatastreamBlockList(String streamID) {
-		List objects = null;
+		List<?> objects = null;
 		Session session = HibernateUtil.beginTransaction();
 		Criteria criteria = session.createCriteria(DatastreamBlocks.class);
 		criteria.add(Restrictions.eq("streamID", streamID)).addOrder(
@@ -167,7 +163,7 @@ public class DatastreamDAO extends BaseDAO {
 		;
 		try {
 			objects = criteria.list();
-			return objects;
+			return (List<DatastreamBlocks>) objects;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;

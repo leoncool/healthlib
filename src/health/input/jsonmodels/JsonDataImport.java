@@ -4,11 +4,10 @@
  */
 package health.input.jsonmodels;
 
-import device.input.jsonmodels.JsonDevice;
-import health.database.models.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Embeddable;
+
+import device.input.jsonmodels.JsonDevice;
 
 /**
  *

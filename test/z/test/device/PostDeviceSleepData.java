@@ -4,12 +4,11 @@ package z.test.device;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import au.com.bytecode.opencsv.CSVReader;
-import com.google.gson.Gson;
 import health.database.DAO.BaseDAO;
 import health.input.jsonmodels.JsonDataImport;
-import health.input.jsonmodels.JsonDataValues;
 import health.input.jsonmodels.JsonDataPoints;
+import health.input.jsonmodels.JsonDataValues;
+
 import java.io.FileReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -17,8 +16,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
+
 import util.AllConstants;
 import util.DateUtil;
+import au.com.bytecode.opencsv.CSVReader;
+
+import com.google.gson.Gson;
 
 /**
  *

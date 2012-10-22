@@ -4,7 +4,9 @@
  */
 package health.hbase.models;
 
-import health.input.jsonmodels.*;
+import health.input.jsonmodels.JsonDataImport;
+import health.input.jsonmodels.JsonDatastreamUnits;
+
 import java.util.List;
 
 /**

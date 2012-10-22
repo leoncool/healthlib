@@ -4,19 +4,18 @@ package z.test;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.google.gson.Gson;
-import health.input.jsonmodels.JsonSubject;
-import health.database.models.Subject;
 import health.input.jsonmodels.JsonDatastream;
 import health.input.jsonmodels.JsonDatastreamUnits;
-import java.io.IOException;
+
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Date;
+
 import util.AllConstants;
+
+import com.google.gson.Gson;
 
 /**
  *

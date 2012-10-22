@@ -4,8 +4,6 @@
  */
 package health.input.jsonmodels;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
 
 /**
  *
