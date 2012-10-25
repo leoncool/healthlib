@@ -11,6 +11,7 @@ import health.database.models.Follower;
 import health.database.models.JobsTable;
 import health.database.models.Subject;
 import health.database.models.UserAvatar;
+import health.database.models.UserDetails;
 import health.database.models.Users;
 
 import java.io.File;
@@ -52,8 +53,9 @@ public class HibernateUtil {
     }
 
     public static Session getSession() {
+    	
         if (factory == null) {
-        	
+        	Configuration config=null;
         	File configFolder=new File(AllConstants.ServerConfigs.configsFolderPath);
         	if(!configFolder.exists())
         	{
@@ -66,7 +68,8 @@ public class HibernateUtil {
         		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
         		configFolder.mkdir();
         	}
-        	
+        	String debugModel="true";
+        	if(debugModel.equals("false")){
         	File configFile=new File(AllConstants.ServerConfigs.configsFolderPath+"hibernate.cfg.xml");
         	if(!configFile.exists())
         	{
@@ -82,8 +85,12 @@ public class HibernateUtil {
         		System.out.println("Loading Hibernate Config File.......................");
         		System.out.println("Loading Hibernate Config File.......................");
         	}
-            Configuration config = new Configuration().configure(new File(AllConstants.ServerConfigs.configsFolderPath+"hibernate.cfg.xml"));
-
+            config = new Configuration().configure(new File(AllConstants.ServerConfigs.configsFolderPath+"hibernate.cfg.xml"));
+        	}
+        	else{
+        		System.out.println("Loading local File!!!!!!!!!!!!!!");
+        		 config = new Configuration().configure("hibernate.cfg.xml");
+        	}
             config.addAnnotatedClass(DatastreamTriggers.class);
             config.addAnnotatedClass(Follower.class);
             config.addAnnotatedClass(Subject.class);
@@ -96,6 +103,7 @@ public class HibernateUtil {
             config.addAnnotatedClass(Debug.class);
             config.addAnnotatedClass(UserAvatar.class);
             config.addAnnotatedClass(JobsTable.class);
+            config.addAnnotatedClass(UserDetails.class);
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);
 

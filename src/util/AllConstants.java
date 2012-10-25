@@ -65,6 +65,7 @@ public interface AllConstants {
         public static final String job_method_delete = "delete";
         public static final String job_targetObject_datastream = "datastream";
         public static final String job_targetObject_datablock = "datablock";
+        public static final String visibleSet_PUBLIC="public";
     }
 
     public interface ValidDictionary {

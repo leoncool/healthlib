@@ -33,7 +33,7 @@ public class UserDAO extends BaseDAO {
 
     public static void main(String args[]) {
         UserDAO userDao = new UserDAO();
-
+        System.out.println(userDao.getLogin("leoncool").getUserDetails().getHeight());
       //  System.out.println(userDao.searchUserInfo("li", 0).size());
     }
 
@@ -74,25 +74,14 @@ public class UserDAO extends BaseDAO {
 
     public UserInfo getUserInfo(String loginID) {
         Session session = HibernateUtil.beginTransaction();
-        Query query = session.createQuery("from Users u,UserAvatar a where u.loginID=a.loginID AND "
-                + "u.loginID =:loginID");
-        query.setParameter("loginID", loginID);
-        Object[] result = (Object[]) query.uniqueResult();
+        Users user = (Users) session.get(Users.class, loginID);
         if (session.isOpen()) {
             session.close();
         }
-        if (result == null) {
-            return null;
-        }
-        Users user = (Users) result[0];
-        UserAvatar avatar = null;
-        if (result[1] != null) {
-            avatar = (UserAvatar) result[1];
-        } else {
-        }
+     
         UserInfo userinfo = new UserInfo();
         userinfo.setUser(user);
-        userinfo.setAvatar(avatar);
+        userinfo.setAvatar(user.getUserAvatar());
         return userinfo;
     }
     public List<UserInfo> ListUsers(int startFrom) {

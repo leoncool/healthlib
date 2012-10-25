@@ -110,7 +110,7 @@ public class DBtoJsonUtil {
 
     public JsonUserAvatar convert_a_userAvatar(UserAvatar avatar) {
         JsonUserAvatar javar = new JsonUserAvatar();
-        javar.setLoginid(avatar.getLoginID());
+        javar.setLoginid(avatar.getUsers().getLoginID());
         javar.setUrl(avatar.getUrl());
         javar.setHash(avatar.getHash());
         return javar;

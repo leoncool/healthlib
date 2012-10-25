@@ -12,7 +12,7 @@ package health.input.jsonmodels;
 public class JsonUserAvatar {
     private Integer id;
     private String loginid;
-    private Integer hash;
+    private String hash;
     private String url;   
 
     public Integer getId() {
@@ -31,11 +31,11 @@ public class JsonUserAvatar {
         this.loginid = loginid;
     }
 
-    public Integer getHash() {
+    public String getHash() {
         return hash;
     }
 
-    public void setHash(Integer hash) {
+    public void setHash(String hash) {
         this.hash = hash;
     }
 

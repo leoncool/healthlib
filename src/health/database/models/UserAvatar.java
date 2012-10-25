@@ -6,79 +6,60 @@
 package health.database.models;
 
 import java.io.Serializable;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  *
- * @author leon
+ * @author Leon
  */
 @Entity
 @Table(name = "user_avatar")
 @NamedQueries({
     @NamedQuery(name = "UserAvatar.findAll", query = "SELECT u FROM UserAvatar u"),
-    @NamedQuery(name = "UserAvatar.findById", query = "SELECT u FROM UserAvatar u WHERE u.id = :id"),
-    @NamedQuery(name = "UserAvatar.findByLoginID", query = "SELECT u FROM UserAvatar u WHERE u.loginID = :loginID"),
     @NamedQuery(name = "UserAvatar.findByHash", query = "SELECT u FROM UserAvatar u WHERE u.hash = :hash"),
-    @NamedQuery(name = "UserAvatar.findByUrl", query = "SELECT u FROM UserAvatar u WHERE u.url = :url")})
+    @NamedQuery(name = "UserAvatar.findByUrl", query = "SELECT u FROM UserAvatar u WHERE u.url = :url"),
+    @NamedQuery(name = "UserAvatar.findById", query = "SELECT u FROM UserAvatar u WHERE u.id = :id")})
 public class UserAvatar implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @Column(name = "loginID")
-    private String loginID;
     @Column(name = "hash")
-    private Integer hash;
+    private String hash;
     @Basic(optional = false)
     @Column(name = "url")
     private String url;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "id")
+    private String id;
+    @JoinColumn(name = "loginID", referencedColumnName = "loginID")
+    @OneToOne(optional = false)
+    private Users users;
 
     public UserAvatar() {
     }
 
-    public UserAvatar(Integer id) {
+    public UserAvatar(String id) {
         this.id = id;
     }
 
-    public UserAvatar(Integer id, String loginID, String url) {
+    public UserAvatar(String id, String url) {
         this.id = id;
-        this.loginID = loginID;
         this.url = url;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getLoginID() {
-        return loginID;
-    }
-
-    public void setLoginID(String loginID) {
-        this.loginID = loginID;
-    }
-
-    public Integer getHash() {
+    public String getHash() {
         return hash;
     }
 
-    public void setHash(Integer hash) {
+    public void setHash(String hash) {
         this.hash = hash;
     }
 
@@ -88,6 +69,22 @@ public class UserAvatar implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     @Override

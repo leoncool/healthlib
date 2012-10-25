@@ -86,6 +86,8 @@ public class Subject implements Serializable {
     private Integer parentSub;
     @Column(name = "purpose")
     private String purpose;
+    @Column(name = "visibleSet")
+    private String visibleSet;
 
     public Subject() {
     }
@@ -246,5 +248,13 @@ public class Subject implements Serializable {
     public String toString() {
         return "health.database.models.Subject[ id=" + id + " ]";
     }
-    
+
+	public String getVisibleSet() {
+		// TODO Auto-generated method stub
+		return visibleSet;
+	}
+	public void setVisibleSet(String visibleSet) {
+		// TODO Auto-generated method stub
+		this.visibleSet=visibleSet;
+	}
 }
