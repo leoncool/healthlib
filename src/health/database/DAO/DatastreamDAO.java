@@ -7,8 +7,11 @@ package health.database.DAO;
 import health.database.models.Datastream;
 import health.database.models.DatastreamBlocks;
 import health.database.models.DatastreamUnits;
+import health.database.models.DeviceTemplate;
 import health.database.models.JobsTable;
+import health.input.jsonmodels.JsonDatastreamUnits;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,8 +22,12 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import device.input.jsonmodels.JsonDeviceTemplate;
+
+import server.exception.ReturnParser;
 import util.AllConstants;
 import util.HibernateUtil;
+import util.UnitValueTypes;
 
 /**
  * 
@@ -44,7 +51,119 @@ public class DatastreamDAO extends BaseDAO {
 		} finally {
 		}
 	}
-
+	public Datastream basicDefaultDatastreamCreate(String loginID,int subjectID)
+	{
+		Datastream ds=new Datastream();
+		Date now=new Date();
+		UUID uuid=UUID.randomUUID();
+		ds.setStreamId(uuid.toString());
+		ds.setCreatedTime(now);
+		ds.setUpdated(now);
+		ds.setOwner(loginID);
+		ds.setSubId(subjectID);
+		ds.setPurpose(AllConstants.ProgramConts.defaultDatastreamPurpose);			
+		return ds;
+	}
+	public Datastream attachDatastreamUnitsFromTemplate(Datastream ds, String templateID) throws Exception
+	{
+		String devicetemplateid =templateID;
+        DeviceTemplateDAO dtDao = new DeviceTemplateDAO();        
+        DeviceTemplate devicetemplate = dtDao.getDeviceTemplate(devicetemplateid);
+        if (devicetemplate == null) {
+        	throw new Exception("cannot find template in database");
+        }
+        JsonDeviceTemplate jdtemplate = dtDao.toJsonDeviceTemplate(devicetemplate);
+        if (jdtemplate == null || jdtemplate.getUnits_list().isEmpty()) {
+        	throw new Exception("template parsing error");
+        }
+        ArrayList<DatastreamUnits> datastreamUnits = new ArrayList<DatastreamUnits>();
+        for (JsonDatastreamUnits unit : jdtemplate.getUnits_list()) {
+            if (unit.getValue_type() == null) {
+            	throw new Exception("template parsing error--getValue_type");
+            }
+            if (!UnitValueTypes.existValueType(unit.getValue_type())) {
+            	throw new Exception("template parsing error--getValue_type--doesnt exist type:"+unit.getValue_type());
+            }
+            DatastreamUnits dsUnit = new DatastreamUnits();
+            dsUnit.setStreamID(ds);
+            dsUnit.setCreatedTime(new Date());
+            dsUnit.setUpdatedTime(new Date());
+            dsUnit.setMaxValue(unit.getMax_value());
+            dsUnit.setMinValue(unit.getMin_value());
+            dsUnit.setCurrentValue(unit.getCurrent_value());
+            dsUnit.setUnitLabel(unit.getUnit_label());
+            dsUnit.setValueType(unit.getValue_type());
+            dsUnit.setUnitSymbol(unit.getUnit_symbol());
+            dsUnit.setUnitID(UUID.randomUUID().toString());
+            datastreamUnits.add(dsUnit);
+        }
+        ds.setDatastreamUnitsList(datastreamUnits);
+        return ds;
+	}
+	public Datastream createDS_Steps(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_steps);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_steps);
+		return ds;
+	}
+	public Datastream createDS_Location(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_location);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_location);
+		return ds;
+	}
+	public Datastream createDS_Sleep(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_sleep);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_sleep);
+		return ds;
+	}
+	public Datastream createDS_ECG(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_ecg);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_ecg);
+		return ds;
+	}
+	public Datastream createDS_Weight(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_weight);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_weight);
+		return ds;
+	}
+	public Datastream createDS_calories_burned(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_calories_burned);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_calories_burned);
+		return ds;
+	}
+	public Datastream createDS_floor_climbed(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_floor_climbed);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_floor_climbed);
+		return ds;
+	}
+	public Datastream createDS_distance_traveled(String loginID,int subjectID) throws Exception
+	{
+		Datastream ds=basicDefaultDatastreamCreate(loginID, subjectID);
+		ds.setTitle(AllConstants.ProgramConts.defaultDS_Name_distancetravel);
+		attachDatastreamUnitsFromTemplate(ds, AllConstants.HealthConts.unit_default_template_id_distance_travel);
+		return ds;
+	}
+	public String createDefaultDatastreamsOnDefaultSubject(String loginID,int subjectID) throws Exception {
+		
+			  DatastreamDAO dstreamDao = new DatastreamDAO();
+			  Datastream ds_steps=createDS_Steps(loginID, subjectID);			 
+			  dstreamDao.createDatastream(ds_steps, ds_steps.getDatastreamUnitsList());
+			  
+			  return " ";
+	}
 	public Datastream getDatastream(String StreamID, boolean fetchDataUnits,
 			boolean fetchDatablocks) {
 		Datastream stream = null;
@@ -242,9 +361,9 @@ public class DatastreamDAO extends BaseDAO {
 		}
 	}
 
-	public static void main(String arsg[]) {
+	public static void main(String arsg[]) throws Exception {
 		DatastreamDAO dao = new DatastreamDAO();
-		// dao.CreateDatastreamBlock("leoncool", "blockname1");
+		dao.createDefaultDatastreamsOnDefaultSubject("leoncool", 644);
 
 	}
 }

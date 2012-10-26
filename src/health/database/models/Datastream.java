@@ -80,6 +80,8 @@ public class Datastream implements Serializable {
     private String description;
     @Column(name = "Icon")
     private String icon;
+    @Column(name = "purpose")
+    private String purpose;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "streamID")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<DatastreamUnits> datastreamUnitsList;
@@ -190,7 +192,15 @@ public class Datastream implements Serializable {
         this.icon = icon;
     }
 
-    @XmlTransient
+    public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
+
+	@XmlTransient
     @JsonIgnore
     public List<DatastreamUnits> getDatastreamUnitsList() {
         return datastreamUnitsList;

@@ -66,8 +66,47 @@ public interface AllConstants {
         public static final String job_targetObject_datastream = "datastream";
         public static final String job_targetObject_datablock = "datablock";
         public static final String visibleSet_PUBLIC="public";
+        public static final String defaultSubjectName="default";
+        public static final String defaultSubjectPurpose="default";
+        public static final String defaultDatastreamPurpose="default";
+        public static final String defaultDS_Name_steps="steps";
+        public static final String defaultDS_Name_sleep="sleep";
+        public static final String defaultDS_Name_distancetravel="distance_travel";
+        public static final String defaultDS_Name_floor_climbed="floor_climbed";
+        public static final String defaultDS_Name_calories_burned="calories_burned";
+        public static final String defaultDS_Name_weight="weight";
+        public static final String defaultDS_Name_location="location";
+        public static final String defaultDS_Name_ecg="ecg";
+        
     }
 
+    public interface HealthConts {
+//        public static final String UnitSymbol_Steps="steps";
+//        public static final String UnitLabel_Steps="steps";     
+//        public static final String UnitSymbol_distance_travel="km";
+//        public static final String UnitLabel_distance_travel="distance";     
+//        public static final String UnitSymbol_floor_climbed="floors";
+//        public static final String UnitLabel_floor_climbed="floor_climbed";   
+//        public static final String UnitSymbol_calories_burned="calories";
+//        public static final String UnitLabel_calories_burned="calaories_burned";   
+//        public static final String UnitSymbol_weight="kg";
+//        public static final String UnitLabel_weight="weight";   
+//        public static final String UnitSymbol_location="steps";
+//        public static final String UnitLabel_location="steps";   
+//        public static final String UnitSymbol_Sleep="times";
+//        public static final String UnitLabel_Sleep="awake";   
+//        public static final String UnitSymbol_ECG="";
+//        public static final String UnitLabel_Sleep="awake";   
+      public static final String unit_default_template_id_steps="default_steps";
+      public static final String unit_default_template_id_sleep="default_sleep";
+      public static final String unit_default_template_id_distance_travel="default_distance_travel";
+      public static final String unit_default_template_id_floor_climbed="default_floor_climb";
+      public static final String unit_default_template_id_calories_burned="default_calories_burned";
+      public static final String unit_default_template_id_weight="default_weight";
+      public static final String unit_default_template_id_location="default_location";
+      public static final String unit_default_template_id_ecg="default_ecg";
+      
+    }
     public interface ValidDictionary {
 
         public static final String Valid = "valid";
