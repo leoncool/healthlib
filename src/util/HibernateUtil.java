@@ -1,5 +1,7 @@
 package util;
 
+import health.database.models.CreationTemplate;
+import health.database.models.DataSummary;
 import health.database.models.Datastream;
 import health.database.models.DatastreamBlocks;
 import health.database.models.DatastreamTriggers;
@@ -104,6 +106,8 @@ public class HibernateUtil {
             config.addAnnotatedClass(UserAvatar.class);
             config.addAnnotatedClass(JobsTable.class);
             config.addAnnotatedClass(UserDetails.class);
+            config.addAnnotatedClass(DataSummary.class);
+            config.addAnnotatedClass(CreationTemplate.class);
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);
 
