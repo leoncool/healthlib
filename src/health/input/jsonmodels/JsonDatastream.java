@@ -22,6 +22,7 @@ public class JsonDatastream {
     private String owner;
     private String updated_time;
     private String created_time;
+    private String purpose;
     protected List<JsonDatastreamUnits> units_list;
     private int total_units;
     private int total_blocks;
@@ -133,5 +134,13 @@ public class JsonDatastream {
     public void setTotal_units(int total_units) {
         this.total_units = total_units;
     }
+
+	public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
 
 }

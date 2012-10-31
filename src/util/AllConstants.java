@@ -15,8 +15,9 @@ public interface AllConstants {
     	public static final String configsFolderPath="AppConfigs/";
     }
     public static interface api_entryPoints {
-
+    	  public static final String default_subject = "default";
         public static final String api_subject = "subjects";
+        public static final String api_health = "health";
         public static final String api_datastream = "datastreams";
         public static final String api_device = "devices";
         public static final String api_datapoints = "datapoints";
@@ -105,6 +106,7 @@ public interface AllConstants {
       public static final String unit_default_template_id_weight="default_weight";
       public static final String unit_default_template_id_location="default_location";
       public static final String unit_default_template_id_ecg="default_ecg";
+      public static final String default_health_subject_purpose="default_health";
       
     }
     public interface ValidDictionary {
@@ -135,6 +137,7 @@ public interface AllConstants {
         public static final String Unauthorized_Access = "unauthorized_access";
         public static final String Unknown_StreamID = "unknown_stream_id";
         public static final String Unknown_SubjectID = "unknown_subject_id";
+ 
         public static final String Invalid_ValueType = "invalid_value_type_name";
         public static final String InputValue_Oversize = "input_over_size";
         public static final String Hibernate_Internal_Error = "hibernate_internal_error";
@@ -150,6 +153,7 @@ public interface AllConstants {
         public static final String already_exist_subject_datastream = "subject_datastream_follow_exist";
         public static final String Not_exist_follow = "follow_not_exist";
         public static final String Invalid_date_format = "invalid_date_input_format";
+        public static final String SYSTEM_ERROR_NO_DEFAULT_HEALTH_SUBJECT = "sys_error_no_default_subject";
     }
 
     public interface DeviceErrorDictionary {

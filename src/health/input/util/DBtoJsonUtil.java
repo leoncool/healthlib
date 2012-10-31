@@ -154,6 +154,7 @@ public class DBtoJsonUtil {
         System.out.print("title:" + jd.getTitle() + "," + datastream.getTitle());
         jd.setDesc(datastream.getDescription());
         jd.setIcon(datastream.getIcon());
+        jd.setPurpose(datastream.getPurpose());
         int totalblocks = 0;
         if (datastream.getDatastreamBlocksList() != null) {
             totalblocks = datastream.getDatastreamBlocksList().size();
