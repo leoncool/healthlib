@@ -16,7 +16,7 @@ public class DateUtil {
 
     protected static final SimpleDateFormat millisecFormat = new SimpleDateFormat("H:m:s.S dd/MM/yy");
     public static final SimpleDateFormat sleepFormat = new SimpleDateFormat("H:m dd.MM.yy");
-
+    protected static final SimpleDateFormat YearMonthDay_DateFormat=new SimpleDateFormat("YYYY-MM-DD");
     public static long parseMillisecFormatToLong(String str) throws ParseException {
         Date date = millisecFormat.parse(str);
         return date.getTime();

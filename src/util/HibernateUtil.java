@@ -138,7 +138,6 @@ public class HibernateUtil {
     public static void commitTransaction() {
     	if(!HibernateUtil.getSession().getTransaction().wasCommitted())
     	{
-    		System.out.println("committing");
         HibernateUtil.getSession().getTransaction().commit();
     	}
         if (HibernateUtil.getSession().isOpen()) {
