@@ -25,6 +25,7 @@ import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.MasterNotRunningException;
 import org.apache.hadoop.hbase.ZooKeeperConnectionException;
+import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
@@ -47,7 +48,7 @@ import util.HBaseConfig;
  *
  * @author Leon
  */
-public class DataImportDAO extends BaseDAO {
+public class DataPointDAO extends BaseDAO {
 
     private final byte[] PROP_COL = Bytes.toBytes("p");
     private final byte[] VALUE_COL = Bytes.toBytes("v");
@@ -58,7 +59,7 @@ public class DataImportDAO extends BaseDAO {
     private final String str_unassignBlockID = "noid";
     private final byte[] unassignBlockID = Bytes.toBytes(str_unassignBlockID);
 
-    public DataImportDAO() throws IOException {
+    public DataPointDAO() throws IOException {
         HBaseConfig hbaseconfig = new HBaseConfig();
         Configuration config = hbaseconfig.getConfig();
         HBaseAdmin admin = new HBaseAdmin(config);
@@ -254,12 +255,45 @@ public class DataImportDAO extends BaseDAO {
 //        System.out.println("valueList size:" + valueList.size());
         return valueList;
     }
-
+    public long delete_A_Datapoint(String streamID,long at) throws IOException, ErrorCodeException
+    {
+    	  Date timerStart = new Date();
+          System.out.println("starting Exporting...." + at);
+          HTableInterface table = HBaseConfig.getTable(health_book);
+          Scan scan = new Scan();
+          scan.setCaching(200000);
+          //        scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
+//          scan.setCacheBlocks(true);
+          FilterList filterList = new FilterList();
+          RowFilter rowFilterStreamID = new RowFilter(CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(toBytes(streamID)));
+          filterList.addFilter(rowFilterStreamID);
+         
+              RowFilter fowFilter_startDate = new RowFilter(CompareFilter.CompareOp.EQUAL, new BinaryComparator(toBytes(streamID + "/" + Long.toString(at))));
+              filterList.addFilter(fowFilter_startDate);
+      
+          scan.setFilter(filterList);      
+          ResultScanner scanner = table.getScanner(scan);
+          Iterator<Result> itr = scanner.iterator();
+          long no_deleted=0;
+          while (itr.hasNext()) {
+               Result res = itr.next();
+               System.out.println("deleting..."+toString(res.getRow()));
+               Delete delete=new Delete(res.getRow());
+               table.delete(delete);
+               no_deleted++;
+          }
+          HBaseConfig.putTable(table);
+          HBaseDataImport dataexport = null;         
+          Date timerEnd = new Date();
+          System.out.println("Finished Deleting...." + timerEnd);
+          System.out.println("Finished Deleting...." + (timerEnd.getTime() - timerStart.getTime()) / (1000.00) + "seconds");
+          return no_deleted;
+    }
     public static void main(String args[]) throws MasterNotRunningException, IOException, ParseException, ErrorCodeException {
-        DataImportDAO importDao = new DataImportDAO();
-        long start = DateUtil.parseMillisecFormatToLong("21:49:59.725 16/11/2003");
-        long end = DateUtil.parseMillisecFormatToLong("21:49:59.722 16/11/2012");
-        System.out.println(Long.toString(start));
+//        DataPointDAO importDao = new DataPointDAO();
+//        long start = DateUtil.parseMillisecFormatToLong("21:49:59.725 16/11/2003");
+//        long end = DateUtil.parseMillisecFormatToLong("21:49:59.722 16/11/2012");
+//        System.out.println(Long.toString(start));
 
         //     importDao.exportDatapoints("70376e83-10b4-4de8-bde9-989e3111cf69", start, end, null);
     }

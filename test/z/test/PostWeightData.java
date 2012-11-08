@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import util.DateUtil;
@@ -26,13 +27,12 @@ import com.google.gson.Gson;
  *
  * @author Leon
  */
-public class PostSleepData {
+public class PostWeightData {
 
     public static void main(String args[]) {
         try {
-            String subjectID = "644";
-            String dataStreamID = "75abb188-9c15-4333-b3bf-f80d5e8095ad";
-            URL url = new URL("http://146.169.35.28:55555/healthbook/v1/subjects/" + subjectID + "/datastreams/" + dataStreamID + "/datapoints");
+            String subjectID = "627";
+            URL url = new URL("http://localhost:8080/healthbook/v1/subjects/" + subjectID + "/datastreams/45c53baf-dafc-43cd-a634-3f0d8e8b0e75/datapoints");
             URLConnection connection = url.openConnection();
             connection.setDoOutput(true);
 
@@ -43,59 +43,26 @@ public class PostSleepData {
                     connection.getOutputStream());
             Gson gson = new Gson();
             BaseDAO dao = new BaseDAO();
-
-
-            CSVReader reader = new CSVReader(new FileReader("F:/Dropbox/Dropbox/java/healthbook/sample_data/clean2.csv"));
-            String[] nextLine;
             ArrayList<JsonDataPoints> datapoint_List = new ArrayList<JsonDataPoints>();
-            int i = 0;
-
-            while ((nextLine = reader.readNext()) != null) {
-                // nextLine[] is an array of values from the line
-                i++;
-//                if (i < 3) {
-//                    continue;
-//                }
-//                if (i > 2) {
-//                    break;
-//                }
-                if (nextLine[0] == null || nextLine[0].length() < 1) {
-                    break;
-                }
-//                System.out.println(nextLine[0]);
-//                System.out.println(nextLine[1]);
-                String datestr = "05.08.2012";
-                String dateTime = nextLine[0] + " " + datestr;
-                Date date = DateUtil.sleepFormat.parse(dateTime);
-                System.out.println(date);
-
-//                String rawDate = nextLine[0];
-//                rawDate = rawDate.replaceAll("\\[", "");
-//                rawDate = rawDate.replaceAll("\\]", "");
-//                rawDate = rawDate.replaceAll("'", "");
-//                System.out.println(rawDate + nextLine[1] + "etc...");
                 JsonDataPoints point = new JsonDataPoints();
-                point.setAt(Long.toString(date.getTime()));
-                System.out.println(date.getTime());
+                Calendar cal=Calendar.getInstance();
+                cal.setTime(new Date());
+                cal.set(2012, 9, 25);
+                point.setAt(Long.toString(cal.getTime().getTime()));
                 ArrayList<JsonDataValues> value_list = new ArrayList<JsonDataValues>();
                 JsonDataValues value1 = new JsonDataValues();
-                value1.setUnit_id("6a9d52a3-400b-4296-8e1e-7a3563e4407d");
-                value1.setVal(nextLine[1]);
-                if (i == 1) {
-                    value1.setVal_tag("startblock");
-                }
-
+                value1.setUnit_id("1820a975-5f39-442e-9bbd-57e181179535");
+                value1.setVal("180.2");
                 value_list.add(value1);
-//                value_list.add(value2);
 //                value_list.add(value3);
 //                value_list.add(value4);
 //                value_list.add(value5);
                 point.setValue_list(value_list);
                 datapoint_List.add(point);
-            }
             JsonDataImport importData = new JsonDataImport();
+          //  importData.setBlock_id("9ecbc259-3918-45c7-aeb5-c6850d601e0c");
             importData.setData_points(datapoint_List);
-           // importData.setBlock_id("8ad4c077-d30d-4a14-b882-0cbfcfb3e4ea");
+
             System.out.println(gson.toJson(importData));
             out.write(gson.toJson(importData));
             out.close();
