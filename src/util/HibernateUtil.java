@@ -9,6 +9,7 @@ import health.database.models.DatastreamUnits;
 import health.database.models.Debug;
 import health.database.models.DeviceBinding;
 import health.database.models.DeviceTemplate;
+import health.database.models.ExternalApiInfo;
 import health.database.models.Follower;
 import health.database.models.JobsTable;
 import health.database.models.Subject;
@@ -108,6 +109,7 @@ public class HibernateUtil {
             config.addAnnotatedClass(UserDetails.class);
             config.addAnnotatedClass(DataSummary.class);
             config.addAnnotatedClass(CreationTemplate.class);
+            config.addAnnotatedClass(ExternalApiInfo.class);
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);
 

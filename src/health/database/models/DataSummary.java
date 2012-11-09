@@ -2,6 +2,7 @@ package health.database.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -20,13 +21,13 @@ public class DataSummary implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date date;
-
+    @Column(name = "dstreamID")
 	private String dstreamID;
-
+    @Column(name = "goal")
 	private double goal;
-
+    @Column(name = "title")
 	private String title;
-
+    @Column(name = "value")
 	private double value;
 
 	public DataSummary() {
