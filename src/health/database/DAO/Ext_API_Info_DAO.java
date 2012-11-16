@@ -32,6 +32,20 @@ public class Ext_API_Info_DAO extends BaseDAO {
 		}
 		return ext_API_List;
 	}
+	public List<ExternalApiInfo> getExt_API_INFO_List(String device) {
+		List<ExternalApiInfo> ext_API_List=new ArrayList<ExternalApiInfo>();
+		// stream = (Datastream) session.get(Datastream.class, StreamID);
+		Session session = HibernateUtil.beginTransaction();
+		Criteria criteria = session.createCriteria(ExternalApiInfo.class);
+		criteria.add(Restrictions.eq("device", device));
+		ext_API_List=criteria.list();
+		
+		HibernateUtil.commitTransaction();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return ext_API_List;
+	}
 	public ExternalApiInfo getExt_API_INFO(String loginID, String device,String ext_id) {
 		ExternalApiInfo ext_API=new ExternalApiInfo();
 		// stream = (Datastream) session.get(Datastream.class, StreamID);
@@ -39,7 +53,7 @@ public class Ext_API_Info_DAO extends BaseDAO {
 		Criteria criteria = session.createCriteria(ExternalApiInfo.class);
 		criteria.add(Restrictions.eq("loginID", loginID));
 		criteria.add(Restrictions.eq("device", device));
-		criteria.add(Restrictions.eq("extId", ext_id));		
+	//	criteria.add(Restrictions.eq("extId", ext_id));		
 		ext_API=(ExternalApiInfo) criteria.uniqueResult();
 		
 		HibernateUtil.commitTransaction();
@@ -47,6 +61,22 @@ public class Ext_API_Info_DAO extends BaseDAO {
 			session.close();
 		}
 		return ext_API;
+	}
+	public void Update_A_ExtAPI(ExternalApiInfo apiinfo)
+	{
+		try {
+            Session session = HibernateUtil.beginTransaction();
+            session.update(apiinfo);
+            HibernateUtil.commitTransaction();    
+            if(session.isOpen())
+            {
+            	session.close();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+        	
+        }
 	}
 	public DataSummary create_A_DataSummary(DataSummary ds) {
         try {
@@ -59,6 +89,24 @@ public class Ext_API_Info_DAO extends BaseDAO {
             }
             else{
             	return ds;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        } finally {
+        }
+    }	
+	public ExternalApiInfo create_A_ExternalAPIInfo(ExternalApiInfo apiinfo) {
+        try {
+            Session session = HibernateUtil.beginTransaction();
+            session.save(apiinfo);
+            HibernateUtil.commitTransaction();
+            if(apiinfo.getId()==0)
+            {
+            	return null;
+            }
+            else{
+            	return apiinfo;
             }
         } catch (Exception ex) {
             ex.printStackTrace();

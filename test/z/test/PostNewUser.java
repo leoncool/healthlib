@@ -36,10 +36,10 @@ public class PostNewUser {
                     connection.getOutputStream());
             Gson gson = new Gson();
             JsonUser juser=new JsonUser();
-            juser.setLoginid("test3");
-            juser.setEmail("random2@email.com");
-            juser.setPassword("test3");
-            juser.setScreenname("Shulin Yang");
+            juser.setLoginid("liguo");
+            juser.setEmail("liguo@doc.ic.ac.uk");
+            juser.setPassword("liguo");
+            juser.setScreenname("Li Guo");
             juser.setLanguage("en");
             
             System.out.println(gson.toJson(juser));

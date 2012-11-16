@@ -166,7 +166,7 @@ public class SubjectDAO extends BaseDAO {
         } finally {
         }
     }
-    public void createDefaultSubject(String loginID)
+    public Subject createDefaultSubject(String loginID)
     {
     	   Session session = HibernateUtil.beginTransaction();
     	   Subject subject=new Subject();
@@ -177,10 +177,11 @@ public class SubjectDAO extends BaseDAO {
     	   subject.setCreatedTime(now);
     	   subject.setUpdated(now);
     	   session.save(subject);
+    	
     	   HibernateUtil.commitTransaction();
     	    if (session.isOpen()) {
                 session.close();
             }
-    	    
+    	    return subject;
     }
 }

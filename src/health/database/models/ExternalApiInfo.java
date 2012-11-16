@@ -1,6 +1,8 @@
 package health.database.models;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 
@@ -35,7 +37,10 @@ public class ExternalApiInfo implements Serializable {
 
 	@Column(name="token_secrect")
 	private String tokenSecrect;
-
+	@Column(name="lateDataUpdate")
+    @Temporal(TemporalType.TIMESTAMP)
+	private Date lateDataUpdate;
+	
 	public ExternalApiInfo() {
 	}
 
@@ -102,5 +107,18 @@ public class ExternalApiInfo implements Serializable {
 	public void setTokenSecrect(String tokenSecrect) {
 		this.tokenSecrect = tokenSecrect;
 	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public Date getLateDataUpdate() {
+		return lateDataUpdate;
+	}
+
+	public void setLateDataUpdate(Date lateDataUpdate) {
+		this.lateDataUpdate = lateDataUpdate;
+	}
+
 
 }

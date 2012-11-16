@@ -109,6 +109,9 @@ public interface AllConstants {
       public static final String default_health_subject_purpose="default_health";
       
     }
+    public interface ExternalAPIConsts {
+     public static final String fitbit_device="fitbit";
+    }
     public interface ValidDictionary {
 
         public static final String Valid = "valid";

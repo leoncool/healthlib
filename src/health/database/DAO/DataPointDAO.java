@@ -82,7 +82,10 @@ public class DataPointDAO extends BaseDAO {
         admin.createTable(desc);
 
     }
-
+    public int importDatapoints(HBaseDataImport importData,String newBlockName,String newBlockDecs) throws ErrorCodeException, NumberFormatException, IOException, ParseException {
+    	DatastreamDAO dsDAO=new DatastreamDAO();
+    	return importDatapoints(importData);
+    }
     public int importDatapoints(HBaseDataImport importData) throws ErrorCodeException, NumberFormatException, IOException, ParseException {
         int dataCounter = 0;
         HTableInterface table = HBaseConfig.getTable(health_book);

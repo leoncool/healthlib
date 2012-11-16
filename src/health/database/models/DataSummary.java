@@ -18,8 +18,8 @@ public class DataSummary implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-
 	@Temporal(TemporalType.DATE)
+    @Column(name = "date")
 	private Date date;
     @Column(name = "dstreamID")
 	private String dstreamID;
