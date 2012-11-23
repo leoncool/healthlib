@@ -173,6 +173,7 @@ public class SubjectDAO extends BaseDAO {
     	   subject.setLoginID(loginID);
     	   subject.setPurpose(AllConstants.ProgramConts.defaultSubjectPurpose);
     	   subject.setTitle(AllConstants.ProgramConts.defaultSubjectName);
+    	   subject.setVisibleSet(AllConstants.ProgramConts.visibleSet_PUBLIC);
     	   Date now=new Date();
     	   subject.setCreatedTime(now);
     	   subject.setUpdated(now);
