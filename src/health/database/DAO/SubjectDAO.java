@@ -171,8 +171,8 @@ public class SubjectDAO extends BaseDAO {
     	   Session session = HibernateUtil.beginTransaction();
     	   Subject subject=new Subject();
     	   subject.setLoginID(loginID);
-    	   subject.setPurpose(AllConstants.ProgramConts.defaultSubjectPurpose);
-    	   subject.setTitle(AllConstants.ProgramConts.defaultSubjectName);
+    	   subject.setPurpose(AllConstants.HealthConts.default_health_subject_purpose);
+    	   subject.setTitle(AllConstants.HealthConts.default_health_SubjectName);
     	   subject.setVisibleSet(AllConstants.ProgramConts.visibleSet_PUBLIC);
     	   Date now=new Date();
     	   subject.setCreatedTime(now);

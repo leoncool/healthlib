@@ -19,6 +19,7 @@ public interface AllConstants {
         public static final String api_subject = "subjects";
         public static final String api_health = "health";
         public static final String api_datastream = "datastreams";
+        public static final String api_title = "title";
         public static final String api_device = "devices";
         public static final String api_datapoints = "datapoints";
         public static final String api_following = "followings";
@@ -37,12 +38,14 @@ public interface AllConstants {
         public static final String request_api_start = "start";
         public static final String request_devicetemplateID = "devicetemplateid";
         public static final String request_api_end = "end";
+        public static final String request_api_YearMonthDay = "date";
         public static final String request_api_blockid = "blockid";
         public static final String request_api_onlyParentSubjects = "onlyparents";
         public static final String request_api_true = "true";
         public static final String request_api_unit_id = "unitid";
         public static final String request_api_keywords = "keywords";
         public static final String request_api_startpage = "startpage";
+        public static final String request_api_dataformat = "dateformat";
         public static final String wildcardsubject_all = "all";
     }
 
@@ -67,9 +70,6 @@ public interface AllConstants {
         public static final String job_targetObject_datastream = "datastream";
         public static final String job_targetObject_datablock = "datablock";
         public static final String visibleSet_PUBLIC="public";
-        public static final String defaultSubjectName="default";
-        public static final String defaultSubjectPurpose="default";
-        public static final String defaultDatastreamPurpose="default";
         public static final String defaultDS_Name_steps="steps";
         public static final String defaultDS_Name_sleep="sleep";
         public static final String defaultDS_Name_distancetravel="distance_travel";
@@ -107,6 +107,8 @@ public interface AllConstants {
       public static final String unit_default_template_id_location="default_location";
       public static final String unit_default_template_id_ecg="default_ecg";
       public static final String default_health_subject_purpose="default_health";
+      public static final String default_health_SubjectName="default";
+      public static final String defaultDatastreamPurpose="default_health";
       
     }
     public interface ExternalAPIConsts {
@@ -139,6 +141,7 @@ public interface AllConstants {
         public static final String INPUT_DATE_FORMAT_ERROR = "input_data_format_error";
         public static final String Unauthorized_Access = "unauthorized_access";
         public static final String Unknown_StreamID = "unknown_stream_id";
+        public static final String Unknown_StreamTitle = "unknown_stream_title";
         public static final String Unknown_SubjectID = "unknown_subject_id";
  
         public static final String Invalid_ValueType = "invalid_value_type_name";

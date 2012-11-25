@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.NonUniqueResultException;
+
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
@@ -60,7 +62,7 @@ public class DatastreamDAO extends BaseDAO {
 		ds.setUpdated(now);
 		ds.setOwner(loginID);
 		ds.setSubId(subjectID);
-		ds.setPurpose(AllConstants.ProgramConts.defaultDatastreamPurpose);
+		ds.setPurpose(AllConstants.HealthConts.default_health_subject_purpose);
 		return ds;
 	}
 
@@ -135,6 +137,28 @@ public class DatastreamDAO extends BaseDAO {
 		}
 		stream = (Datastream) criteria.add(Restrictions.idEq(StreamID))
 				.uniqueResult();
+		HibernateUtil.commitTransaction();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return stream;
+	}
+	public Datastream getDatastreamByTitle(int subjectID,String streamTitle, boolean fetchDataUnits,
+			boolean fetchDatablocks) throws NonUniqueResultException{
+		Datastream stream = null;
+		// stream = (Datastream) session.get(Datastream.class, StreamID);
+		Session session = HibernateUtil.beginTransaction();
+		Criteria criteria = session.createCriteria(Datastream.class);
+		criteria.add(Restrictions.eq("purpose", AllConstants.HealthConts.defaultDatastreamPurpose));
+		criteria.add(Restrictions.eq("title", streamTitle));
+		criteria.add(Restrictions.eq("subId", subjectID));
+		if (fetchDataUnits) {
+			criteria.setFetchMode("datastreamUnitsList", FetchMode.JOIN);
+		}
+		if (fetchDatablocks) {
+			criteria.setFetchMode("datastreamBlocksList", FetchMode.JOIN);
+		}
+		stream = (Datastream) criteria.uniqueResult();
 		HibernateUtil.commitTransaction();
 		if (session.isOpen()) {
 			session.close();
