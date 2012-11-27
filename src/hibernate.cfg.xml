@@ -7,7 +7,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://146.169.35.28:55557/healthbook?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8</property>
         <property name="hibernate.connection.username">healthbook</property>
         <property name="hibernate.connection.password">superhealthy</property>
-<!--        <property name="hibernate.show_sql">true</property>-->
+       <property name="hibernate.show_sql">false</property>
         <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
         <property name="current_session_context_class">thread</property>
         <property name="hibernate.connection.autocommit">true</property>

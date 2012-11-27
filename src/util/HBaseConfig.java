@@ -29,11 +29,11 @@ public class HBaseConfig {
     public static void initualize() {
     	System.out.println("initualizeing...");
 //       config.set("hbase.zookeeper.quorum", "192.168.0.4");
-        config.set("hbase.zookeeper.quorum", "namenode");
+        config.set("hbase.zookeeper.quorum", "146.169.35.28");
 //        config.set("hbase.zookeeper.property.clientPort", "55556");
 //        config.set("hbase.master.port", "55558");
 //        config.set("hbase.regionserver.port", "55559");
-        pool = new HTablePool(config, 100);
+        pool = new HTablePool(config, 5);
     	System.out.println("initualizeing done...");
     }
 

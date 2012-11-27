@@ -27,6 +27,7 @@ import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.MasterNotRunningException;
 import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.Delete;
+import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.Put;
@@ -72,6 +73,16 @@ public class DataPointDAO extends BaseDAO {
 //			createTable();
 //		}
 		System.out.println("initualizeing......DONE!..");
+	}
+	public void testTable() throws ErrorCodeException, IOException
+	{
+		HTableInterface table = HBaseConfig.getTable(health_book);
+		Put put=new Put(toBytes("asdfsadf"));
+		put.add(PROP_COL,toBytes("acasc"),toBytes("acasc"));
+		table.put(put);
+		Get get=new Get(toBytes("asdfsadf"));
+		System.out.println(table.get(get));
+		
 	}
 
 	public void createTable() throws MasterNotRunningException,
@@ -385,6 +396,8 @@ public class DataPointDAO extends BaseDAO {
 
 		// importDao.exportDatapoints("70376e83-10b4-4de8-bde9-989e3111cf69",
 		// start, end, null);
+		DataPointDAO importDao = new DataPointDAO();
+		importDao.testTable();
 	}
 
 	public byte[] toBytes(String str) {
