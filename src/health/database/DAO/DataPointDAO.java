@@ -59,14 +59,19 @@ public class DataPointDAO extends BaseDAO {
 	private final String health_book = "hb";
 	private final String str_unassignBlockID = "noid";
 	private final byte[] unassignBlockID = Bytes.toBytes(str_unassignBlockID);
-
+	//create 'hb','p','v','vt'
 	public DataPointDAO() throws IOException {
 		HBaseConfig hbaseconfig = new HBaseConfig();
+		System.out.println("initualizeing......new HBaseConfig();..");
 		Configuration config = hbaseconfig.getConfig();
-		HBaseAdmin admin = new HBaseAdmin(config);
-		if (!admin.tableExists(health_book)) {
-			createTable();
-		}
+		System.out.println("initualizeing......getConfig..");
+//		HBaseAdmin admin = new HBaseAdmin(config);
+//		System.out.println("initualizeing......admin..");
+//		if (!admin.tableExists(health_book)) {
+//			System.out.println("initualizeing......createTable..");
+//			createTable();
+//		}
+		System.out.println("initualizeing......DONE!..");
 	}
 
 	public void createTable() throws MasterNotRunningException,
