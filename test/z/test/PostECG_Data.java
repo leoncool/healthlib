@@ -62,7 +62,7 @@ public class PostECG_Data {
                 rawDate = rawDate.replaceAll("'", "");
 //                System.out.println(rawDate + nextLine[1] + "etc...");
                 JsonDataPoints point = new JsonDataPoints();
-                point.setAt(Long.toString(DateUtil.parseMillisecFormatToLong(rawDate)));
+                point.setAt(rawDate);
                 ArrayList<JsonDataValues> value_list = new ArrayList<JsonDataValues>();
                 JsonDataValues value1 = new JsonDataValues();
                 value1.setUnit_id("7d067f87-10bc-4e10-9b07-49089e58f49c");

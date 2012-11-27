@@ -66,7 +66,8 @@ public class PostDeviceECG_Data {
                 rawDate = rawDate.replaceAll("'", "");
 //                System.out.println(rawDate + nextLine[1] + "etc...");
                 JsonDataPoints point = new JsonDataPoints();
-                point.setAt(Long.toString(DateUtil.parseMillisecFormatToLong(rawDate)));
+                //point.setAt(Long.toString(DateUtil.parseMillisecFormatToLong(rawDate)));
+                point.setAt(rawDate);
                 ArrayList<JsonDataValues> value_list = new ArrayList<JsonDataValues>();
                 JsonDataValues value1 = new JsonDataValues();
                 value1.setUnit_id("d23c52dc-f9f9-4dff-b944-4ce79f31818a");

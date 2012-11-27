@@ -66,7 +66,8 @@ public class PostSleepData {
 //                System.out.println(nextLine[1]);
                 String datestr = "05.08.2012";
                 String dateTime = nextLine[0] + " " + datestr;
-                Date date = DateUtil.sleepFormat.parse(dateTime);
+                DateUtil dateUtil=new DateUtil();
+                Date date = dateUtil.sleepFormat.parse(dateTime);
                 System.out.println(date);
 
 //                String rawDate = nextLine[0];

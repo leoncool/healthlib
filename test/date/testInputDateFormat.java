@@ -12,8 +12,7 @@ public class testInputDateFormat {
 public static void main(String args[]) throws ParseException
 {
 	System.out.println(Arrays.asList(TimeZone.getDefault()));
-	Date date = DateUtil.YearMonthDay_DateFormat
-			.parse("2012-11-24");
+	Date date =new Date();
 	System.out.println("DateRequest:"+date);
 	Calendar calStart = Calendar.getInstance();
 	Calendar calEnd = Calendar.getInstance();
@@ -34,9 +33,9 @@ public static void main(String args[]) throws ParseException
  
  Long valueLong=1353733200000L; 
  testDate2.setTime(valueLong);
- System.out.println(testDate);
- System.out.println(DateUtil.millisecFormat.format(testDate));
- System.out.println(testDate2);
- System.out.println(DateUtil.millisecFormat.format(testDate2));
+// System.out.println(testDate);
+// System.out.println(DateUtil.millisecFormat.format(testDate));
+// System.out.println(testDate2);
+// System.out.println(DateUtil.millisecFormat.format(testDate2));
 }
 }

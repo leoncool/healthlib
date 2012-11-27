@@ -43,12 +43,12 @@ public class Test {
             System.out.println(values[0]);
             System.out.println(values[1]);
             System.out.println("startfromhere");
-            Date date1 = new Date(1069019340000L);
-            System.out.println(DateUtil.toMillisecFormatString(date1));
-            Date date2 = new Date(1069019340001L);
-            System.out.println(DateUtil.toMillisecFormatString(date2));
-            Date date3 = new Date(1069016520000L);
-            System.out.println(DateUtil.toMillisecFormatString(date3));
+//            Date date1 = new Date(1069019340000L);
+//            System.out.println(DateUtil.toMillisecFormatString(date1));
+//            Date date2 = new Date(1069019340001L);
+//            System.out.println(DateUtil.toMillisecFormatString(date2));
+//            Date date3 = new Date(1069016520000L);
+//            System.out.println(DateUtil.toMillisecFormatString(date3));
 
         } catch (Exception ex) {
             ex.printStackTrace();

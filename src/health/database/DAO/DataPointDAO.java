@@ -265,7 +265,7 @@ public class DataPointDAO extends BaseDAO {
 				date.setTime(Long.parseLong(getTimefromRowKey(res)));
 				//datapoint.setAt(format.format(date));
 				System.out.println(counter+",First Date from Export long:"+date.getTime());
-				System.out.println(counter+",First Date from Export Format:"+DateUtil.millisecFormat.format(date));
+			//	System.out.println(counter+",First Date from Export Format:"+DateUtil.millisecFormat.format(date));
 				
 			}
 			if (res.getValue(PROP_COL, TIME_TAG) != null) {

@@ -59,8 +59,9 @@ public class DBtoJsonUtil {
         jsub.setParent_subject(subject.getParentSub());
         jsub.setTags(subject.getTags());
         jsub.setStatus(subject.getStatus());
-        jsub.setCreated_time(DateUtil.toMillisecFormatString(subject.getCreatedTime()));
-        jsub.setUpdated_time(DateUtil.toMillisecFormatString(subject.getCreatedTime()));
+        DateUtil dateUtil=new DateUtil();
+        jsub.setCreated_time(dateUtil.format(subject.getCreatedTime(),dateUtil.millisecFormat));
+        jsub.setUpdated_time(dateUtil.format(subject.getUpdated(),dateUtil.millisecFormat));
         jsub.setIcon(subject.getIcon());
         return jsub;
     }
@@ -148,7 +149,8 @@ public class DBtoJsonUtil {
         jd.setDatastream_id(datastream.getStreamId());
         jd.setOwner(datastream.getOwner());
         jd.setNote(datastream.getNote());
-        jd.setCreated_time(DateUtil.toMillisecFormatString(datastream.getCreatedTime()));
+        DateUtil dateUtil=new DateUtil();
+        jd.setCreated_time(dateUtil.format(datastream.getCreatedTime(),dateUtil.millisecFormat));
         jd.setSubject_id(datastream.getSubId());
         jd.setTitle(datastream.getTitle());
         System.out.print("title:" + jd.getTitle() + "," + datastream.getTitle());
@@ -166,7 +168,7 @@ public class DBtoJsonUtil {
         }
         jd.setTotal_units(total_units);
         if (datastream.getUpdated() != null) {
-            jd.setUpdated_time(DateUtil.toMillisecFormatString(datastream.getUpdated()));
+            jd.setUpdated_time(dateUtil.format(datastream.getUpdated(),dateUtil.millisecFormat));
         }
         for (int i = 0; i < unitsList.size(); i++) {
             JsonDatastreamUnits unit = new JsonDatastreamUnits();
@@ -197,13 +199,14 @@ public class DBtoJsonUtil {
         jd.setDevice_id(datastream.getStreamId());
         jd.setOwner(datastream.getOwner());
         jd.setNote(datastream.getNote());
-        jd.setCreated_time(DateUtil.toMillisecFormatString(datastream.getCreatedTime()));
+        DateUtil dateUtil=new DateUtil();
+        jd.setCreated_time(dateUtil.format(datastream.getCreatedTime(),dateUtil.millisecFormat));
         jd.setDevice_name(datastream.getTitle());
 //        System.out.print("title:" + jd.getTitle() + "," + datastream.getTitle());
         jd.setDesc(datastream.getDescription());
         jd.setIcon(datastream.getIcon());
         if (datastream.getUpdated() != null) {
-            jd.setUpdated_time(DateUtil.toMillisecFormatString(datastream.getUpdated()));
+            jd.setUpdated_time(dateUtil.format(datastream.getUpdated(),dateUtil.millisecFormat));
         }
         for (int i = 0; i < unitsList.size(); i++) {
             JsonDatastreamUnits unit = new JsonDatastreamUnits();
