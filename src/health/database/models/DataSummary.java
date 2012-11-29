@@ -29,7 +29,12 @@ public class DataSummary implements Serializable {
 	private String title;
     @Column(name = "value")
 	private double value;
-
+    @Column(name = "unit_id")
+ 	private String unit_id;
+	@Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated")
+	private Date updated;
+    
 	public DataSummary() {
 	}
 
@@ -79,6 +84,22 @@ public class DataSummary implements Serializable {
 
 	public void setValue(double value) {
 		this.value = value;
+	}
+
+	public String getUnit_id() {
+		return unit_id;
+	}
+
+	public void setUnit_id(String unit_id) {
+		this.unit_id = unit_id;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 }

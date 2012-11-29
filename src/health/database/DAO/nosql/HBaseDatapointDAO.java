@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package health.database.DAO;
+package health.database.DAO.nosql;
 
+import health.database.DAO.BaseDAO;
+import health.database.DAO.DatastreamDAO;
 import health.hbase.models.HBaseDataImport;
 import health.input.jsonmodels.JsonDataPoints;
 import health.input.jsonmodels.JsonDataValues;
@@ -43,6 +45,7 @@ import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import server.exception.ErrorCodeException;
+import util.AllConstants;
 import util.DateUtil;
 import util.HBaseConfig;
 
@@ -50,7 +53,7 @@ import util.HBaseConfig;
  * 
  * @author Leon
  */
-public class DataPointDAO extends BaseDAO {
+public class HBaseDatapointDAO implements DatapointDAOInterface{
 
 	private final byte[] PROP_COL = Bytes.toBytes("p");
 	private final byte[] VALUE_COL = Bytes.toBytes("v");
@@ -61,7 +64,7 @@ public class DataPointDAO extends BaseDAO {
 	private final String str_unassignBlockID = "noid";
 	private final byte[] unassignBlockID = Bytes.toBytes(str_unassignBlockID);
 	//create 'hb','p','v','vt'
-	public DataPointDAO() throws IOException {
+	public HBaseDatapointDAO() {
 		HBaseConfig hbaseconfig = new HBaseConfig();
 		System.out.println("initualizeing......new HBaseConfig();..");
 		Configuration config = hbaseconfig.getConfig();
@@ -74,19 +77,28 @@ public class DataPointDAO extends BaseDAO {
 //		}
 		System.out.println("initualizeing......DONE!..");
 	}
-	public void testTable() throws ErrorCodeException, IOException
+	public void testTable() throws ErrorCodeException 
 	{
-		HTableInterface table = HBaseConfig.getTable(health_book);
+		HTableInterface table;
+		try {
+			table = HBaseConfig.getTable(health_book);
 		Put put=new Put(toBytes("asdfsadf"));
 		put.add(PROP_COL,toBytes("acasc"),toBytes("acasc"));
 		table.put(put);
 		Get get=new Get(toBytes("asdfsadf"));
 		System.out.println(table.get(get));
-		
+		} catch (ErrorCodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+		e.printStackTrace();
+		throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
 	}
 
-	public void createTable() throws MasterNotRunningException,
-			ZooKeeperConnectionException, IOException {
+	public void createTable() throws ErrorCodeException  {
+		try{
 		HBaseConfig hbaseconfig = new HBaseConfig();
 		Configuration config = hbaseconfig.getConfig();
 		HBaseAdmin admin = new HBaseAdmin(config);
@@ -98,20 +110,28 @@ public class DataPointDAO extends BaseDAO {
 		desc.addFamily(val_tag_col);
 		desc.addFamily(value_col);
 		admin.createTable(desc);
-
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+	}
 	}
 
 	public int importDatapoints(HBaseDataImport importData,
 			String newBlockName, String newBlockDecs)
-			throws ErrorCodeException, NumberFormatException, IOException,
-			ParseException {
+			throws ErrorCodeException{
+		try{
 		DatastreamDAO dsDAO = new DatastreamDAO();
 		return importDatapoints(importData);
+		}catch(NumberFormatException ex)
+		{
+			ex.printStackTrace();
+			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
 	}
 
 	public int importDatapoints(HBaseDataImport importData)
-			throws ErrorCodeException, NumberFormatException, IOException,
-			ParseException {
+			throws ErrorCodeException {
+		try{
 		int dataCounter = 0;
 		HTableInterface table = HBaseConfig.getTable(health_book);
 		List<JsonDataPoints> dataPoints = importData.getData_points();
@@ -168,12 +188,24 @@ public class DataPointDAO extends BaseDAO {
 		table.put(putList);
 		HBaseConfig.putTable(table);
 		return dataCounter;
+		}
+		catch(NumberFormatException ex)
+		{
+			ex.printStackTrace();
+			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
+		catch (IOException ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
+	
 	}
 
 	public HBaseDataImport exportDatapoints(String streamID, Long start,
 			Long end, String blockID, HashMap<String, String> dsUnitsList,
-			SimpleDateFormat format) throws ErrorCodeException, IOException,
-			Throwable {
+			SimpleDateFormat format) throws ErrorCodeException {
+		try{
 		Date timerStart = new Date();
 		System.out.println("starting Exporting...." + timerStart);
 		HTableInterface table = HBaseConfig.getTable(health_book);
@@ -226,11 +258,7 @@ public class DataPointDAO extends BaseDAO {
 		// System.out.println("totalnumber of rows:"+rowCount);
 		ResultScanner scanner = table.getScanner(scan);
 		Iterator<Result> itr = scanner.iterator();
-		// List<Result> res_List = new ArrayList<Result>();
-		// while (itr.hasNext()) {
-		// Result result = itr.next();
-		// res_List.add(result);
-		// }
+
 		List<JsonDataPoints> jsonDPList = new ArrayList<JsonDataPoints>();
 	
 		int counter = 0;
@@ -263,10 +291,7 @@ public class DataPointDAO extends BaseDAO {
 				System.out.println(counter+",First Date from Export:"+Long.parseLong(getTimefromRowKey(res)));
 				Date date=new Date();
 				date.setTime(Long.parseLong(getTimefromRowKey(res)));
-				//datapoint.setAt(format.format(date));
 				System.out.println(counter+",First Date from Export long:"+date.getTime());
-			//	System.out.println(counter+",First Date from Export Format:"+DateUtil.millisecFormat.format(date));
-				
 			}
 			if (res.getValue(PROP_COL, TIME_TAG) != null) {
 				datapoint
@@ -289,6 +314,16 @@ public class DataPointDAO extends BaseDAO {
 				+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 				+ "seconds");
 		return dataexport;
+		}catch(IOException ex)
+		{
+			ex.printStackTrace();
+			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
+		catch (NumberFormatException ex) {
+			ex.printStackTrace();
+			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
+		
 	}
 
 	public String getTimefromRowKey(Result result) {
@@ -345,7 +380,8 @@ public class DataPointDAO extends BaseDAO {
 	}
 
 	public long delete_A_Datapoint(String streamID, long at)
-			throws IOException, ErrorCodeException {
+			throws ErrorCodeException {
+		try{
 		Date timerStart = new Date();
 		System.out.println("starting Exporting...." + at);
 		HTableInterface table = HBaseConfig.getTable(health_book);
@@ -383,6 +419,11 @@ public class DataPointDAO extends BaseDAO {
 				+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 				+ "seconds");
 		return no_deleted;
+		}catch(IOException ex)
+		{
+			ex.printStackTrace();
+			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
 	}
 
 	public static void main(String args[]) throws MasterNotRunningException,
@@ -396,7 +437,7 @@ public class DataPointDAO extends BaseDAO {
 
 		// importDao.exportDatapoints("70376e83-10b4-4de8-bde9-989e3111cf69",
 		// start, end, null);
-		DataPointDAO importDao = new DataPointDAO();
+		HBaseDatapointDAO importDao = new HBaseDatapointDAO();
 		importDao.testTable();
 	}
 

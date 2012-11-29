@@ -23,11 +23,12 @@ public class JsonDataSummary {
 
 	private String datastream_id;
 
-	private String goal;
-
 	private String title;
 
+	private String goal;
 	private String value;
+	private String unit_id;
+
 
 	public String getId() {
 		return id;
@@ -53,13 +54,6 @@ public class JsonDataSummary {
 		this.datastream_id = datastream_id;
 	}
 
-	public String getGoal() {
-		return goal;
-	}
-
-	public void setGoal(String goal) {
-		this.goal = goal;
-	}
 
 	public String getTitle() {
 		return title;
@@ -69,12 +63,28 @@ public class JsonDataSummary {
 		this.title = title;
 	}
 
+	public String getGoal() {
+		return goal;
+	}
+
+	public void setGoal(String goal) {
+		this.goal = goal;
+	}
+
 	public String getValue() {
 		return value;
 	}
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getUnit_id() {
+		return unit_id;
+	}
+
+	public void setUnit_id(String unit_id) {
+		this.unit_id = unit_id;
 	}
 
 
