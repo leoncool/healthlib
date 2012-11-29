@@ -26,6 +26,9 @@ public interface AllConstants {
         public static final String api_follower = "followers";
         public static final String api_devicebinding = "devicebinding";
         public static final String api_user = "users";
+        public static final String api_register = "register";
+        public static final String api_GetToken = "gettoken";
+
         public static final String api_search = "search";
         public static final String api_list = "list";
         public static final String api_avatar = "user_av";
@@ -46,6 +49,7 @@ public interface AllConstants {
         public static final String request_api_keywords = "keywords";
         public static final String request_api_startpage = "startpage";
         public static final String request_api_dataformat = "dateformat";
+        public static final String header_api_token = "accesstoken";
         public static final String wildcardsubject_all = "all";
     }
 
@@ -152,6 +156,10 @@ public interface AllConstants {
         public static final String Invalid_Unit_ID = "invalid_unit_id";
         public static final String Invalid_Datablock_ID = "invalid_datablock_id";
         public static final String Invalid_LoginID = "invalid_loginid";
+        public static final String Invalid_wrong_password = "invalid_password";
+        public static final String Invalid_login_token_id = "invalid_login_tokenid";
+        public static final String Invalid_Login_format = "invalid_login_format";
+        public static final String Invalid_password_format = "invalid_password_format";
         public static final String Internal_Fault = "internal_fault";
         public static final String Invalid_Target_LoginID = "invalid_target_loginid";
         public static final String following_exist = "following_exist";
