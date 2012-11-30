@@ -5,6 +5,7 @@
 package health.input.util;
 
 import health.database.DAO.DatastreamDAO;
+import health.database.models.DataSummary;
 import health.database.models.Datastream;
 import health.database.models.DatastreamBlocks;
 import health.database.models.DatastreamUnits;
@@ -14,6 +15,7 @@ import health.database.models.Subject;
 import health.database.models.UserAvatar;
 import health.database.models.Users;
 import health.database.models.merge.UserInfo;
+import health.input.jsonmodels.JsonDataSummary;
 import health.input.jsonmodels.JsonDatastream;
 import health.input.jsonmodels.JsonDatastreamBlock;
 import health.input.jsonmodels.JsonDatastreamUnits;
@@ -254,5 +256,18 @@ public class DBtoJsonUtil {
             jDevice.setCreated_time(Long.toString(device.getCreatedTime().getTime()));
         }
         return jDevice;
+    }
+    public JsonDataSummary convertDataSummary(DataSummary summary) throws ParseException {
+    	JsonDataSummary jsummary = new JsonDataSummary();
+    	jsummary.setDatastream_id(summary.getDstreamID());
+     	jsummary.setValue(Double.toString(summary.getValue()));
+    	DateUtil dateUtil = new DateUtil();
+     	jsummary.setDate(dateUtil.format(summary.getDate(), dateUtil.YearMonthDay_DateFormat));
+    	jsummary.setDate_long(Long.toString(summary.getDate().getTime()));
+    	jsummary.setGoal(Double.toString(summary.getGoal()));
+       	jsummary.setTitle(summary.getTitle());
+    	jsummary.setUnit_id(summary.getUnit_id());
+      	jsummary.setUpdate_time(Long.toString(summary.getUpdated().getTime()));
+        return jsummary;
     }
 }

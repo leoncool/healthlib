@@ -22,6 +22,7 @@ public interface AllConstants {
         public static final String api_title = "title";
         public static final String api_device = "devices";
         public static final String api_datapoints = "datapoints";
+        public static final String api_datasummaries = "datasummaries";
         public static final String api_following = "followings";
         public static final String api_follower = "followers";
         public static final String api_devicebinding = "devicebinding";
@@ -39,8 +40,10 @@ public interface AllConstants {
         public static final String request_api_loginid = "loginid";
         public static final String request_api_targetid = "targetid";
         public static final String request_api_start = "start";
+        public static final String request_api_startDate = "startdate";
         public static final String request_devicetemplateID = "devicetemplateid";
         public static final String request_api_end = "end";
+        public static final String request_api_endDate = "enddate";
         public static final String request_api_YearMonthDay = "date";
         public static final String request_api_blockid = "blockid";
         public static final String request_api_onlyParentSubjects = "onlyparents";

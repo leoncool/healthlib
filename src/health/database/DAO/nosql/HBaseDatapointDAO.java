@@ -260,7 +260,9 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 		Iterator<Result> itr = scanner.iterator();
 
 		List<JsonDataPoints> jsonDPList = new ArrayList<JsonDataPoints>();
-	
+		System.out.println("Just After scanner...."
+				+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
+				+ "seconds");
 		int counter = 0;
 		while (itr.hasNext()) {
 			counter++;
@@ -277,21 +279,19 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 				datapoint.setValue_list(hbaseDatavalueList);
 			}
 			if (format == null) {
-				Date date=new Date();
-				date.setTime(Long.parseLong(getTimefromRowKey(res)));
-				datapoint.setAt(String.valueOf(date.getTime()));
-			
+			//	date.setTime(Long.parseLong(getTimefromRowKey(res)));
+				datapoint.setAt(getTimefromRowKey(res));			
 			} else {
-				Date date=new Date();
-				date.setTime(Long.parseLong(getTimefromRowKey(res)));
-				datapoint.setAt(format.format(date));
+//				Date date=new Date();
+//				date.setTime(Long.parseLong(getTimefromRowKey(res)));				
+				datapoint.setAt(format.format(getTimefromRowKey(res)));
 			}
 			if(counter<=1)
 			{
-				System.out.println(counter+",First Date from Export:"+Long.parseLong(getTimefromRowKey(res)));
+			//	System.out.println(counter+",First Date from Export:"+Long.parseLong(getTimefromRowKey(res)));
 				Date date=new Date();
 				date.setTime(Long.parseLong(getTimefromRowKey(res)));
-				System.out.println(counter+",First Date from Export long:"+date.getTime());
+				//System.out.println(counter+",First Date from Export long:"+date.getTime());
 			}
 			if (res.getValue(PROP_COL, TIME_TAG) != null) {
 				datapoint
@@ -299,6 +299,9 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 			}
 			jsonDPList.add(datapoint);
 		}
+		System.out.println("Just After While loop...."
+				+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
+				+ "seconds");
 		HBaseConfig.putTable(table);
 		HBaseDataImport dataexport = null;
 		if (jsonDPList.size() > 0) {
@@ -330,8 +333,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 		byte[] rowbytes = result.getRow();
 		String rowKey = toString(rowbytes);
 		String[] values = rowKey.split("/");
-		Date date=new Date(Long.parseLong(values[1]));
-		return Long.toString(date.getTime());
+		//Date date=new Date(Long.parseLong(values[1]));
+		return values[1];
 		
 	}
 

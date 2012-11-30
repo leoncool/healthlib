@@ -11,19 +11,23 @@ import health.database.models.Subject;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import util.HibernateUtil;
 
 public class DataSummaryDAO extends BaseDAO {
-	public List<DataSummary> getA_DataSummary(String StreamID, String unit_id,
+	public List<DataSummary> getDataSummaries(String StreamID, String unit_id,
 			Date date) {
 		List<DataSummary> dsummaryList = new ArrayList<DataSummary>();
 		// stream = (Datastream) session.get(Datastream.class, StreamID);
 		Session session = HibernateUtil.beginTransaction();
 		Criteria criteria = session.createCriteria(DataSummary.class);
 		criteria.add(Restrictions.eq("dstreamID", StreamID));
+		criteria.addOrder(Order.asc("date"));
+		if(date!=null){
 		criteria.add(Restrictions.eq("date", date));
+		}
 		if (unit_id != null) {
 			criteria.add(Restrictions.eq("unit_id", unit_id));
 		}
@@ -33,11 +37,33 @@ public class DataSummaryDAO extends BaseDAO {
 		}
 		return dsummaryList;
 	}
-
+	public List<DataSummary> getDataSummariesByStartAndEndTime(String StreamID, String unit_id,
+			Long start,Long end) {
+		List<DataSummary> dsummaryList = new ArrayList<DataSummary>();
+		// stream = (Datastream) session.get(Datastream.class, StreamID);
+		Session session = HibernateUtil.beginTransaction();
+		Criteria criteria = session.createCriteria(DataSummary.class);
+		criteria.add(Restrictions.eq("dstreamID", StreamID));
+		Date startDate=new Date();
+		startDate.setTime(start);
+		Date endDate=new Date();
+		endDate.setTime(end);
+		criteria.add(Restrictions.ge("date", startDate));
+		criteria.add(Restrictions.le("date", endDate));
+		criteria.addOrder(Order.asc("date"));
+		if (unit_id != null) {
+			criteria.add(Restrictions.eq("unit_id", unit_id));
+		}
+		dsummaryList = criteria.list();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return dsummaryList;
+	}
 	public DataSummary create_A_DataSummary(DataSummary ds) {
 		try {
 			DataSummary DataSummaryToPut = null;
-			List<DataSummary> existSummryList = getA_DataSummary(
+			List<DataSummary> existSummryList = getDataSummaries(
 					ds.getDstreamID(), ds.getUnit_id(), ds.getDate());
 			if (existSummryList.size() == 1) {
 				DataSummaryToPut = existSummryList.get(0);

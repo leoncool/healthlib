@@ -40,7 +40,8 @@ public class ExternalApiInfo implements Serializable {
 	@Column(name="lateDataUpdate")
     @Temporal(TemporalType.TIMESTAMP)
 	private Date lateDataUpdate;
-	
+	@Column(name="retrieveDays")
+	private int retrieveDays;
 	public ExternalApiInfo() {
 	}
 
@@ -118,6 +119,14 @@ public class ExternalApiInfo implements Serializable {
 
 	public void setLateDataUpdate(Date lateDataUpdate) {
 		this.lateDataUpdate = lateDataUpdate;
+	}
+
+	public int getRetrieveDays() {
+		return retrieveDays;
+	}
+
+	public void setRetrieveDays(int retrieveDays) {
+		this.retrieveDays = retrieveDays;
 	}
 
 

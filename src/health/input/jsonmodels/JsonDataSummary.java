@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 public class JsonDataSummary {
 	private String id;
 	private String date;
-
+	private String date_long;
 	private String datastream_id;
 
 	private String title;
@@ -28,7 +28,7 @@ public class JsonDataSummary {
 	private String goal;
 	private String value;
 	private String unit_id;
-
+	private String update_time;
 
 	public String getId() {
 		return id;
@@ -85,6 +85,22 @@ public class JsonDataSummary {
 
 	public void setUnit_id(String unit_id) {
 		this.unit_id = unit_id;
+	}
+
+	public String getUpdate_time() {
+		return update_time;
+	}
+
+	public void setUpdate_time(String update_time) {
+		this.update_time = update_time;
+	}
+
+	public String getDate_long() {
+		return date_long;
+	}
+
+	public void setDate_long(String date_long) {
+		this.date_long = date_long;
 	}
 
 
