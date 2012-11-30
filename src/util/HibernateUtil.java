@@ -12,6 +12,7 @@ import health.database.models.DeviceTemplate;
 import health.database.models.ExternalApiInfo;
 import health.database.models.Follower;
 import health.database.models.JobsTable;
+import health.database.models.LoginToken;
 import health.database.models.Subject;
 import health.database.models.UserAvatar;
 import health.database.models.UserDetails;
@@ -94,6 +95,7 @@ public class HibernateUtil {
         		System.out.println("Loading local File!!!!!!!!!!!!!!");
         		 config = new Configuration().configure("hibernate.cfg.xml");
         	}
+        	
             config.addAnnotatedClass(DatastreamTriggers.class);
             config.addAnnotatedClass(Follower.class);
             config.addAnnotatedClass(Subject.class);
@@ -110,6 +112,7 @@ public class HibernateUtil {
             config.addAnnotatedClass(DataSummary.class);
             config.addAnnotatedClass(CreationTemplate.class);
             config.addAnnotatedClass(ExternalApiInfo.class);
+            config.addAnnotatedClass(LoginToken.class);
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);
 

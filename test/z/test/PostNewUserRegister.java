@@ -21,7 +21,7 @@ import com.google.gson.Gson;
  *
  * @author Leon
  */
-public class PostNewUser {
+public class PostNewUserRegister {
 
     public static void main(String args[]) {
         try {

@@ -4,13 +4,16 @@
  */
 package health.database.DAO;
 
+import health.database.models.LoginToken;
 import health.database.models.UserAvatar;
 import health.database.models.Users;
 import health.database.models.merge.UserInfo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -148,7 +151,28 @@ public class UserDAO extends BaseDAO {
 
         return userInfoList;
     }
-
+public LoginToken requestNewLoginToken(String loginID,String ip,Date expireTime)
+{
+	LoginToken token=new LoginToken();
+	UUID uuid=UUID.randomUUID();
+	
+	token.setLoginID(loginID);
+	token.setTokenID(uuid.toString().replaceAll("-", ""));
+	if(expireTime!=null)
+	{
+		token.setExpireTime(expireTime);
+	}
+	token.setIp(ip);
+	token.setCreated(new Date());
+	Session session=HibernateUtil.beginTransaction();
+	session.save(token);
+	HibernateUtil.commitTransaction();
+	if(session.isOpen())
+	{
+		session.close();
+	}
+	return token;
+}
     public List<Users> searchLogin(String keywords, int startFrom) {
         List<Users> userList = new ArrayList<Users>();
         try {
@@ -232,6 +256,15 @@ public class UserDAO extends BaseDAO {
         } else {
             return false;
         }
+    }
+    public LoginToken getLoginToken(String tokenID)
+    {
+    	Session session=HibernateUtil.beginTransaction();
+    	  LoginToken token = (LoginToken) session.get(LoginToken.class, tokenID);
+          if (session.isOpen()) {
+              session.close();
+          }
+          return token;
     }
 //    public List<Logins> SearchLogin(String idLogins, boolean fuzzy) {
 //        List objects = null;
