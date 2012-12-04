@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -38,16 +40,20 @@ public class UserDetails implements Serializable {
     private Double weight;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @JoinColumn(name = "loginID", referencedColumnName = "loginID")
     @ManyToOne(optional = false)
     private Users users;
-
+    @Column(name = "city")
+    private String city;
+    @Column(name = "country")
+    private String country;
     public UserDetails() {
     }
 
-    public UserDetails(String id) {
+    public UserDetails(Integer id) {
         this.id = id;
     }
 
@@ -75,11 +81,11 @@ public class UserDetails implements Serializable {
         this.weight = weight;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -98,7 +104,24 @@ public class UserDetails implements Serializable {
         return hash;
     }
 
-    @Override
+    
+    public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof UserDetails)) {

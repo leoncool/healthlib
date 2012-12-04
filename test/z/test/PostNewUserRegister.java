@@ -25,7 +25,8 @@ public class PostNewUserRegister {
 
     public static void main(String args[]) {
         try {
-            URL url = new URL("http://localhost:8080/healthbook/v1/"+AllConstants.api_entryPoints.api_user);
+            URL url = new URL("http://localhost:8080/healthbook/v1/"+AllConstants.api_entryPoints.api_user
+            		+"/"+AllConstants.api_entryPoints.api_register);
             URLConnection connection = url.openConnection();
             connection.setDoOutput(true);
 
@@ -36,12 +37,13 @@ public class PostNewUserRegister {
                     connection.getOutputStream());
             Gson gson = new Gson();
             JsonUser juser=new JsonUser();
-            juser.setLoginid("liguo");
-            juser.setEmail("liguo@doc.ic.ac.uk");
-            juser.setPassword("liguo");
-            juser.setScreenname("Li Guo");
+            juser.setLoginid("test551111");
+            juser.setEmail("test55111111@sdfd.com");
+            juser.setPassword("test55");
+            juser.setScreenname("test551");
             juser.setLanguage("en");
-            
+          // juser.setGender("male");
+            juser.setBirthday("11/11/1987");
             System.out.println(gson.toJson(juser));
             out.write(gson.toJson(juser));
             out.close();

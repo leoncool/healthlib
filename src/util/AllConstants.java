@@ -161,6 +161,7 @@ public interface AllConstants {
         public static final String Invalid_LoginID = "invalid_loginid";
         public static final String Invalid_wrong_password = "invalid_password";
         public static final String Invalid_login_token_id = "invalid_login_tokenid";
+        public static final String login_token_expired = "login_token_expired";
         public static final String Invalid_Login_format = "invalid_login_format";
         public static final String Invalid_password_format = "invalid_password_format";
         public static final String Internal_Fault = "internal_fault";

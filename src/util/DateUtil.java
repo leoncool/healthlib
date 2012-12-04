@@ -21,7 +21,8 @@ public class DateUtil {
 			"H:m dd.MM.yy");
 	public final SimpleDateFormat YearMonthDay_DateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd");
-
+	public final SimpleDateFormat birthdayFormat = new SimpleDateFormat(
+			"dd/MM/yyyy");
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
 	public DateUtil() {

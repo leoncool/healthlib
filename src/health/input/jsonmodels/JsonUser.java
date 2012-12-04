@@ -13,14 +13,21 @@ import java.util.Date;
 public class JsonUser {
     private String loginid;
     private String password;
-    private Date updated_time;
-    private Date created_time;
+    private String screenname;
+    private String email;
+    private String birthday;
+    private String gender;
+    private String height_cm;
+    private String weight_kg;
+    private String country;
+    private String city;
     private String parent_id;
     private String group_id;
     private String language;
     private String timezone;
-    private String screenname;
-    private String email;
+    private Date updated_time;
+    private Date created_time;
+    
     
     public String getLoginid() {
         return loginid;
@@ -86,7 +93,55 @@ public class JsonUser {
         this.screenname = screenname;
     }
 
-    public String getEmail() {
+    public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getHeight_cm() {
+		return height_cm;
+	}
+
+	public void setHeight_cm(String height_cm) {
+		this.height_cm = height_cm;
+	}
+
+	public String getWeight_kg() {
+		return weight_kg;
+	}
+
+	public void setWeight_kg(String weight_kg) {
+		this.weight_kg = weight_kg;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getEmail() {
         return email;
     }
 
