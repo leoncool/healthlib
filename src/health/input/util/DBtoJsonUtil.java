@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import util.DateUtil;
+import util.AllConstants.ServerConfigs;
 import device.input.jsonmodels.JsonDevice;
 import device.input.jsonmodels.JsonDeviceBinding;
 
@@ -114,7 +115,7 @@ public class DBtoJsonUtil {
     public JsonUserAvatar convert_a_userAvatar(UserAvatar avatar) {
         JsonUserAvatar javar = new JsonUserAvatar();
         javar.setLoginid(avatar.getUsers().getLoginID());
-        javar.setUrl(avatar.getUrl());
+        javar.setUrl(ServerConfigs.AvatarAccessPoint+avatar.getUrl());
         javar.setHash(avatar.getHash());
         return javar;
     }

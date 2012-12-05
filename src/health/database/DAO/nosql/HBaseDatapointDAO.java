@@ -131,9 +131,10 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 
 	public int importDatapoints(HBaseDataImport importData)
 			throws ErrorCodeException {
+		HTableInterface table =null;
 		try{
 		int dataCounter = 0;
-		HTableInterface table = HBaseConfig.getTable(health_book);
+		table= HBaseConfig.getTable(health_book);
 		List<JsonDataPoints> dataPoints = importData.getData_points();
 		List<Put> putList = new ArrayList<Put>();
 		for (int i = 0; i < dataPoints.size(); i++) {
@@ -191,10 +192,12 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 		}
 		catch(NumberFormatException ex)
 		{
+			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
 		}
 		catch (IOException ex) {
+			HBaseConfig.putTable(table);
 			// TODO: handle exception
 			ex.printStackTrace();
 			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
@@ -205,10 +208,11 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 	public HBaseDataImport exportDatapoints(String streamID, Long start,
 			Long end, String blockID, HashMap<String, String> dsUnitsList,
 			SimpleDateFormat format) throws ErrorCodeException {
+		HTableInterface table=null;
 		try{
 		Date timerStart = new Date();
 		System.out.println("starting Exporting...." + timerStart);
-		HTableInterface table = HBaseConfig.getTable(health_book);
+		table= HBaseConfig.getTable(health_book);
 		Scan scan = new Scan();
 		scan.setCaching(200000);
 
@@ -302,7 +306,6 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 		System.out.println("Just After While loop...."
 				+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
 				+ "seconds");
-		HBaseConfig.putTable(table);
 		HBaseDataImport dataexport = null;
 		if (jsonDPList.size() > 0) {
 			dataexport = new HBaseDataImport();
@@ -316,13 +319,16 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 		System.out.println("Finished Exporting...."
 				+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 				+ "seconds");
+		HBaseConfig.putTable(table);
 		return dataexport;
 		}catch(IOException ex)
 		{
+			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
 		}
 		catch (NumberFormatException ex) {
+			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
 		}
@@ -384,10 +390,11 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 
 	public long delete_A_Datapoint(String streamID, long at)
 			throws ErrorCodeException {
+		HTableInterface table=null;
 		try{
 		Date timerStart = new Date();
 		System.out.println("starting Exporting...." + at);
-		HTableInterface table = HBaseConfig.getTable(health_book);
+		table = HBaseConfig.getTable(health_book);
 		Scan scan = new Scan();
 		scan.setCaching(200000);
 		// scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
@@ -424,6 +431,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 		return no_deleted;
 		}catch(IOException ex)
 		{
+			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
 		}
