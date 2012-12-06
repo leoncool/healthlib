@@ -26,7 +26,7 @@ public class GetNewUserToken {
 
     public static void main(String args[]) {
         try {
-            URL url = new URL("http://localhost:8080/healthbook/v1/"+AllConstants.api_entryPoints.api_user+"/"
+            URL url = new URL("http://146.169.35.28:55555/healthbook/v1/"+AllConstants.api_entryPoints.api_user+"/"
             		+AllConstants.api_entryPoints.api_GetToken);
             URLConnection connection = url.openConnection();
             connection.setDoOutput(true);
