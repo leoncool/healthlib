@@ -6,6 +6,7 @@ package health.database.DAO;
 
 import health.database.models.LoginToken;
 import health.database.models.UserAvatar;
+import health.database.models.UserDetails;
 import health.database.models.Users;
 import health.database.models.merge.UserInfo;
 
@@ -27,6 +28,7 @@ import org.hibernate.criterion.Restrictions;
 
 import util.AllConstants;
 import util.HibernateUtil;
+import util.ServerConfigUtil;
 
 /**
  * IC Cloud Billing System Author: Yang Li MSc Computing Science, Imperial
@@ -81,9 +83,30 @@ public class UserDAO extends BaseDAO {
         if (session.isOpen()) {
             session.close();
         }
-     
         UserInfo userinfo = new UserInfo();
         userinfo.setUser(user);
+        session = HibernateUtil.beginTransaction();
+        if(user.getUserAvatar()==null)
+        {
+        	UserAvatar avatar=new UserAvatar();
+        	UUID uuid=UUID.randomUUID();
+        	avatar.setId(uuid.toString());
+        	avatar.setUrl(ServerConfigUtil.getConfigValue(AllConstants.ServerConfigs.UndefinedAvatarLocation));
+        	avatar.setUsers(user);
+        	user.setUserAvatar(avatar);        	
+        	session.saveOrUpdate(avatar);
+       	}
+        if(user.getUserDetails()==null){
+        	UserDetails detail=new UserDetails();
+        	detail.setUsers(user);        	
+        	user.setUserDetails(detail);
+        	session.saveOrUpdate(detail);
+        	
+       	}        
+        HibernateUtil.commitTransaction();
+        if (session.isOpen()) {
+            session.close();
+        }
         userinfo.setAvatar(user.getUserAvatar());
         return userinfo;
     }

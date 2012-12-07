@@ -15,6 +15,7 @@ public interface AllConstants {
 		public static final String configsFolderPath = "AppConfigs/";
 		public static final String UserAvatarLocation = "UserAvatarLocation";
 		public static final String AvatarAccessPoint ="AvatarAccessPoint";
+		public static final String UndefinedAvatarLocation="UndefinedAvatarLocation";
 	}
 
 	public static interface api_entryPoints {
