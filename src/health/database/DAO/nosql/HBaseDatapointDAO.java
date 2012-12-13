@@ -214,7 +214,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface{
 		System.out.println("starting Exporting...." + timerStart);
 		table= HBaseConfig.getTable(health_book);
 		Scan scan = new Scan();
-		scan.setCaching(200000);
+		scan.setCaching(1000);
 
 		// scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 		// scan.setCacheBlocks(true);
