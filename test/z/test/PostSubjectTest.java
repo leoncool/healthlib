@@ -33,8 +33,8 @@ public class PostSubjectTest {
             Gson gson = new Gson();
             JsonSubject subject = new JsonSubject();
             subject.setLoginid("leoncool");
-            subject.setTitle("TestingDatabase");
-            subject.setPrivate_set("private");
+            subject.setTitle("bedroom_environment");
+            subject.setPrivate_set("public");
             System.out.println(gson.toJson(subject));
             out.write(gson.toJson(subject));
             out.close();
