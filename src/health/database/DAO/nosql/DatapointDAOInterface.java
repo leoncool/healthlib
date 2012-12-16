@@ -7,7 +7,7 @@ import health.hbase.models.HBaseDataImport;
 import server.exception.ErrorCodeException;
 
 public interface DatapointDAOInterface {
-	public int importDatapoints(HBaseDataImport importData)
+	public int importDatapointsDatapoints(HBaseDataImport importData)
 			throws ErrorCodeException;
 	public int importDatapoints(HBaseDataImport importData,
 			String newBlockName, String newBlockDecs)

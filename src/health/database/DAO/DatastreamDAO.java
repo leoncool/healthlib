@@ -143,7 +143,7 @@ public class DatastreamDAO extends BaseDAO {
 		}
 		return stream;
 	}
-	public Datastream getDatastreamByTitle(int subjectID,String streamTitle, boolean fetchDataUnits,
+	public Datastream getHealthDatastreamByTitle(int subjectID,String streamTitle, boolean fetchDataUnits,
 			boolean fetchDatablocks) throws NonUniqueResultException{
 		Datastream stream = null;
 		// stream = (Datastream) session.get(Datastream.class, StreamID);

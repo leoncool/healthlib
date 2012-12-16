@@ -4,8 +4,12 @@
  */
 package health.input.jsonmodels;
 
+import health.input.jsonmodels.singleunitstream.JsonSingleDataPoints;
+
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
 
 import device.input.jsonmodels.JsonDevice;
 
@@ -14,11 +18,13 @@ import device.input.jsonmodels.JsonDevice;
  * @author Leon
  */
 public class JsonDataImport implements Serializable {
-
+    @SerializedName(value="data_points")
     protected List<JsonDataPoints> data_points;
     protected String block_id;
     protected JsonDatastream datastream;
     protected JsonDevice device;
+    @SerializedName(value="single_unit_data_points")
+    protected List<JsonSingleDataPoints> data_points_single_list; 
     public JsonDatastream getDatastream() {
         return datastream;
     }
@@ -50,5 +56,14 @@ public class JsonDataImport implements Serializable {
     public void setDevice(JsonDevice device) {
         this.device = device;
     }
+
+	public List<JsonSingleDataPoints> getData_points_single_list() {
+		return data_points_single_list;
+	}
+
+	public void setData_points_single_list(
+			List<JsonSingleDataPoints> data_points_single_list) {
+		this.data_points_single_list = data_points_single_list;
+	}
     
 }

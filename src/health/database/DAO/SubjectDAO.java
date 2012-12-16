@@ -84,6 +84,23 @@ public class SubjectDAO extends BaseDAO {
         } finally {
         }
     }
+    public Subject findSystem_Default_Subject(String loginID) {
+        try {
+            Session session = HibernateUtil.beginTransaction();
+            Criteria criteria = session.createCriteria(Subject.class)
+                    .add(Restrictions.eq("loginID", loginID))
+                    .add(Restrictions.eq("purpose", AllConstants.HealthConts.System_Default_subject_Name));
+            Subject subject= (Subject) criteria.uniqueResult();
+            if (session.isOpen()) {
+                session.close();
+            }
+            return subject;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        } finally {
+        }
+    }
     public List<Subject> findSubjectsByLoginID(String loginID) {
         try {
             Session session = HibernateUtil.beginTransaction();
@@ -166,7 +183,7 @@ public class SubjectDAO extends BaseDAO {
         } finally {
         }
     }
-    public Subject createDefaultSubject(String loginID)
+    public Subject createDefaultHealthSubject(String loginID)
     {
     	   Session session = HibernateUtil.beginTransaction();
     	   Subject subject=new Subject();

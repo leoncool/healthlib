@@ -19,8 +19,8 @@ public interface AllConstants {
 	}
 
 	public static interface api_entryPoints {
-		public static final String default_subject = "default";
 		public static final String api_subject = "subjects";
+		public static final String api_defaultsubject="defaultsubject";
 		public static final String api_health = "health";
 		public static final String api_datastream = "datastreams";
 		public static final String api_title = "title";
@@ -120,8 +120,10 @@ public interface AllConstants {
 		public static final String unit_default_template_id_location = "default_location";
 		public static final String unit_default_template_id_ecg = "default_ecg";
 		public static final String default_health_subject_purpose = "default_health";
-		public static final String default_health_SubjectName = "default";
+		public static final String default_health_SubjectName = "default_health";
 		public static final String defaultDatastreamPurpose = "default_health";
+		
+		public static final String System_Default_subject_Name = "default_subject";
 
 	}
 
@@ -180,6 +182,8 @@ public interface AllConstants {
 		public static final String INPUT_DATE_FORMAT_ERROR = "input_date_format_error";
 		public static final String Unauthorized_Access = "unauthorized_access";
 		public static final String Unknown_StreamID = "unknown_stream_id";
+		public static final String NO_STREAM_UNIT_EXIST = "no_datastream_unit_exist";
+		public static final String MORE_THAN_ONE_DATASTREAM_UNIT = "more_than_one_datastream_unit_exist";
 		public static final String Unknown_StreamTitle = "unknown_stream_title";
 		public static final String Unknown_SubjectID = "unknown_subject_id";
 
@@ -188,6 +192,8 @@ public interface AllConstants {
 		public static final String Hibernate_Internal_Error = "hibernate_internal_error";
 		public static final String HBase_Internal_Error = "hbase_internal_error";
 		public static final String Input_Json_Format_Error = "json_input_syntax_error";
+		public static final String No_Input_Single_Datapoints = "no_input_single_datapoints";
+		public static final String No_Input_Datapoints = "no_input_datapoints";
 		public static final String Input_file_format_error = "input_file_format_error";
 		public static final String Invalid_Unit_ID = "invalid_unit_id";
 		public static final String Invalid_Datablock_ID = "invalid_datablock_id";
@@ -205,6 +211,7 @@ public interface AllConstants {
 		public static final String Not_exist_follow = "follow_not_exist";
 		public static final String Invalid_date_format = "invalid_date_input_format";
 		public static final String SYSTEM_ERROR_NO_DEFAULT_HEALTH_SUBJECT = "sys_error_no_default_subject";
+		public static final String SYSTEM_ERROR_NO_DEFAULT_SUBJECT = "sys_error_no_default_subject";
 		public static final String Cannot_find_request_avatar = "cannot_find_request_avatar";
 	}
 

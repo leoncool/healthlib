@@ -11,7 +11,7 @@ public class DeleteDatatstreamTest {
 public static void main(String args[])
 {
 	DatastreamDAO dsDao=new DatastreamDAO();
-	Datastream ds=dsDao.getDatastream("30ffa9ae-42a3-45ad-9d6c-7a39af234728", false, false);
+	Datastream ds=dsDao.getDatastream("07e4eeb5-ab4f-49d6-84b4-764db3a1f7d4", false, false);
 	dsDao.DeleteDatastream(ds);
 }
 }

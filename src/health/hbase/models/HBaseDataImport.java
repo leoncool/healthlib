@@ -18,7 +18,7 @@ public class HBaseDataImport extends JsonDataImport {
     protected String datastream_id;
     protected List<JsonDatastreamUnits> units_list;
     protected String device_id;
-
+    protected String single_Unit_ID;
     public String getDatastream_id() {
         return datastream_id;
     }
@@ -41,7 +41,15 @@ public class HBaseDataImport extends JsonDataImport {
 
     
     
-    public void setUnits_list(List<JsonDatastreamUnits> units_list) {
+    public String getSingle_Unit_ID() {
+		return single_Unit_ID;
+	}
+
+	public void setSingle_Unit_ID(String single_Unit_ID) {
+		this.single_Unit_ID = single_Unit_ID;
+	}
+
+	public void setUnits_list(List<JsonDatastreamUnits> units_list) {
         this.units_list = units_list;
     }
 

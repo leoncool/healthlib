@@ -33,7 +33,7 @@ public class HBaseConfig {
 //        config.set("hbase.zookeeper.property.clientPort", "55556");
 //        config.set("hbase.master.port", "55558");
 //        config.set("hbase.regionserver.port", "55559");
-        pool = new HTablePool(config, 5);
+        pool = new HTablePool(config, 100);
     	System.out.println("initualizeing done...");
     }
 
@@ -78,13 +78,7 @@ public class HBaseConfig {
 
     public static void putTable(HTableInterface table) throws ErrorCodeException {
         if (table != null) {
-          try {
-			table.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
-		}
+			pool.putTable(table);
         }
     }
 
