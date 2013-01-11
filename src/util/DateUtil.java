@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+
 /**
  * 
  * @author Leon
@@ -24,7 +27,7 @@ public class DateUtil {
 	public final SimpleDateFormat birthdayFormat = new SimpleDateFormat(
 			"dd/MM/yyyy");
 	public static final TimeZone UTC = TimeZone.getTimeZone("UTC");
-
+	public final String YearMonthDay_DateFormat_pattern="yyyy-MM-dd";
 	public DateUtil() {
 		millisecFormat.setTimeZone(UTC);
 		sleepFormat.setTimeZone(UTC);
@@ -43,6 +46,13 @@ public class DateUtil {
 		synchronized (format) {
 			Date d = format.parse(source);
 			return d;
+		}
+	}
+	public Date convert(String source, String format)
+			throws ParseException {
+		synchronized (format) {
+			DateTime dt = DateTime.parse(source, DateTimeFormat.forPattern(format));
+			return dt.toDate();
 		}
 	}
 	public String format(String source, SimpleDateFormat format)

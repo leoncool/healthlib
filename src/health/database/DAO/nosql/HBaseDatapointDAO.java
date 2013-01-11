@@ -632,7 +632,64 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		}
 	}
-
+	public long delete_range_Datapoint(String streamID, long start,long end)
+			throws ErrorCodeException {
+		HTableInterface table = null;
+		try {
+			Date timerStart = new Date();
+			System.out.println("starting Deleting....start:" + start+",end:"+start);
+			table = HBaseConfig.getTable(health_book);
+			Scan scan = new Scan();
+			scan.setCaching(200000);
+			// scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
+			// scan.setCacheBlocks(true);
+			FilterList filterList = new FilterList();
+			RowFilter rowFilterStreamID = new RowFilter(
+					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
+							toBytes(streamID)));
+			filterList.addFilter(rowFilterStreamID);
+			if(start>0)
+			{
+				RowFilter fowFilter_startDate = new RowFilter(
+						CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(
+								toBytes(streamID + "/" + Long.toString(start))));
+				filterList.addFilter(fowFilter_startDate);
+			}
+			
+			if(end>0)
+			{
+				RowFilter fowFilter_endDate = new RowFilter(
+						CompareFilter.CompareOp.LESS_OR_EQUAL, new BinaryComparator(
+								toBytes(streamID + "/" + Long.toString(end))));
+				filterList.addFilter(fowFilter_endDate);
+			}
+			
+			scan.setFilter(filterList);
+			ResultScanner scanner = table.getScanner(scan);
+			Iterator<Result> itr = scanner.iterator();
+			long no_deleted = 0;
+			while (itr.hasNext()) {
+				Result res = itr.next();
+				System.out.println("deleting..." + toString(res.getRow()));
+				Delete delete = new Delete(res.getRow());
+				table.delete(delete);
+				no_deleted++;
+			}
+			HBaseConfig.putTable(table);
+			HBaseDataImport dataexport = null;
+			Date timerEnd = new Date();
+			System.out.println("Finished Deleting...." + timerEnd);
+			System.out.println("Finished Deleting...."
+					+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
+					+ "seconds");
+			return no_deleted;
+		} catch (IOException ex) {
+			HBaseConfig.putTable(table);
+			ex.printStackTrace();
+			throw new ErrorCodeException(
+					AllConstants.ErrorDictionary.HBase_Internal_Error);
+		}
+	}
 	public static void main(String args[]) throws MasterNotRunningException,
 			IOException, ParseException, ErrorCodeException {
 		// DataPointDAO importDao = new DataPointDAO();

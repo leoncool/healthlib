@@ -304,6 +304,9 @@ public class DBtoJsonUtil {
 		jsummary.setDatastream_id(summary.getDstreamID());
 		jsummary.setValue(Double.toString(summary.getValue()));
 		DateUtil dateUtil = new DateUtil();
+//		System.out.println("debug converting:"+summary.getDate());
+//		System.out.println("debug converting2:"+dateUtil.format(summary.getDate(),
+//				dateUtil.YearMonthDay_DateFormat));
 		jsummary.setDate(dateUtil.format(summary.getDate(),
 				dateUtil.YearMonthDay_DateFormat));
 		jsummary.setDate_long(Long.toString(summary.getDate().getTime()));

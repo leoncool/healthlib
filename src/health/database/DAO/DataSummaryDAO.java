@@ -25,6 +25,7 @@ public class DataSummaryDAO extends BaseDAO {
 		Criteria criteria = session.createCriteria(DataSummary.class);
 		criteria.add(Restrictions.eq("dstreamID", StreamID));
 		criteria.addOrder(Order.asc("date"));
+//		System.out.println("debug date:"+date);
 		if(date!=null){
 		criteria.add(Restrictions.eq("date", date));
 		}
@@ -81,7 +82,6 @@ public class DataSummaryDAO extends BaseDAO {
 			}
 			Session session = HibernateUtil.beginTransaction();
 			if (existSummryList.size() == 1) {
-
 				session.update(DataSummaryToPut);
 			} else {
 				session.save(DataSummaryToPut);
