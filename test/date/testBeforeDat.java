@@ -15,5 +15,8 @@ public static void main(String args[])
 	else{
 		System.out.println("After");
 	}
+	Date testDate=new Date();
+	testDate.setTime(1358121540000L);
+	System.out.println(testDate.toString());
 }
 }
