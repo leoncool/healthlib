@@ -32,7 +32,7 @@ public class PostDatastreamTest {
 			// "d98eb956-7236-45ab-ac15-dec9c370bca7";
 			String parameter = "";
 			URL url = new URL(
-					"http://localhost:8080/healthbook/v1/"+api_entryPoints.api_defaultsubject+
+					"http://146.169.35.28:55555/healthbook/v1/"+api_entryPoints.api_defaultsubject+
 					"/datastreams");
 							//+ "?" + parameter);
 			URLConnection connection = url.openConnection();
@@ -45,7 +45,7 @@ public class PostDatastreamTest {
 					connection.getOutputStream());
 			Gson gson = new Gson();
 			JsonDatastreamUnits unit1 = new JsonDatastreamUnits("physical",
-					"C", "temperature", "float");
+					"", "Lightness", "float");
 //			JsonDatastreamUnits unit2 = new JsonDatastreamUnits("phisical", "",
 //					"lightness", "float");
 			// JsonDatastreamUnits unit3 = new JsonDatastreamUnits("elec", "uV",
@@ -67,7 +67,7 @@ public class PostDatastreamTest {
 			// unitList.add(unit6);
 			JsonDatastream jdStream = new JsonDatastream();
 			 jdStream.setUnits_list(unitList);
-			jdStream.setTitle("London Home Environment");
+			jdStream.setTitle("London Home Lightness");
 			System.out.println(gson.toJson(jdStream));
 			out.write(gson.toJson(jdStream));
 			// out.write("{\"title\":\"nte123111\"}");

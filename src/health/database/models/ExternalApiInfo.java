@@ -5,43 +5,45 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the external_api_info database table.
  * 
  */
 @Entity
-@Table(name="external_api_info")
+@Table(name = "external_api_info")
 public class ExternalApiInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(name="access_token")
+	@Column(name = "access_token")
 	private String accessToken;
 
 	private String device;
 
-	@Column(name="ext_id")
+	@Column(name = "ext_id")
 	private String extId;
 
 	private String loginID;
 
-	@Column(name="temp_token")
+	@Column(name = "temp_token")
 	private String tempToken;
 
-	@Column(name="temp_token_verifier")
+	@Column(name = "temp_token_verifier")
 	private String tempTokenVerifier;
 
-	@Column(name="token_secrect")
+	@Column(name = "token_secrect")
 	private String tokenSecrect;
-	@Column(name="lateDataUpdate")
-    @Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "lateDataUpdate")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lateDataUpdate;
-	@Column(name="retrieveDays")
+	@Column(name = "retrieveDays")
 	private int retrieveDays;
+	@Column(name = "apiCounter")
+	private int apiCounter;
+
 	public ExternalApiInfo() {
 	}
 
@@ -109,10 +111,10 @@ public class ExternalApiInfo implements Serializable {
 		this.tokenSecrect = tokenSecrect;
 	}
 
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	public Date getLateDataUpdate() {
 		return lateDataUpdate;
 	}
@@ -129,5 +131,12 @@ public class ExternalApiInfo implements Serializable {
 		this.retrieveDays = retrieveDays;
 	}
 
+	public int getApiCounter() {
+		return apiCounter;
+	}
+
+	public void setApiCounter(int apiCounter) {
+		this.apiCounter = apiCounter;
+	}
 
 }

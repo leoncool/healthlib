@@ -11,6 +11,7 @@ import health.database.models.Debug;
 import health.database.models.DeviceBinding;
 import health.database.models.DeviceTemplate;
 import health.database.models.ExternalApiInfo;
+import health.database.models.FitbitLog;
 import health.database.models.Follower;
 import health.database.models.JobsTable;
 import health.database.models.LoginToken;
@@ -115,6 +116,7 @@ public class HibernateUtil {
             config.addAnnotatedClass(ExternalApiInfo.class);
             config.addAnnotatedClass(LoginToken.class);
             config.addAnnotatedClass(Config.class);
+            config.addAnnotatedClass(FitbitLog.class);
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);
 

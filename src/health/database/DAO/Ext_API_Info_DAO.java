@@ -7,11 +7,13 @@ import java.util.List;
 import health.database.models.DataSummary;
 import health.database.models.Datastream;
 import health.database.models.ExternalApiInfo;
+import health.database.models.FitbitLog;
 import health.database.models.Subject;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import util.HibernateUtil;
@@ -98,6 +100,7 @@ public class Ext_API_Info_DAO extends BaseDAO {
     }	
 	public ExternalApiInfo create_A_ExternalAPIInfo(ExternalApiInfo apiinfo) {
         try {
+        	apiinfo.setApiCounter(0);
             Session session = HibernateUtil.beginTransaction();
             session.save(apiinfo);
             HibernateUtil.commitTransaction();
@@ -114,9 +117,77 @@ public class Ext_API_Info_DAO extends BaseDAO {
         } finally {
         }
     }	
+	public FitbitLog create_FitbitLog(FitbitLog log)
+	{
+		 Session session = HibernateUtil.beginTransaction();
+         session.save(log);
+         HibernateUtil.commitTransaction();
+         if(log.getId()==0)
+         {
+         	return null;
+         }
+         else{
+         	return log;
+         }
+	}
+	public FitbitLog update_FitbitLog(FitbitLog log)
+	{
+		 Session session = HibernateUtil.beginTransaction();
+         session.update(log);
+         HibernateUtil.commitTransaction();
+         if(log.getId()==0)
+         {
+         	return null;
+         }
+         else{
+         	return log;
+         }
+	}
+	public FitbitLog getFitbitFetch(String loginID,Date date)
+	{
+		FitbitLog log=null;
+		// stream = (Datastream) session.get(Datastream.class, StreamID);
+		Session session = HibernateUtil.beginTransaction();
+		Criteria criteria = session.createCriteria(FitbitLog.class);
+		criteria.add(Restrictions.eq("loginID", loginID));
+		criteria.add(Restrictions.eq("date", date));
+	//	criteria.add(Restrictions.eq("extId", ext_id));		
+		log=(FitbitLog) criteria.uniqueResult();
+		HibernateUtil.commitTransaction();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return log;
+	}
+	public FitbitLog getLastFetchFitbitLog(String loginID)
+	{
+		FitbitLog log=null;
+		// stream = (Datastream) session.get(Datastream.class, StreamID);
+		Session session = HibernateUtil.beginTransaction();
+		Criteria criteria = session.createCriteria(FitbitLog.class);
+		criteria.add(Restrictions.eq("loginID", loginID));
+		criteria.addOrder(Order.desc("date"));
+		criteria.setMaxResults(1);
+//		criteria.add(Restrictions.eq("date", date));
+	//	criteria.add(Restrictions.eq("extId", ext_id));		
+		log=(FitbitLog) criteria.uniqueResult();
+		HibernateUtil.commitTransaction();
+		if (session.isOpen()) {
+			session.close();
+		}
+		return log;
+	}
 	public static void main(String args[])
 	{
 		Ext_API_Info_DAO dao=new Ext_API_Info_DAO();
-		System.out.println(dao.getExt_API_INFO_List("leoncool", "fitbit").size());
+//		System.out.println(dao.getExt_API_INFO_List("leoncool", "fitbit").size());
+		FitbitLog log=dao.getLastFetchFitbitLog("leoncool");
+		if(log==null)
+		{
+			System.out.println("null");
+		}
+		else{
+			System.out.println(log.getId());
+		}
 	}
 }
