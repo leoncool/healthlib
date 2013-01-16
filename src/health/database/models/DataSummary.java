@@ -34,7 +34,7 @@ public class DataSummary implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated")
 	private Date updated;
-    
+    private String loginID;
 	public DataSummary() {
 	}
 
@@ -100,6 +100,14 @@ public class DataSummary implements Serializable {
 
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	public String getLoginID() {
+		return loginID;
+	}
+
+	public void setLoginID(String loginID) {
+		this.loginID = loginID;
 	}
 
 }

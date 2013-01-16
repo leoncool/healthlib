@@ -20,6 +20,8 @@ public class DateUtil {
 
 	public final SimpleDateFormat millisecFormat = new SimpleDateFormat(
 			"H:m:s.S dd/MM/yy");
+	public final SimpleDateFormat isoformat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS");
 	public final SimpleDateFormat sleepFormat = new SimpleDateFormat(
 			"H:m dd.MM.yy");
 	public final SimpleDateFormat YearMonthDay_DateFormat = new SimpleDateFormat(

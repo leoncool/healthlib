@@ -11,6 +11,7 @@ import health.database.models.DatastreamBlocks;
 import health.database.models.DatastreamUnits;
 import health.database.models.DeviceBinding;
 import health.database.models.Follower;
+import health.database.models.SleepDataSummary;
 import health.database.models.Subject;
 import health.database.models.UserAvatar;
 import health.database.models.Users;
@@ -20,6 +21,7 @@ import health.input.jsonmodels.JsonDatastream;
 import health.input.jsonmodels.JsonDatastreamBlock;
 import health.input.jsonmodels.JsonDatastreamUnits;
 import health.input.jsonmodels.JsonFollower;
+import health.input.jsonmodels.JsonSleepDataSummary;
 import health.input.jsonmodels.JsonSubject;
 import health.input.jsonmodels.JsonUser;
 import health.input.jsonmodels.JsonUserAvatar;
@@ -315,5 +317,33 @@ public class DBtoJsonUtil {
 		jsummary.setUnit_id(summary.getUnit_id());
 		jsummary.setUpdate_time(Long.toString(summary.getUpdated().getTime()));
 		return jsummary;
+	}
+	public JsonSleepDataSummary convertSleepDataSummary(SleepDataSummary summary)
+			throws ParseException {
+		JsonSleepDataSummary jsummary = new JsonSleepDataSummary();
+		jsummary.setDatastream_id(summary.getDstreamID());
+		DateUtil dateUtil = new DateUtil();
+		jsummary.setDate(dateUtil.format(summary.getDate(),
+				dateUtil.YearMonthDay_DateFormat));
+		jsummary.setDate_long(Long.toString(summary.getDate().getTime()));
+		jsummary.setTitle("sleep");
+		jsummary.setSleep_start_time(dateUtil.format(summary.getStartTime(),
+				dateUtil.isoformat));
+		jsummary.setSleep_end_time(dateUtil.format(summary.getEndtime(),
+				dateUtil.isoformat));
+		jsummary.setSleep_start_long(summary.getStartTime().getTime());
+		jsummary.setSleep_end_long(summary.getEndtime().getTime());
+		jsummary.setAwakened_count(summary.getAwakeningCount());
+		jsummary.setEfficiency(summary.getEfficiency());
+		if(summary.getLoginID()!=null){
+		jsummary.setLoginid(summary.getLoginID());
+		}
+		jsummary.setMinutes_afterwakeup(summary.getMinutesAfterWakeup());
+		jsummary.setMinutes_asleep(summary.getMinutesAsleep());
+		jsummary.setMinutes_awake(summary.getMinutesAwake());
+		jsummary.setMinutes_inbed(summary.getInBedMinutes());
+		jsummary.setMinutes_tofallasleep(summary.getMinutesToFallAsleep());
+		jsummary.setUpdate_time(Long.toString(summary.getUpdated().getTime()));
+			return jsummary;
 	}
 }
