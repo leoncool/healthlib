@@ -289,23 +289,23 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			// scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 			// scan.setCacheBlocks(true);
 			FilterList filterList = new FilterList();
-			RowFilter rowFilterStreamID = new RowFilter(
-					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
-							toBytes(streamID)));
-			filterList.addFilter(rowFilterStreamID);
 			if (start != null && start != 0) {
-				RowFilter fowFilter_startDate = new RowFilter(
-						CompareFilter.CompareOp.GREATER_OR_EQUAL,
-						new BinaryComparator(toBytes(streamID + "/"
-								+ Long.toString(start))));
-				filterList.addFilter(fowFilter_startDate);
+//				RowFilter fowFilter_startDate = new RowFilter(
+//						CompareFilter.CompareOp.GREATER_OR_EQUAL,
+//						new BinaryComparator(toBytes(streamID + "/"
+//								+ Long.toString(start))));
+//				filterList.addFilter(fowFilter_startDate);
+				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 			}
 			if (end != null && end != 0) {
-				RowFilter fowFilter_endDate = new RowFilter(
-						CompareFilter.CompareOp.LESS_OR_EQUAL,
-						new BinaryComparator(toBytes(streamID + "/"
-								+ Long.toString(end))));
-				filterList.addFilter(fowFilter_endDate);
+				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
+			}
+			if((start == null || start == 0)&&(end==null ||end == 0))
+			{
+				RowFilter rowFilterStreamID = new RowFilter(
+						CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
+								toBytes(streamID)));
+				filterList.addFilter(rowFilterStreamID);
 			}
 			if (blockID != null
 					&& !blockID.equalsIgnoreCase(str_unassignBlockID)) {
@@ -389,7 +389,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			System.out.println("Finished Exporting...."
 					+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
-			HBaseConfig.putTable(table);
+			scanner.close();
+			HBaseConfig.putTable(table);			
 			return dataexport;
 		} catch (IOException ex) {
 			HBaseConfig.putTable(table);
@@ -415,27 +416,28 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(1000);
-
-			// scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
+//			scan.setBatch(1000);
+			
 			// scan.setCacheBlocks(true);
 			FilterList filterList = new FilterList();
-			RowFilter rowFilterStreamID = new RowFilter(
-					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
-							toBytes(streamID)));
-			filterList.addFilter(rowFilterStreamID);
+		
 			if (start != null && start != 0) {
-				RowFilter fowFilter_startDate = new RowFilter(
-						CompareFilter.CompareOp.GREATER_OR_EQUAL,
-						new BinaryComparator(toBytes(streamID + "/"
-								+ Long.toString(start))));
-				filterList.addFilter(fowFilter_startDate);
+//				RowFilter fowFilter_startDate = new RowFilter(
+//						CompareFilter.CompareOp.GREATER_OR_EQUAL,
+//						new BinaryComparator(toBytes(streamID + "/"
+//								+ Long.toString(start))));
+//				filterList.addFilter(fowFilter_startDate);
+				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 			}
 			if (end != null && end != 0) {
-				RowFilter fowFilter_endDate = new RowFilter(
-						CompareFilter.CompareOp.LESS_OR_EQUAL,
-						new BinaryComparator(toBytes(streamID + "/"
-								+ Long.toString(end))));
-				filterList.addFilter(fowFilter_endDate);
+				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
+			}
+			if((start == null || start == 0)&&(end==null ||end == 0))
+			{
+				RowFilter rowFilterStreamID = new RowFilter(
+						CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
+								toBytes(streamID)));
+				filterList.addFilter(rowFilterStreamID);
 			}
 			if (blockID != null
 					&& !blockID.equalsIgnoreCase(str_unassignBlockID)) {
@@ -465,9 +467,9 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			int counter = 0;
 			while (itr.hasNext()) {
 				counter++;
-				// if (counter > max) {
-				// continue;
-				// }
+				 if (counter > 5000) {
+				 continue;
+				 }
 				Result res = itr.next();
 				JsonSingleDataPoints datapoint = new JsonSingleDataPoints();
 				if (res.getValue(VALUE_COL, toBytes(unitID)) != null) {
@@ -499,9 +501,9 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				}
 				jsonDPList.add(datapoint);
 			}
-			System.out.println("Just After While loop...."
+			System.out.println("SingleUnit, Just After While loop...."
 					+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
-					+ "seconds");
+					+ "seconds"+",number of records:"+counter);
 			HBaseDataImport dataexport = null;
 			if (jsonDPList.size() > 0) {
 				dataexport = new HBaseDataImport();
@@ -515,8 +517,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			System.out.println("Finished Exporting...."
 					+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
+			scanner.close();			
 			HBaseConfig.putTable(table);
-			
 			return dataexport;
 		} catch (IOException ex) {
 			HBaseConfig.putTable(table);

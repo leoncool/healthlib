@@ -79,7 +79,15 @@ public class HBaseConfig {
 
     public static void putTable(HTableInterface table) throws ErrorCodeException {
         if (table != null) {
-			pool.putTable(table);
+        	try {
+				table.close();
+				pool.putTable(table);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				  throw new ErrorCodeException(AllConstants.ErrorDictionary.HBase_Internal_Error);
+			}
+		
         }
     }
 
