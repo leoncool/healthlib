@@ -258,15 +258,16 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			
 			table.put(putList);
 			table.flushCommits();
-			HBaseConfig.putTable(table);
+			table.close();
+//			HBaseConfig.putTable(table);
 			return dataCounter;
 		} catch (NumberFormatException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		} catch (IOException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			// TODO: handle exception
 			ex.printStackTrace();
 			throw new ErrorCodeException(
@@ -278,11 +279,11 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 	public HBaseDataImport exportDatapoints(String streamID, Long start,
 			Long end, String blockID, HashMap<String, String> dsUnitsList,
 			SimpleDateFormat format) throws ErrorCodeException {
-		HTableInterface table = null;
+	
 		try {
+			HTableInterface table = HBaseConfig.getTable(health_book);
 			Date timerStart = new Date();
-			System.out.println("starting Exporting...." + timerStart);
-			table = HBaseConfig.getTable(health_book);
+			System.out.println("starting Exporting...." + timerStart); 
 			Scan scan = new Scan();
 			scan.setCaching(1000);
 
@@ -390,15 +391,16 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
 			scanner.close();
-			HBaseConfig.putTable(table);			
+			table.close();
+//			HBaseConfig.putTable(table);			
 			return dataexport;
 		} catch (IOException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		} catch (NumberFormatException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
@@ -518,15 +520,16 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
 			scanner.close();			
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
+			table.close();
 			return dataexport;
 		} catch (IOException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		} catch (NumberFormatException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
@@ -619,7 +622,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				table.delete(delete);
 				no_deleted++;
 			}
-			HBaseConfig.putTable(table);
+			table.close();
+//			HBaseConfig.putTable(table);
 			HBaseDataImport dataexport = null;
 			Date timerEnd = new Date();
 			System.out.println("Finished Deleting...." + timerEnd);
@@ -628,7 +632,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					+ "seconds");
 			return no_deleted;
 		} catch (IOException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
@@ -677,7 +681,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				table.delete(delete);
 				no_deleted++;
 			}
-			HBaseConfig.putTable(table);
+			table.close();
+//			HBaseConfig.putTable(table);
 			HBaseDataImport dataexport = null;
 			Date timerEnd = new Date();
 			System.out.println("Finished Deleting...." + timerEnd);
@@ -686,7 +691,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					+ "seconds");
 			return no_deleted;
 		} catch (IOException ex) {
-			HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
