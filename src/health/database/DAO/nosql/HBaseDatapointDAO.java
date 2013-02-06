@@ -67,17 +67,15 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 
 	// create 'hb','p','v','vt'
 	public HBaseDatapointDAO() {
-		HBaseConfig hbaseconfig = new HBaseConfig();
-		System.out.println("initualizeing......new HBaseConfig();..");
-		Configuration config = hbaseconfig.getConfig();
-		System.out.println("initualizeing......getConfig..");
-		// HBaseAdmin admin = new HBaseAdmin(config);
-		// System.out.println("initualizeing......admin..");
-		// if (!admin.tableExists(health_book)) {
-		// System.out.println("initualizeing......createTable..");
-		// createTable();
-		// }
-		System.out.println("initualizeing......DONE!..");
+
+//		System.out.println("getinConfig..");
+//		// HBaseAdmin admin = new HBaseAdmin(config);
+//		// System.out.println("initualizeing......admin..");
+//		// if (!admin.tableExists(health_book)) {
+//		// System.out.println("initualizeing......createTable..");
+//		// createTable();
+//		// }
+//		System.out.println("initualizeing......DONE!..");
 	}
 
 	public void testTable() throws ErrorCodeException {

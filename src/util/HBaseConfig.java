@@ -16,25 +16,31 @@ public class HBaseConfig {
 //    private static ConfigManager cm = ConfigManager.getInstance();
     private static Configuration config=null;
     private static HTablePool pool = null;
-
+    
     public HBaseConfig() {
     	if(config==null)
     	{
     		config = HBaseConfiguration.create();
     	}
+    	if(pool==null)
+    	{
         initualize();
+    	}
         // config.set("hbase.master", "146.169.35.29:60000");
     }
 
     public static void initualize() {
     	System.out.println("initualizeing...");
 //       config.set("hbase.zookeeper.quorum", "192.168.0.4");
-    	
+    	if(config==null)
+    	{
+    		config = HBaseConfiguration.create();
+    	}
         config.set("hbase.zookeeper.quorum", ServerConfigUtil.getConfigValue("hbase.zookeeper.quorum"));
 //        config.set("hbase.zookeeper.property.clientPort", "55556");
 //        config.set("hbase.master.port", "55558");
 //        config.set("hbase.regionserver.port", "55559");
-        pool = new HTablePool(config, 100);
+        pool = new HTablePool(config, 10);
     	System.out.println("initualizeing done...");
     }
 
@@ -74,7 +80,6 @@ public class HBaseConfig {
         } else {
             return table;
         }
-
     }
 
     public static void putTable(HTableInterface table) throws ErrorCodeException {
@@ -100,4 +105,5 @@ public class HBaseConfig {
             ex.printStackTrace();
         }
     }
+    
 }

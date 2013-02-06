@@ -137,7 +137,6 @@ public class DatastreamDAO extends BaseDAO {
 		}
 		stream = (Datastream) criteria.add(Restrictions.idEq(StreamID))
 				.uniqueResult();
-		HibernateUtil.commitTransaction();
 		if (session.isOpen()) {
 			session.close();
 		}
@@ -159,7 +158,6 @@ public class DatastreamDAO extends BaseDAO {
 			criteria.setFetchMode("datastreamBlocksList", FetchMode.JOIN);
 		}
 		stream = (Datastream) criteria.uniqueResult();
-		HibernateUtil.commitTransaction();
 		if (session.isOpen()) {
 			session.close();
 		}
