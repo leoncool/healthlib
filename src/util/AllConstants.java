@@ -32,6 +32,8 @@ public interface AllConstants {
 		public static final String api_devicebinding = "devicebinding";
 		public static final String api_user = "users";
 		public static final String api_myaccount = "myaccount";
+		public static final String api_lifestyle = "lifestyle";
+		public static final String api_location = "location";
 		public static final String api_register = "register";
 		public static final String api_avatar = "avatar";
 		public static final String api_GetToken = "gettoken";

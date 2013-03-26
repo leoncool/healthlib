@@ -24,6 +24,8 @@ public class DateUtil {
 			"yyyy-MM-dd'T'HH:mm:ss.SSS");
 	public final SimpleDateFormat sleepFormat = new SimpleDateFormat(
 			"H:m dd.MM.yy");
+    public final SimpleDateFormat utcFormat = new SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss'Z'");
 	public final SimpleDateFormat YearMonthDay_DateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd");
 	public final SimpleDateFormat birthdayFormat = new SimpleDateFormat(
