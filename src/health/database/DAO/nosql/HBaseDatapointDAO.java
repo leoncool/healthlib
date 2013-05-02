@@ -358,7 +358,16 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				} else {
 					// Date date=new Date();
 					// date.setTime(Long.parseLong(getTimefromRowKey(res)));
-					datapoint.setAt(format.format(getTimefromRowKey(res)));
+					DateUtil dateUtil=new DateUtil();
+					Date date=new Date();
+					date.setTime(Long.parseLong(getTimefromRowKey(res)));
+					try{
+					datapoint.setAt(dateUtil.format(date, dateUtil.millisecFormat));
+					}catch(Exception ex)
+					{
+						throw new ErrorCodeException(
+								AllConstants.ErrorDictionary.HBase_Internal_Error);
+					}
 				}
 				if (counter <= 1) {
 					// System.out.println(counter+",First Date from Export:"+Long.parseLong(getTimefromRowKey(res)));

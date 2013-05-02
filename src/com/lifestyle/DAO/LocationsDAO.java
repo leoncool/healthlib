@@ -66,7 +66,8 @@ public class LocationsDAO {
     }
 
     public static void main(String args[]) {
-        Locationlogs log = new Locationlogs("leoncool", new Date(), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+   
+//        Locationlogs log = new Locationlogs("leoncool", new Date(), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 //        Locationlogs log=new Locationlogs();
 //        log.setUserID("leoncool");
 //        log.setAccuracy(0.0);
@@ -76,6 +77,6 @@ public class LocationsDAO {
 //        log.setLon(0.0);
 //        log.setSpeed(0.0);
         LocationsDAO dao = new LocationsDAO();
-        dao.putLog(log);
+//        dao.putLog(log);
     }
 }

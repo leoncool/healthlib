@@ -15,6 +15,7 @@ public class JsonDataPoints {
     protected String at;
     protected List<JsonDataValues> value_list;
     protected String timetag;
+    protected String at_str;
     
     public String getTimetag() {
         return timetag;
@@ -39,4 +40,13 @@ public class JsonDataPoints {
     public void setValue_list(List<JsonDataValues> value_list) {
         this.value_list = value_list;
     }
+
+	public String getAt_str() {
+		return at_str;
+	}
+
+	public void setAt_str(String at_str) {
+		this.at_str = at_str;
+	}
+    
 }

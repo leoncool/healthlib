@@ -28,10 +28,9 @@ public class Locationlogs implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Basic(optional = false)
     @Column(name = "userID")
     private String userID;
@@ -61,12 +60,12 @@ public class Locationlogs implements Serializable {
     public Locationlogs() {
     }
 
-    public Locationlogs(Integer id) {
+    public Locationlogs(String id) {
         this.id = id;
     }
 
-    public Locationlogs(String userID, Date datetime,double lat, double lon, double elevation, double accuracy, double bearing, double speed) {
-        this.id = null;
+    public Locationlogs(String id,String userID, Date datetime,double lat, double lon, double elevation, double accuracy, double bearing, double speed) {
+        this.id = id;
         this.userID = userID;
         this.lat = lat;
         this.lon = lon;
@@ -77,11 +76,11 @@ public class Locationlogs implements Serializable {
         this.datetime=datetime;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

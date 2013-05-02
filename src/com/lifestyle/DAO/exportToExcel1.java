@@ -31,7 +31,7 @@ public class exportToExcel1 {
         firstRow.createCell(1).setCellValue("lat");
         firstRow.createCell(2).setCellValue("lon");
         firstRow.createCell(3).setCellValue("accuracy");
-        LocationsDAO locDao = new LocationsDAO();
+        LocationLogDAO locDao = new LocationLogDAO();
         List<Locationlogs> loclogList = locDao.getLocatioonLogs("leoncool", null, null);
         int rowCounter = 1;
         for (Locationlogs log : loclogList) {
