@@ -50,14 +50,14 @@ public class exportFitbitToExcel {
 		System.out.println("DateRequest:" + date);
 		LocalDate localDate = LocalDate.fromDateFields(date);
 		
-		
+		String liguoStringID="8005b15c-15af-49bb-9429-b2d19a436e21";
 		String leoncoolStringID="aa30b3a2-78c1-49b9-98a9-93fa5c46bbd4";
 		String dongdongStreamID = "1bfedead-2b5c-420f-b3a5-7a542be19292";
 		DatastreamDAO dstreamDao = new DatastreamDAO();
 		DBtoJsonUtil dbtoJUtil = new DBtoJsonUtil();
 		Datastream datastream = null;
 		try {
-			datastream = dstreamDao.getHealthDatastreamByTitle(644,
+			datastream = dstreamDao.getHealthDatastreamByTitle(646,
 					"steps", true, false);
 		} catch (NonUniqueResultException ex) {
 			ex.printStackTrace();
@@ -97,7 +97,7 @@ public class exportFitbitToExcel {
 					datastream.getDatastreamUnitsList().get(0).getUnitID(),
 					datastream.getDatastreamUnitsList().get(0).getUnitID());
 
-			hbaseexport = diDao.exportDatapoints(leoncoolStringID, start, end,
+			hbaseexport = diDao.exportDatapoints(datastream.getStreamId(), start, end,
 					null, mapUnits, null);
 
 			
@@ -146,12 +146,12 @@ public class exportFitbitToExcel {
 					row=sheet.getRow(i-1);
 				}
 				row.createCell(cellCounter).setCellValue(mapMatrix.get(i));
-				System.out.println(i + "," + mapMatrix.get(i));
+//				System.out.println(i + "," + mapMatrix.get(i));
 			}
 			cellCounter++;
 		}
 
-		FileOutputStream fileOut = new FileOutputStream("F:/FitbitWorkbook_leon.xls");
+		FileOutputStream fileOut = new FileOutputStream("F:/FitbitWorkbook_liguo.xls");
 		wb.write(fileOut);
 		fileOut.close();
 	}
