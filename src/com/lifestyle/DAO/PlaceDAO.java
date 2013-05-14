@@ -9,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -132,8 +134,8 @@ public class PlaceDAO {
 
                 if (distance > distanceThreh) {
                     long timeDiff = Math.abs((logList.get(j).getDatetime().getTime() - logList.get(i).getDatetime().getTime()) / 1000);
-                    System.out.println("distance:" + distance);
-                    System.out.println("timeDiff:" + timeDiff);
+//                    System.out.println("distance:" + distance);
+//                    System.out.println("timeDiff:" + timeDiff);
                     if (timeDiff > timeThreh) {
                         double meanLat = ComputMeanLatFromList(logList, i, j);
                         double meanLon = ComputMeanLonFromList(logList, i, j);
@@ -142,7 +144,7 @@ public class PlaceDAO {
                             UUID uuid = UUID.randomUUID();
                             LocationPlaces newPlace = new LocationPlaces(meanLat, meanLon, distanceThreh, "name", "leoncool");
                             allPlaces.add(newPlace);
-                            System.out.println("newPlace:" + newPlace.getLat() + "," + newPlace.getLon() + "," + logList.get(j).getDatetime());
+//                            System.out.println("newPlace:" + newPlace.getLat() + "," + newPlace.getLon() + "," + logList.get(j).getDatetime());
                         }
                     }
                     i = j;
@@ -463,7 +465,6 @@ public class PlaceDAO {
                     continue;
                 }
             }
-
             LocalDate date = LocalDate.fromDateFields(log.getDatetime());
             if (datePlaceHistoryMap.get(date) == null) {
                 HashMap<LocalTime, HashMap<String, Integer>> timeMatrix = new HashMap<LocalTime, HashMap<String, Integer>>();
@@ -476,6 +477,11 @@ public class PlaceDAO {
             HashMap<LocalTime, HashMap<String, Integer>> timeMatrix = datePlaceHistoryMap.get(date);
 //            System.out.println(log.getDatetime() + "----" + LocalTime.fromDateFields(log.getDatetime()).getHourOfDay());
             HashMap<String, Integer> frequencyMap = timeMatrix.get(LocalTime.fromDateFields(log.getDatetime()).getHourOfDay());
+            if(frequencyMap==null)
+            {
+            	System.out.println("ERRORRRRRRR");
+            }
+            
             if (frequencyMap.get(eventName) == null) {
                 frequencyMap.put(eventName, 1);
             } else {
@@ -513,15 +519,82 @@ public class PlaceDAO {
 
 
     }
+    public static HashMap<Integer, Integer> timeStateMatrix(LocalDate date) throws FileNotFoundException, IOException, ParseException {
+        List<LocationPlaces> allPlaces = updatePlaces();
+        LocationLogDAO logDao = new LocationLogDAO();
+        System.out.println("date:"+date+"date.toDateTimeAtStartOfDay():"+date.toDateTimeAtStartOfDay()+","+date.plusDays(1).toDateTimeAtStartOfDay());
+        List<Locationlogs> logList = logDao.getLocatioonLogs("leoncool", date.toDateTimeAtStartOfDay().toDate(), date.plusDays(1).toDateTimeAtStartOfDay().toDate());
+        HashMap<Integer, List<String>> datePlaceHistoryMap = new HashMap<Integer, List<String>>();
+//        LocalTime tempTime=date.toDateTimeAtStartOfDay().toLocalTime();
+        for(int i=1;i<25;i++)
+        {
+        	List<String> initial=new ArrayList<String>();
+        	datePlaceHistoryMap.put(i,initial);
+//        	tempTime=tempTime.plusHours(1);        	       	
+        }
+        HashMap<Integer, Integer> mapMatrix = new HashMap<Integer, Integer>();
+		for (int i = 1; i < 25; i++) {
+			mapMatrix.put(i, 0);
+		}
+        for (Locationlogs log : logList) {
+            boolean existingPlace = false;
+            String eventName = "other";
+            for (LocationPlaces place : allPlaces) {
+                if (distFrom(place.getLat(), place.getLon(), log.getLat(), log.getLon()) <= place.getRadius()) {
+                    existingPlace = true;
+                    eventName = place.getCategory();
+                    continue;
+                }
+            }//1 – home, 2 – work, 3 – elsewhere, 0 – no signal, NaN – phone is off
+            if(eventName.equalsIgnoreCase("home"))
+            {
+            	eventName="1";
+            }
+            else if(eventName.equalsIgnoreCase("work"))
+            {
+            	eventName="2";
+            }
+            else{
+            	eventName="3";
+            }
+            int hourofday=LocalTime.fromDateFields(log.getDatetime()).getHourOfDay();
+            List<String> previous=datePlaceHistoryMap.get(hourofday+1);
+            previous.add(eventName);
+            datePlaceHistoryMap.put(hourofday, previous);
+//            System.out.println("time:"+hourofday+",event:"+eventName);
+        }
+		for (int i = 1; i < 25; i++) {
+			Set<String> unique = new HashSet<String>(datePlaceHistoryMap.get(i));
+			String topFrequenceItem="0";
+			int topCount=0;
+			for (String key : unique) {
+				if(Collections.frequency(datePlaceHistoryMap.get(i), key)>topCount)
+				{
+					topFrequenceItem=key;
+					topCount=Collections.frequency(datePlaceHistoryMap.get(i), key);
+				}
+//			    System.out.println(key + ": " + Collections.frequency(datePlaceHistoryMap.get(i), key));
+			}
+//			System.out.println("i:"+i+","+topFrequenceItem);
+			if(topCount>0){
+			mapMatrix.put(i, Integer.parseInt(topFrequenceItem));
+			}
+		}
+		return mapMatrix;
+       
 
+    }
     public static void main(String args[]) throws FileNotFoundException, IOException, ParseException {
 //        System.out.println(distFrom(51.499001, -0.176904, 51.494379, -0.188742));
 //        LocationPlaces place = new LocationPlaces("1", 0.0, 0.0, 0.2, "name", "user");
 //        PlaceDAO placeDao = new PlaceDAO();
 //        toXml_Log_File();
 //        exportPlaceLogToExcel();
-//        timeStateMatrix();
+
+//    	timeStateMatrix();
 //        exportPlaceLogToTxt();
 //        toBIDE_Pattern();
+    	LocalDate date=LocalDate.parse("2013-04-23");
+    	timeStateMatrix(date);
     }
 }

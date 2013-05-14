@@ -31,6 +31,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
+import com.lifestyle.models.LocationPlaces;
 import com.lifestyle.models.Locationlogs;
 
 public class HibernateUtil {
@@ -122,6 +123,9 @@ public class HibernateUtil {
             config.addAnnotatedClass(FitbitLog.class);
             config.addAnnotatedClass(SleepDataSummary.class);
             config.addAnnotatedClass(Locationlogs.class);
+            config.addAnnotatedClass(LocationPlaces.class);
+            
+            
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);
 
