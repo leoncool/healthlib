@@ -12,7 +12,7 @@ public static void main(String args[])
 {
 	
 	SubjectDAO subDao=new SubjectDAO();
-	Subject subject=subDao.getSubjectByID(634);
+	Subject subject=subDao.getSubjectByID(662);
 	subDao.deleteSubjectByID(subject);
 }
 }

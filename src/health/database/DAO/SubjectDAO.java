@@ -185,6 +185,7 @@ public class SubjectDAO extends BaseDAO {
     }
     public Subject createDefaultHealthSubject(String loginID)
     {
+    	
     	   Session session = HibernateUtil.beginTransaction();
     	   Subject subject=new Subject();
     	   subject.setLoginID(loginID);

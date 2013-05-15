@@ -137,6 +137,11 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			int dataCounter = 0;
 			table = HBaseConfig.getTable(health_book);
 			List<Put> putList = new ArrayList<Put>();
+			if(importData.getDatastream_id()==null||importData.getDatastream_id().length()<5)
+			{
+				throw new ErrorCodeException(
+						AllConstants.ErrorDictionary.MISSING_DATA);
+			}
 			if(importData.getData_points()!=null&&importData.getData_points().size()
 					>0)
 			{

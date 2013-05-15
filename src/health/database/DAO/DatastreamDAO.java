@@ -330,6 +330,37 @@ public class DatastreamDAO extends BaseDAO {
 			e.printStackTrace();
 		}
 	}
+	public void DeleteDatastreamUnitList(Datastream datastream) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+//			session.delete(datastream);
+			List<DatastreamUnits> unitList=datastream.getDatastreamUnitsList();
+			for(DatastreamUnits unit:unitList)
+			{
+				session.delete(unit);
+			}
+			
+			{
+				Date now = new Date();
+				JobsTable job = new JobsTable();
+				job.setCreatedDate(now);
+				job.setUpdatedDate(now);
+				job.setStatus(AllConstants.ProgramConts.job_status_pending);
+				job.setMethod(AllConstants.ProgramConts.job_method_delete);
+				job.setTargetObject(AllConstants.ProgramConts.job_targetObject_datastream);
+				job.setTargetObjectID(datastream.getStreamId());
+				session.save(job);
+			}
+			HibernateUtil.commitTransaction();
+			if (session.isOpen()) {
+				session.close();
+			}
+
+		} catch (Exception e) {
+			HibernateUtil.rollBackTransaction();
+			e.printStackTrace();
+		}
+	}
 
 	public void DeleteDataBlock(DatastreamBlocks block) {
 		try {
