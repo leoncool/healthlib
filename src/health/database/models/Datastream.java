@@ -23,6 +23,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -200,6 +201,7 @@ public class Datastream implements Serializable {
 	}
 
 	@XmlTransient
+    @JsonIgnore
     public List<DatastreamUnits> getDatastreamUnitsList() {
         return datastreamUnitsList;
     }
@@ -209,7 +211,7 @@ public class Datastream implements Serializable {
     }
 
     @XmlTransient
- 
+    @JsonIgnore
     public List<DatastreamBlocks> getDatastreamBlocksList() {
         return datastreamBlocksList;
     }

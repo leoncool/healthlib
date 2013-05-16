@@ -68,14 +68,14 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 	// create 'hb','p','v','vt'
 	public HBaseDatapointDAO() {
 
-		// System.out.println("getinConfig..");
-		// // HBaseAdmin admin = new HBaseAdmin(config);
-		// // System.out.println("initualizeing......admin..");
-		// // if (!admin.tableExists(health_book)) {
-		// // System.out.println("initualizeing......createTable..");
-		// // createTable();
-		// // }
-		// System.out.println("initualizeing......DONE!..");
+//		System.out.println("getinConfig..");
+//		// HBaseAdmin admin = new HBaseAdmin(config);
+//		// System.out.println("initualizeing......admin..");
+//		// if (!admin.tableExists(health_book)) {
+//		// System.out.println("initualizeing......createTable..");
+//		// createTable();
+//		// }
+//		System.out.println("initualizeing......DONE!..");
 	}
 
 	public void testTable() throws ErrorCodeException {
@@ -137,13 +137,14 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			int dataCounter = 0;
 			table = HBaseConfig.getTable(health_book);
 			List<Put> putList = new ArrayList<Put>();
-			if (importData.getDatastream_id() == null
-					|| importData.getDatastream_id().length() < 5) {
+			if(importData.getDatastream_id()==null||importData.getDatastream_id().length()<5)
+			{
 				throw new ErrorCodeException(
 						AllConstants.ErrorDictionary.MISSING_DATA);
 			}
-			if (importData.getData_points() != null
-					&& importData.getData_points().size() > 0) {
+			if(importData.getData_points()!=null&&importData.getData_points().size()
+					>0)
+			{
 				List<JsonDataPoints> dataPoints = importData.getData_points();
 				for (int i = 0; i < dataPoints.size(); i++) {
 					long longAt = 0;
@@ -162,66 +163,55 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					List<JsonDataValues> dataValues = dataPoints.get(i)
 							.getValue_list();
 					for (JsonDataValues value : dataValues) {
-						String id_to_use = null;
-						if (value.getShort_uid() != null
-								&& value.getShort_uid().length() > 1) {
-							id_to_use = value.getShort_uid();
-
-						} else {
-							id_to_use = value.getUnit_id();
-						}
-						put.add(VALUE_COL, toBytes(id_to_use),
+						put.add(VALUE_COL, toBytes(value.getUnit_id()),
 								toBytes(value.getVal()));
 						dataCounter = dataCounter + rowKey.length
 								+ VALUE_COL.length
-								+ toBytes(id_to_use).length
+								+ toBytes(value.getUnit_id()).length
 								+ toBytes(value.getVal()).length;
 						if (value.getVal_tag() != null) {
-							put.add(VALUE_TAG_COL, toBytes(id_to_use),
+							put.add(VALUE_TAG_COL, toBytes(value.getUnit_id()),
 									toBytes(value.getVal_tag()));
 							dataCounter = dataCounter
 									+ rowKey.length
 									+ VALUE_TAG_COL.length
-									+ toBytes(id_to_use
+									+ toBytes(value.getUnit_id()
 											+ value.getVal_tag()).length;
 						}
 					}
 					if (importData.getBlock_id() != null) {
 						put.add(PROP_COL, BLOCK_ID,
 								toBytes(importData.getBlock_id()));
-						dataCounter = dataCounter + rowKey.length
-								+ PROP_COL.length + BLOCK_ID.length
+						dataCounter = dataCounter + rowKey.length + PROP_COL.length
+								+ BLOCK_ID.length
 								+ toBytes(importData.getBlock_id()).length;
 					} else {
 						put.add(PROP_COL, BLOCK_ID, unassignBlockID);
-						dataCounter = dataCounter + rowKey.length
-								+ PROP_COL.length + BLOCK_ID.length
-								+ unassignBlockID.length;
+						dataCounter = dataCounter + rowKey.length + PROP_COL.length
+								+ BLOCK_ID.length + unassignBlockID.length;
 					}
 					if (dataPoints.get(i).getTimetag() != null) {
 						put.add(PROP_COL, TIME_TAG, toBytes(dataPoints.get(i)
 								.getTimetag()));
-						dataCounter = dataCounter
-								+ rowKey.length
-								+ PROP_COL.length
+						dataCounter = dataCounter + rowKey.length + PROP_COL.length
 								+ TIME_TAG.length
 								+ toBytes(dataPoints.get(i).getTimetag()).length;
 					}
-					System.out.println("put:" + put);
 					putList.add(put);
 				}
-			} else if (importData.getData_points_single_list() != null
-					&& importData.getData_points_single_list().size() > 0) {
-				String single_unitID = importData.getSingle_Unit_ID();
-				// for single datapoints format
-				List<JsonSingleDataPoints> dataPoints = importData
-						.getData_points_single_list();
+			}
+			else if(importData.getData_points_single_list()!=null&&importData.getData_points_single_list().size()
+					>0)
+			{
+				String single_unitID=importData.getSingle_Unit_ID();
+				//for single datapoints format
+				List<JsonSingleDataPoints> dataPoints = importData.getData_points_single_list();
 				for (int i = 0; i < dataPoints.size(); i++) {
 					long longAt = 0;
 					try {
-
+						
 						longAt = Long.parseLong(dataPoints.get(i).getAt());
-
+						
 					} catch (NumberFormatException ex) {
 						ex.printStackTrace();
 						throw new ErrorCodeException(
@@ -233,53 +223,54 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 							+ Long.toString(longAt));
 					dataCounter = dataCounter + rowKey.length;
 					Put put = new Put(rowKey);
-
-					put.add(VALUE_COL, toBytes(single_unitID),
-							toBytes(dataPoints.get(i).getVal()));
-					dataCounter = dataCounter + rowKey.length
-							+ VALUE_COL.length + toBytes(single_unitID).length
-							+ toBytes(dataPoints.get(i).getVal()).length;
-					if (dataPoints.get(i).getVal_tag() != null) {
-						put.add(VALUE_TAG_COL, toBytes(single_unitID),
-								toBytes(dataPoints.get(i).getVal_tag()));
-						dataCounter = dataCounter
-								+ rowKey.length
-								+ VALUE_TAG_COL.length
-								+ toBytes(single_unitID
-										+ dataPoints.get(i).getVal_tag()).length;
-					}
-
+					
+						put.add(VALUE_COL, toBytes(single_unitID),
+								toBytes(dataPoints.get(i).getVal()));
+						dataCounter = dataCounter + rowKey.length
+								+ VALUE_COL.length
+								+ toBytes(single_unitID).length
+								+ toBytes(dataPoints.get(i).getVal()).length;
+						if (dataPoints.get(i).getVal_tag() != null) {
+							put.add(VALUE_TAG_COL, toBytes(single_unitID),
+									toBytes(dataPoints.get(i).getVal_tag()));
+							dataCounter = dataCounter
+									+ rowKey.length
+									+ VALUE_TAG_COL.length
+									+ toBytes(single_unitID
+											+ dataPoints.get(i).getVal_tag()).length;
+						}
+				
 					if (importData.getBlock_id() != null) {
 						put.add(PROP_COL, BLOCK_ID,
 								toBytes(importData.getBlock_id()));
-						dataCounter = dataCounter + rowKey.length
-								+ PROP_COL.length + BLOCK_ID.length
+						dataCounter = dataCounter + rowKey.length + PROP_COL.length
+								+ BLOCK_ID.length
 								+ toBytes(importData.getBlock_id()).length;
 					} else {
 						put.add(PROP_COL, BLOCK_ID, unassignBlockID);
-						dataCounter = dataCounter + rowKey.length
-								+ PROP_COL.length + BLOCK_ID.length
-								+ unassignBlockID.length;
-					}
+						dataCounter = dataCounter + rowKey.length + PROP_COL.length
+								+ BLOCK_ID.length + unassignBlockID.length;
+					}					
 					putList.add(put);
 				}
-			} else {
+			}
+			else{
 				throw new ErrorCodeException(
 						AllConstants.ErrorDictionary.No_Input_Single_Datapoints);
 			}
-
+			
 			table.put(putList);
 			table.flushCommits();
 			table.close();
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			return dataCounter;
 		} catch (NumberFormatException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		} catch (IOException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			// TODO: handle exception
 			ex.printStackTrace();
 			throw new ErrorCodeException(
@@ -291,11 +282,11 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 	public HBaseDataImport exportDatapoints(String streamID, Long start,
 			Long end, String blockID, HashMap<String, String> dsUnitsList,
 			SimpleDateFormat format) throws ErrorCodeException {
-
+	
 		try {
 			HTableInterface table = HBaseConfig.getTable(health_book);
 			Date timerStart = new Date();
-			System.out.println("starting Exporting...." + timerStart);
+			System.out.println("starting Exporting...." + timerStart); 
 			Scan scan = new Scan();
 			scan.setCaching(1000);
 
@@ -303,20 +294,21 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			// scan.setCacheBlocks(true);
 			FilterList filterList = new FilterList();
 			if (start != null && start != 0) {
-				// RowFilter fowFilter_startDate = new RowFilter(
-				// CompareFilter.CompareOp.GREATER_OR_EQUAL,
-				// new BinaryComparator(toBytes(streamID + "/"
-				// + Long.toString(start))));
-				// filterList.addFilter(fowFilter_startDate);
+//				RowFilter fowFilter_startDate = new RowFilter(
+//						CompareFilter.CompareOp.GREATER_OR_EQUAL,
+//						new BinaryComparator(toBytes(streamID + "/"
+//								+ Long.toString(start))));
+//				filterList.addFilter(fowFilter_startDate);
 				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 			}
 			if (end != null && end != 0) {
 				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
 			}
-			if ((start == null || start == 0) && (end == null || end == 0)) {
+			if((start == null || start == 0)&&(end==null ||end == 0))
+			{
 				RowFilter rowFilterStreamID = new RowFilter(
-						CompareFilter.CompareOp.EQUAL,
-						new BinaryPrefixComparator(toBytes(streamID)));
+						CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
+								toBytes(streamID)));
 				filterList.addFilter(rowFilterStreamID);
 			}
 			if (blockID != null
@@ -371,13 +363,13 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				} else {
 					// Date date=new Date();
 					// date.setTime(Long.parseLong(getTimefromRowKey(res)));
-					DateUtil dateUtil = new DateUtil();
-					Date date = new Date();
+					DateUtil dateUtil=new DateUtil();
+					Date date=new Date();
 					date.setTime(Long.parseLong(getTimefromRowKey(res)));
-					try {
-						datapoint.setAt(dateUtil.format(date,
-								dateUtil.millisecFormat));
-					} catch (Exception ex) {
+					try{
+					datapoint.setAt(dateUtil.format(date, dateUtil.millisecFormat));
+					}catch(Exception ex)
+					{
 						throw new ErrorCodeException(
 								AllConstants.ErrorDictionary.HBase_Internal_Error);
 					}
@@ -412,15 +404,15 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					+ "seconds");
 			scanner.close();
 			table.close();
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);			
 			return dataexport;
 		} catch (IOException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		} catch (NumberFormatException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
@@ -438,26 +430,27 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(1000);
-			// scan.setBatch(1000);
-
+//			scan.setBatch(1000);
+			
 			// scan.setCacheBlocks(true);
 			FilterList filterList = new FilterList();
-
+		
 			if (start != null && start != 0) {
-				// RowFilter fowFilter_startDate = new RowFilter(
-				// CompareFilter.CompareOp.GREATER_OR_EQUAL,
-				// new BinaryComparator(toBytes(streamID + "/"
-				// + Long.toString(start))));
-				// filterList.addFilter(fowFilter_startDate);
+//				RowFilter fowFilter_startDate = new RowFilter(
+//						CompareFilter.CompareOp.GREATER_OR_EQUAL,
+//						new BinaryComparator(toBytes(streamID + "/"
+//								+ Long.toString(start))));
+//				filterList.addFilter(fowFilter_startDate);
 				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 			}
 			if (end != null && end != 0) {
 				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
 			}
-			if ((start == null || start == 0) && (end == null || end == 0)) {
+			if((start == null || start == 0)&&(end==null ||end == 0))
+			{
 				RowFilter rowFilterStreamID = new RowFilter(
-						CompareFilter.CompareOp.EQUAL,
-						new BinaryPrefixComparator(toBytes(streamID)));
+						CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
+								toBytes(streamID)));
 				filterList.addFilter(rowFilterStreamID);
 			}
 			if (blockID != null
@@ -488,9 +481,9 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			int counter = 0;
 			while (itr.hasNext()) {
 				counter++;
-				if (counter > 5000) {
-					continue;
-				}
+				 if (counter > 5000) {
+				 continue;
+				 }
 				Result res = itr.next();
 				JsonSingleDataPoints datapoint = new JsonSingleDataPoints();
 				if (res.getValue(VALUE_COL, toBytes(unitID)) != null) {
@@ -504,7 +497,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 						// date.setTime(Long.parseLong(getTimefromRowKey(res)));
 						datapoint.setAt(format.format(getTimefromRowKey(res)));
 					}
-				} else {
+				}else{
 					continue;
 				}
 				if (counter <= 1) {
@@ -518,14 +511,13 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 							TIME_TAG)));
 				}
 				if (res.getValue(VALUE_TAG_COL, toBytes(unitID)) != null) {
-					datapoint.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
-							toBytes(unitID))));
+					datapoint.setVal_tag(toString(res.getValue(VALUE_TAG_COL, toBytes(unitID))));
 				}
 				jsonDPList.add(datapoint);
 			}
 			System.out.println("SingleUnit, Just After While loop...."
 					+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
-					+ "seconds" + ",number of records:" + counter);
+					+ "seconds"+",number of records:"+counter);
 			HBaseDataImport dataexport = null;
 			if (jsonDPList.size() > 0) {
 				dataexport = new HBaseDataImport();
@@ -539,17 +531,17 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			System.out.println("Finished Exporting...."
 					+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
-			scanner.close();
-			// HBaseConfig.putTable(table);
+			scanner.close();			
+//			HBaseConfig.putTable(table);
 			table.close();
 			return dataexport;
 		} catch (IOException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		} catch (NumberFormatException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
@@ -586,11 +578,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			// toString(data.getKey()) + "," + toString(data.getValue()));
 
 			JsonDataValues value = new JsonDataValues();
-			if (toString(data.getKey()).length() > 6) {
-				value.setUnit_id(toString(data.getKey()));
-			} else {
-				value.setShort_uid(toString(data.getKey()));
-			}
+			value.setUnit_id(toString(data.getKey()));
 			value.setVal(toString(data.getValue()));
 			if (res.getValue(VALUE_TAG_COL, data.getKey()) != null) {
 				value.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
@@ -647,7 +635,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				no_deleted++;
 			}
 			table.close();
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			HBaseDataImport dataexport = null;
 			Date timerEnd = new Date();
 			System.out.println("Finished Deleting...." + timerEnd);
@@ -656,20 +644,18 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					+ "seconds");
 			return no_deleted;
 		} catch (IOException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		}
 	}
-
-	public long delete_range_Datapoint(String streamID, long start, long end)
+	public long delete_range_Datapoint(String streamID, long start,long end)
 			throws ErrorCodeException {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
-			System.out.println("starting Deleting....start:" + start + ",end:"
-					+ start);
+			System.out.println("starting Deleting....start:" + start+",end:"+start);
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(200000);
@@ -680,22 +666,22 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
 							toBytes(streamID)));
 			filterList.addFilter(rowFilterStreamID);
-			if (start > 0) {
+			if(start>0)
+			{
 				RowFilter fowFilter_startDate = new RowFilter(
-						CompareFilter.CompareOp.GREATER_OR_EQUAL,
-						new BinaryComparator(toBytes(streamID + "/"
-								+ Long.toString(start))));
+						CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(
+								toBytes(streamID + "/" + Long.toString(start))));
 				filterList.addFilter(fowFilter_startDate);
 			}
-
-			if (end > 0) {
+			
+			if(end>0)
+			{
 				RowFilter fowFilter_endDate = new RowFilter(
-						CompareFilter.CompareOp.LESS_OR_EQUAL,
-						new BinaryComparator(toBytes(streamID + "/"
-								+ Long.toString(end))));
+						CompareFilter.CompareOp.LESS_OR_EQUAL, new BinaryComparator(
+								toBytes(streamID + "/" + Long.toString(end))));
 				filterList.addFilter(fowFilter_endDate);
 			}
-
+			
 			scan.setFilter(filterList);
 			ResultScanner scanner = table.getScanner(scan);
 			Iterator<Result> itr = scanner.iterator();
@@ -708,7 +694,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				no_deleted++;
 			}
 			table.close();
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			HBaseDataImport dataexport = null;
 			Date timerEnd = new Date();
 			System.out.println("Finished Deleting...." + timerEnd);
@@ -717,13 +703,12 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					+ "seconds");
 			return no_deleted;
 		} catch (IOException ex) {
-			// HBaseConfig.putTable(table);
+//			HBaseConfig.putTable(table);
 			ex.printStackTrace();
 			throw new ErrorCodeException(
 					AllConstants.ErrorDictionary.HBase_Internal_Error);
 		}
 	}
-
 	public static void main(String args[]) throws MasterNotRunningException,
 			IOException, ParseException, ErrorCodeException {
 		// DataPointDAO importDao = new DataPointDAO();

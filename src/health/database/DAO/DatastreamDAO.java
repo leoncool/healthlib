@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import javax.persistence.NonUniqueResultException;
 
-import org.apache.commons.lang.RandomStringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
@@ -102,7 +101,6 @@ public class DatastreamDAO extends BaseDAO {
 			dsUnit.setValueType(unit.getValue_type());
 			dsUnit.setUnitSymbol(unit.getUnit_symbol());
 			dsUnit.setUnitID(UUID.randomUUID().toString());
-			dsUnit.setShortUnitID(RandomStringUtils.randomAlphanumeric(5));
 			datastreamUnits.add(dsUnit);
 		}
 		ds.setDatastreamUnitsList(datastreamUnits);

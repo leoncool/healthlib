@@ -124,14 +124,12 @@ public class DBtoJsonUtil {
 				juser.setCity(user.getUserDetails().getCity());
 			}
 			if (user.getUserDetails().getHeight() != null) {
-				juser.setHeight_cm(Double.toString(user.getUserDetails()
-						.getHeight()));
+				juser.setHeight_cm(Double.toString(user.getUserDetails().getHeight()));
 			}
 			if (user.getUserDetails().getWeight() != null) {
-				juser.setWeight_kg(Double.toString(user.getUserDetails()
-						.getWeight()));
+				juser.setWeight_kg(Double.toString(user.getUserDetails().getWeight()));
 			}
-		}
+		}		
 		juser.setEmail(user.getEmail());
 		juser.setGender(user.getGender());
 		juser.setLanguage(user.getLanguage());
@@ -211,12 +209,7 @@ public class DBtoJsonUtil {
 		}
 		for (int i = 0; i < unitsList.size(); i++) {
 			JsonDatastreamUnits unit = new JsonDatastreamUnits();
-			if (unitsList.get(i).getShortUnitID() != null
-					&& unitsList.get(i).getShortUnitID().length() > 1) {
-				unit.setUnit_id(unitsList.get(i).getShortUnitID());
-			} else {
-				unit.setUnit_id(unitsList.get(i).getUnitID());
-			}
+			unit.setUnit_id(unitsList.get(i).getUnitID());
 			unit.setMax_value(unitsList.get(i).getMaxValue());
 			unit.setMin_value(unitsList.get(i).getMinValue());
 			unit.setUnit_label(unitsList.get(i).getUnitLabel());
@@ -282,12 +275,7 @@ public class DBtoJsonUtil {
 		List<DatastreamUnits> dsUnitList = datastream.getDatastreamUnitsList();
 		HashMap<String, String> mapUnits = new HashMap<String, String>();
 		for (DatastreamUnits unit : dsUnitList) {
-			if (unit.getShortUnitID() != null
-					&& unit.getShortUnitID().length() > 1) {
-				mapUnits.put(unit.getShortUnitID(), unit.getShortUnitID());
-			} else {
-				mapUnits.put(unit.getUnitID(), unit.getUnitID());
-			}
+			mapUnits.put(unit.getUnitID(), unit.getUnitID());
 		}
 		return mapUnits;
 	}
@@ -318,9 +306,9 @@ public class DBtoJsonUtil {
 		jsummary.setDatastream_id(summary.getDstreamID());
 		jsummary.setValue(Double.toString(summary.getValue()));
 		DateUtil dateUtil = new DateUtil();
-		// System.out.println("debug converting:"+summary.getDate());
-		// System.out.println("debug converting2:"+dateUtil.format(summary.getDate(),
-		// dateUtil.YearMonthDay_DateFormat));
+//		System.out.println("debug converting:"+summary.getDate());
+//		System.out.println("debug converting2:"+dateUtil.format(summary.getDate(),
+//				dateUtil.YearMonthDay_DateFormat));
 		jsummary.setDate(dateUtil.format(summary.getDate(),
 				dateUtil.YearMonthDay_DateFormat));
 		jsummary.setDate_long(Long.toString(summary.getDate().getTime()));
@@ -330,7 +318,6 @@ public class DBtoJsonUtil {
 		jsummary.setUpdate_time(Long.toString(summary.getUpdated().getTime()));
 		return jsummary;
 	}
-
 	public JsonSleepDataSummary convertSleepDataSummary(SleepDataSummary summary)
 			throws ParseException {
 		JsonSleepDataSummary jsummary = new JsonSleepDataSummary();
@@ -348,8 +335,8 @@ public class DBtoJsonUtil {
 		jsummary.setSleep_end_long(summary.getEndtime().getTime());
 		jsummary.setAwakened_count(summary.getAwakeningCount());
 		jsummary.setEfficiency(summary.getEfficiency());
-		if (summary.getLoginID() != null) {
-			jsummary.setLoginid(summary.getLoginID());
+		if(summary.getLoginID()!=null){
+		jsummary.setLoginid(summary.getLoginID());
 		}
 		jsummary.setMinutes_afterwakeup(summary.getMinutesAfterWakeup());
 		jsummary.setMinutes_asleep(summary.getMinutesAsleep());
@@ -357,6 +344,6 @@ public class DBtoJsonUtil {
 		jsummary.setMinutes_inbed(summary.getInBedMinutes());
 		jsummary.setMinutes_tofallasleep(summary.getMinutesToFallAsleep());
 		jsummary.setUpdate_time(Long.toString(summary.getUpdated().getTime()));
-		return jsummary;
+			return jsummary;
 	}
 }

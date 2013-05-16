@@ -41,17 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "DatastreamUnits.findByUnitID", query = "SELECT d FROM DatastreamUnits d WHERE d.unitID = :unitID")})
 public class DatastreamUnits implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Column(name = "shortUnitID")
-    private String shortUnitID;
-    public String getShortUnitID() {
-		return shortUnitID;
-	}
-
-	public void setShortUnitID(String shortUnitID) {
-		this.shortUnitID = shortUnitID;
-	}
-
-	@Column(name = "UnitType")
+    @Column(name = "UnitType")
     private String unitType;
     @Column(name = "UnitSymbol")
     private String unitSymbol;
