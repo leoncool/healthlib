@@ -43,7 +43,20 @@ public class DatastreamUnits implements Serializable {
     private static final long serialVersionUID = 1L;
     @Column(name = "UnitType")
     private String unitType;
-    @Column(name = "UnitSymbol")
+    @Column(name = "shortUnitID")
+    private String shortUnitID;
+    
+    
+    
+    public String getShortUnitID() {
+		return shortUnitID;
+	}
+
+	public void setShortUnitID(String shortUnitID) {
+		this.shortUnitID = shortUnitID;
+	}
+
+	@Column(name = "UnitSymbol")
     private String unitSymbol;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "MinValue")
