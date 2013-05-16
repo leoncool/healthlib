@@ -12,4 +12,6 @@ public class testGenerateShortID {
 		System.out.println(RandomStringUtils.randomAlphanumeric(5));
 	}
 
+	
+	
 }
