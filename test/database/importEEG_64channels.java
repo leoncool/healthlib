@@ -34,10 +34,11 @@ public class importEEG_64channels {
 			System.out.println("stream not found!");
 			return;
 		}
+		String folder="F:/Dropbox/Dropbox/PhD/Data Sets/EEG/";
 		FileInputStream signal_label_file = new FileInputStream(new File(
-				"E:/IC_Dropbox/Dropbox/PhD/Data Sets/EEG/labels.xlsx"));
+				folder+"labels.xlsx"));
 		FileInputStream signal_file = new FileInputStream(new File(
-				"E:/IC_Dropbox/Dropbox/PhD/Data Sets/EEG/eeg01.xlsx"));
+				folder+"/eeg01.xlsx"));
 
 		// Get the workbook instance for XLS file
 
@@ -78,7 +79,7 @@ public class importEEG_64channels {
 						if (unit.getUnitLabel().equalsIgnoreCase(
 								signal_label_str)) {
 							JsonDataValues value = new JsonDataValues();
-							value.setUnit_id(unit.getUnitID());
+							value.setUnit_id(unit.getShortUnitID());
 							value.setVal(Double.toString(signal_sheet.getRow(j)
 									.getCell(i).getNumericCellValue()));
 							System.out.println(signal_label_str

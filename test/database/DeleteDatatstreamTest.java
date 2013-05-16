@@ -11,7 +11,9 @@ public class DeleteDatatstreamTest {
 public static void main(String args[])
 {
 	DatastreamDAO dsDao=new DatastreamDAO();
-	Datastream ds=dsDao.getDatastream("07e4eeb5-ab4f-49d6-84b4-764db3a1f7d4", false, false);
+	Datastream stream = dsDao.getHealthDatastreamByTitle(664, "eeg",
+			true, false);
+	Datastream ds=dsDao.getDatastream(stream.getStreamId(), false, false);
 	dsDao.DeleteDatastream(ds);
 }
 }

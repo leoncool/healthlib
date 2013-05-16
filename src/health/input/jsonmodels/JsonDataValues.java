@@ -15,6 +15,7 @@ public class JsonDataValues {
     @SerializedName(value="val")
     protected String val;
     protected String val_tag;
+    protected String short_uid;
 
     public String getUnit_id() {
         return unit_id;
@@ -39,5 +40,13 @@ public class JsonDataValues {
     public void setVal_tag(String val_tag) {
         this.val_tag = val_tag;
     }
+
+	public String getShort_uid() {
+		return short_uid;
+	}
+
+	public void setShort_uid(String short_uid) {
+		this.short_uid = short_uid;
+	}
 
 }

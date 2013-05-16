@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,9 +23,11 @@ public class createEEG_DefaultDatastreamandUnits {
 	DatastreamDAO streamDao=new DatastreamDAO();
 	Datastream stream=streamDao.getHealthDatastreamByTitle(664, "eeg", true, false);
 	
-	  
-    FileInputStream signal_label_file = new FileInputStream(new File("E:/IC_Dropbox/Dropbox/PhD/Data Sets/EEG/labels.xlsx"));
-     
+	String folder="F:/Dropbox/Dropbox/PhD/Data Sets/EEG/";
+	FileInputStream signal_label_file = new FileInputStream(new File(
+			folder+"labels.xlsx"));
+	FileInputStream signal_file = new FileInputStream(new File(
+			folder+"/eeg01.xlsx"));
     //Get the workbook instance for XLS file 
     
     XSSFWorkbook signal_label_workbook = new XSSFWorkbook(signal_label_file);
@@ -57,6 +60,7 @@ public class createEEG_DefaultDatastreamandUnits {
 	    	unit.setUpdatedTime(new Date());
 	    	unit.setUnitType("uV");
 	    	unit.setValueType("double");
+	    	unit.setShortUnitID(RandomStringUtils.randomAlphanumeric(5));
 	    	System.out.println(row.getCell(i).getStringCellValue());
 	    	unitList.add(unit);
 	    }
