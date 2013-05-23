@@ -97,6 +97,8 @@ public interface AllConstants {
 		public static final String defaultDS_Name_weight = "weight";
 		public static final String defaultDS_Name_location = "location";
 		public static final String defaultDS_Name_ecg = "ecg";
+		public static final String defaultDS_Name_eeg="eeg";
+		public static final String defaultDS_Name_heart_rate="heart_rate";
 
 	}
 
