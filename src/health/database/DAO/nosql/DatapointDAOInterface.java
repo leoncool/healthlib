@@ -14,7 +14,7 @@ public interface DatapointDAOInterface {
 			throws ErrorCodeException;
 	public HBaseDataImport exportDatapoints(String streamID, Long start,
 			Long end, String blockID, HashMap<String, String> dsUnitsList,
-			SimpleDateFormat format) throws ErrorCodeException;
+			SimpleDateFormat format,HashMap<String,Object> settings) throws ErrorCodeException;
 	public long delete_A_Datapoint(String streamID, long at)
 			throws ErrorCodeException;
 }

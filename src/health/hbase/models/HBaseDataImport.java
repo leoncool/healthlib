@@ -19,6 +19,7 @@ public class HBaseDataImport extends JsonDataImport {
     protected List<JsonDatastreamUnits> units_list;
     protected String device_id;
     protected String single_Unit_ID;
+    protected String truncated;
     public String getDatastream_id() {
         return datastream_id;
     }
@@ -54,7 +55,15 @@ public class HBaseDataImport extends JsonDataImport {
     }
 
 
-    public String getDeviceid() {
+    public String getTruncated() {
+		return truncated;
+	}
+
+	public void setTruncated(String truncated) {
+		this.truncated = truncated;
+	}
+
+	public String getDeviceid() {
         return device_id;
     }
 

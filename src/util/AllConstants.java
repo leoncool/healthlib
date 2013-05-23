@@ -60,6 +60,7 @@ public interface AllConstants {
 		public static final String request_api_keywords = "keywords";
 		public static final String request_api_startpage = "startpage";
 		public static final String request_api_dataformat = "dateformat";
+		public static final String request_max = "max";
 		public static final String header_api_token = "accesstoken";
 		public static final String wildcardsubject_all = "all";
 	}
@@ -77,6 +78,9 @@ public interface AllConstants {
 		public static final String subject_medical_device_purpose = "medical_device";
 		public static final String succeed = "succeed";
 		public static final String result = "result";
+		public static final String exportSetting_MAX = "max";
+		public static final String total_points = "total_points";
+		public static final String total_records = "total_records";
 		public static final String follower_status_active = "active";
 		public static final String follower_status_pending = "pending";
 		public static final String follower_status_ignored = "ignored";

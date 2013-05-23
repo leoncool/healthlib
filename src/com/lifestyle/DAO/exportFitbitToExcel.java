@@ -106,7 +106,7 @@ public class exportFitbitToExcel {
 					datastream.getDatastreamUnitsList().get(0).getUnitID());
 			
 			hbaseexport = diDao.exportDatapoints(datastream.getStreamId(), start, end,
-					null, mapUnits, null);
+					null, mapUnits, null,null);
 
 			
 			if(hbaseexport==null||hbaseexport.getData_points()==null||hbaseexport.getData_points().size()<1)
