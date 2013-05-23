@@ -407,6 +407,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					jsonDPList.add(datapoint);
 				}
 			}
+			
 			System.out.println("Just After While loop...."
 					+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
