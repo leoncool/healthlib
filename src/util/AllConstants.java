@@ -131,7 +131,7 @@ public interface AllConstants {
 		public static final String default_health_subject_purpose = "default_health";
 		public static final String default_health_SubjectName = "default_health";
 		public static final String defaultDatastreamPurpose = "default_health";
-		
+
 		public static final String System_Default_subject_Name = "default_subject";
 
 	}
@@ -196,7 +196,7 @@ public interface AllConstants {
 			public static final String Unknown_StreamTitle = "unknown_stream_title";
 		public static final String Unknown_SubjectID = "unknown_subject_id";
 		public static final String NO_SLEEP_RECORD = "no_sleep_record_exist";
-		
+
 		public static final String Invalid_ValueType = "invalid_value_type_name";
 		public static final String InputValue_Oversize = "input_over_size";
 		public static final String Hibernate_Internal_Error = "hibernate_internal_error";

@@ -1,5 +1,9 @@
+/.classpath
+/.gitignore
+/.project
+/.settings
+bin
 .classpath
+.gitignore
 .project
 .settings
-.settings*
-bin
