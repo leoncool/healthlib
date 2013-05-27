@@ -57,6 +57,13 @@ public class DatastreamBlocks implements Serializable {
     @ManyToOne(optional = false)
     private Datastream streamID;
 
+    @Column(name = "startTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startTime;
+    @Column(name = "endTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endTime;
+    
     public DatastreamBlocks() {
     }
 
@@ -117,8 +124,25 @@ public class DatastreamBlocks implements Serializable {
     public void setStreamID(Datastream streamID) {
         this.streamID = streamID;
     }
+   
+    
+    public Date getStartTime() {
+		return startTime;
+	}
 
-    @Override
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (blockId != null ? blockId.hashCode() : 0);

@@ -224,7 +224,7 @@ public class DBtoJsonUtil {
 			unit.setUnit_type(unitsList.get(i).getUnitType());
 			unit.setValue_type(unitsList.get(i).getValueType());
 			if (onlyListedUnitIDs != null && onlyListedUnitIDs.size() > 0) {
-				if (onlyListedUnitIDs.get(unitsList.get(i).getUnitID()) == null) {
+				if (onlyListedUnitIDs.get(unitsList.get(i).getUnitID()) == null&&(unitsList.get(i).getShortUnitID()==null||onlyListedUnitIDs.get(unitsList.get(i).getShortUnitID()) == null)) {
 				} else {
 					jdatastreamUnitList.add(unit);
 				}
@@ -284,7 +284,7 @@ public class DBtoJsonUtil {
 		for (DatastreamUnits unit : dsUnitList) {
 			if (unit.getShortUnitID() != null
 					&& unit.getShortUnitID().length() > 1) {
-				mapUnits.put(unit.getUnitID(), unit.getShortUnitID());
+				mapUnits.put(unit.getShortUnitID(), unit.getShortUnitID());
 			} else {
 				mapUnits.put(unit.getUnitID(), unit.getUnitID());
 			}
