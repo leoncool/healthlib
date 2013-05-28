@@ -38,7 +38,7 @@ public class LocationLogDAO {
         Session session = HibernateUtil.beginTransaction();
         int i = 0;
         for (Locationlogs log : logList) {
-            session.saveOrUpdate(log);
+            session.merge(log.getId(),log);
             if (i % 50 == 0) {
                 session.flush();
                 session.clear();

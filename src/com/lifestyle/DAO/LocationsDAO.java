@@ -1,7 +1,7 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- */
+ 
 package com.lifestyle.DAO;
 
 import com.lifestyle.models.Locationlogs;
@@ -13,10 +13,10 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import util.HibernateUtil;
 
-/**
+*//**
  *
  * @author Leon
- */
+ *//*
 public class LocationsDAO {
 
     public void putLog(Locationlogs log) {
@@ -80,3 +80,4 @@ public class LocationsDAO {
 //        dao.putLog(log);
     }
 }
+*/

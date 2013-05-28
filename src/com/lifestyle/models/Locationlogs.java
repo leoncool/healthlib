@@ -40,16 +40,14 @@ public class Locationlogs implements Serializable {
     @Basic(optional = false)
     @Column(name = "lon")
     private double lon;
-    @Basic(optional = false)
+    @Column(name = "alt")
+    private double alt; 
     @Column(name = "elevationV")
     private double elevation;
-    @Basic(optional = false)
     @Column(name = "accuracy")
     private double accuracy;
-    @Basic(optional = false)
     @Column(name = "bearing")
     private double bearing;
-    @Basic(optional = false)
     @Column(name = "speed")
     private double speed;
     @Basic(optional = false)
@@ -148,7 +146,15 @@ public class Locationlogs implements Serializable {
         this.datetime = datetime;
     }
 
-    @Override
+    public double getAlt() {
+		return alt;
+	}
+
+	public void setAlt(double alt) {
+		this.alt = alt;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
