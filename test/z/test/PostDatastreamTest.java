@@ -82,11 +82,11 @@ public class PostDatastreamTest {
 				str = br.readLine();
 			}
 			br.close();
-			java.lang.String responseString = sb.toString();
+/*			java.lang.String responseString = sb.toString();
 			HttpURLConnection httpConnection = (HttpURLConnection) connection;
 			int code = httpConnection.getResponseCode();
 			System.out.println("returncode:" + code);
-			System.out.println(responseString);
+			System.out.println(responseString);*/
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

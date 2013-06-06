@@ -23,6 +23,7 @@ public interface AllConstants {
 		public static final String api_defaultsubject="defaultsubject";
 		public static final String api_health = "health";
 		public static final String api_datastream = "datastreams";
+		public static final String api_unit = "unit";
 		public static final String api_title = "title";
 		public static final String api_device = "devices";
 		public static final String api_datapoints = "datapoints";
@@ -87,6 +88,7 @@ public interface AllConstants {
 		public static final String job_status_pending = "pending";
 		public static final String job_method_delete = "delete";
 		public static final String job_targetObject_datastream = "datastream";
+		public static final String job_targetObject_datastream_unit = "datastream_unit";
 		public static final String job_targetObject_datablock = "datablock";
 		public static final String visibleSet_PUBLIC = "public";
 		public static final String defaultDS_Name_steps = "steps";
@@ -192,6 +194,7 @@ public interface AllConstants {
 		public static final String Unauthorized_Access = "unauthorized_access";
 		public static final String Unknown_StreamID = "unknown_stream_id";
 		public static final String NO_STREAM_UNIT_EXIST = "no_datastream_unit_exist";
+		public static final String Such_Stream_title_EXIST = "such_stream_title_exist";
 		public static final String MORE_THAN_ONE_DATASTREAM_UNIT = "more_than_one_datastream_unit_exist";
 			public static final String Unknown_StreamTitle = "unknown_stream_title";
 		public static final String Unknown_SubjectID = "unknown_subject_id";
@@ -206,6 +209,7 @@ public interface AllConstants {
 		public static final String No_Input_Datapoints = "no_input_datapoints";
 		public static final String Input_file_format_error = "input_file_format_error";
 		public static final String Invalid_Unit_ID = "invalid_unit_id";
+		public static final String Invalid_datastream_title = "invalid_stream_title";
 		public static final String Invalid_Datablock_ID = "invalid_datablock_id";
 		public static final String Invalid_LoginID = "invalid_loginid";
 		public static final String Invalid_wrong_password = "invalid_password";
@@ -217,6 +221,7 @@ public interface AllConstants {
 		public static final String Invalid_Target_LoginID = "invalid_target_loginid";
 		public static final String following_exist = "following_exist";
 		public static final String already_exist_wildcard_subject = "subject_wildcard_exist";
+		public static final String invalid_unitid_or_request_unitid_not_exist = "invalid_unitid_or_request_unitid_not_exist";
 		public static final String already_exist_subject_datastream = "subject_datastream_follow_exist";
 		public static final String Not_exist_follow = "follow_not_exist";
 		public static final String Invalid_date_format = "invalid_date_input_format";

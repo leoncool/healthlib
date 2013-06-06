@@ -54,6 +54,17 @@ public class DatastreamDAO extends BaseDAO {
 		}
 	}
 
+	public void addSingleDS_Unit(DatastreamUnits unit) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			session.save(unit);
+			HibernateUtil.commitTransaction();			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+		}
+	}
+
 	public Datastream basicDefaultDatastreamCreate(String loginID, int subjectID) {
 		Datastream ds = new Datastream();
 		Date now = new Date();
@@ -76,8 +87,7 @@ public class DatastreamDAO extends BaseDAO {
 		if (devicetemplate == null) {
 			throw new Exception("cannot find template in database");
 		}
-		
-		
+
 		JsonDeviceTemplate jdtemplate = dtDao
 				.toJsonDeviceTemplate(devicetemplate);
 		if (jdtemplate == null || jdtemplate.getUnits_list().isEmpty()) {
@@ -116,15 +126,14 @@ public class DatastreamDAO extends BaseDAO {
 
 		creationTemplateDAO ctDao = new creationTemplateDAO();
 		List<CreationTemplate> ctList = ctDao.findall();
-		ArrayList<Datastream> dsList=new ArrayList<Datastream>();
+		ArrayList<Datastream> dsList = new ArrayList<Datastream>();
 		for (CreationTemplate ct : ctList) {
 			Datastream ds = basicDefaultDatastreamCreate(loginID, subjectID);
 			ds.setTitle(ct.getInput2());
-			attachDatastreamUnitsFromTemplate(ds,
-					ct.getInput1());
+			attachDatastreamUnitsFromTemplate(ds, ct.getInput1());
 			dsList.add(ds);
 		}
-		createDatastreamList(dsList);		
+		createDatastreamList(dsList);
 	}
 
 	public Datastream getDatastream(String StreamID, boolean fetchDataUnits,
@@ -146,13 +155,16 @@ public class DatastreamDAO extends BaseDAO {
 		}
 		return stream;
 	}
-	public Datastream getHealthDatastreamByTitle(int subjectID,String streamTitle, boolean fetchDataUnits,
-			boolean fetchDatablocks) throws NonUniqueResultException{
+
+	public Datastream getHealthDatastreamByTitle(int subjectID,
+			String streamTitle, boolean fetchDataUnits, boolean fetchDatablocks)
+			throws NonUniqueResultException {
 		Datastream stream = null;
 		// stream = (Datastream) session.get(Datastream.class, StreamID);
 		Session session = HibernateUtil.beginTransaction();
 		Criteria criteria = session.createCriteria(Datastream.class);
-		criteria.add(Restrictions.eq("purpose", AllConstants.HealthConts.defaultDatastreamPurpose));
+		criteria.add(Restrictions.eq("purpose",
+				AllConstants.HealthConts.defaultDatastreamPurpose));
 		criteria.add(Restrictions.eq("title", streamTitle));
 		criteria.add(Restrictions.eq("subId", subjectID));
 		if (fetchDataUnits) {
@@ -272,9 +284,6 @@ public class DatastreamDAO extends BaseDAO {
 			return null;
 		}
 	}
-	
-	
-	
 
 	public List<DatastreamBlocks> getDatastreamBlockList(String streamID) {
 		List<?> objects = null;
@@ -337,16 +346,48 @@ public class DatastreamDAO extends BaseDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void DeleteSingleDatastream_Unit(DatastreamUnits unit) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			session.delete(unit);
+			{
+				Date now = new Date();
+				JobsTable job = new JobsTable();
+				job.setCreatedDate(now);
+				job.setUpdatedDate(now);
+				job.setStatus(AllConstants.ProgramConts.job_status_pending);
+				job.setMethod(AllConstants.ProgramConts.job_method_delete);
+				job.setTargetObject(AllConstants.ProgramConts.job_targetObject_datastream_unit);
+				if (unit.getShortUnitID() != null
+						&& unit.getShortUnitID().length() > 2) {
+					job.setTargetObjectID("streamID:"+unit.getStreamID().getStreamId()+","+unit.getShortUnitID());
+				} else {
+					job.setTargetObjectID("streamID:"+unit.getStreamID().getStreamId()+","+unit.getUnitID());
+				}
+				session.save(job);
+			}
+			HibernateUtil.commitTransaction();
+			if (session.isOpen()) {
+				session.close();
+			}
+
+		} catch (Exception e) {
+			HibernateUtil.rollBackTransaction();
+			e.printStackTrace();
+		}
+	}
+
 	public void DeleteDatastreamUnitList(Datastream datastream) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
-//			session.delete(datastream);
-			List<DatastreamUnits> unitList=datastream.getDatastreamUnitsList();
-			for(DatastreamUnits unit:unitList)
-			{
+			// session.delete(datastream);
+			List<DatastreamUnits> unitList = datastream
+					.getDatastreamUnitsList();
+			for (DatastreamUnits unit : unitList) {
 				session.delete(unit);
 			}
-			
+
 			{
 				Date now = new Date();
 				JobsTable job = new JobsTable();

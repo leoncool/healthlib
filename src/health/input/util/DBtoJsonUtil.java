@@ -29,9 +29,13 @@ import health.input.jsonmodels.JsonUserInfo;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import org.apache.commons.lang.RandomStringUtils;
 
 import util.AllConstants.ServerConfigs;
 import util.DateUtil;
@@ -44,7 +48,53 @@ import device.input.jsonmodels.JsonDeviceBinding;
  * @author Leon
  */
 public class DBtoJsonUtil {
-
+	public DatastreamUnits convert_a_jdatastream_unit(JsonDatastreamUnits junit)
+	{
+		DatastreamUnits unit=new DatastreamUnits();
+		Date now = new Date();
+		unit.setCreatedTime(now);
+		unit.setUpdatedTime(now);
+		unit.setMaxValue(junit.getMax_value());
+		unit.setMinValue(junit.getMin_value());
+		unit.setCurrentValue(junit.getCurrent_value());
+		unit.setUnitLabel(junit.getUnit_label());
+		unit.setValueType(junit.getValue_type());
+		unit.setUnitSymbol(junit.getUnit_symbol());
+		unit.setUnitID(UUID.randomUUID().toString()); //only use it as primary key in DB
+		unit.setShortUnitID(RandomStringUtils.randomAlphanumeric(5)); //only use it for storage
+		return unit;
+	}
+	public Datastream convert_a_JdataStream(JsonDatastream jdatastream)
+	{
+		Datastream datastream = new Datastream();
+		UUID streamUUID = UUID.randomUUID();
+		datastream.setStreamId(streamUUID.toString());
+		Date now = new Date();
+		datastream.setCreatedTime(now);
+		datastream.setUpdated(now);
+		datastream.setOwner(jdatastream.getOwner());
+		datastream.setTitle(jdatastream.getTitle());
+		ArrayList<DatastreamUnits> datastreamUnits = new ArrayList<DatastreamUnits>();
+		for (JsonDatastreamUnits unit : jdatastream.getUnits_list()) {
+			
+			DatastreamUnits dsUnit = new DatastreamUnits();
+			dsUnit.setStreamID(datastream);
+			dsUnit.setCreatedTime(new Date());
+			dsUnit.setUpdatedTime(new Date());
+			dsUnit.setMaxValue(unit.getMax_value());
+			dsUnit.setMinValue(unit.getMin_value());
+			dsUnit.setCurrentValue(unit.getCurrent_value());
+			dsUnit.setUnitLabel(unit.getUnit_label());
+			dsUnit.setValueType(unit.getValue_type());
+			dsUnit.setUnitSymbol(unit.getUnit_symbol());
+			dsUnit.setUnitID(UUID.randomUUID().toString()); //only use it as primary key in DB
+			dsUnit.setShortUnitID(RandomStringUtils.randomAlphanumeric(5)); //only use it for storage
+			datastreamUnits.add(dsUnit);
+		}
+		datastream.setDatastreamUnitsList(datastreamUnits);
+		return datastream;
+	}
+	
 	public JsonDatastreamBlock convert_a_Datablock(DatastreamBlocks block) {
 		JsonDatastreamBlock jblock = new JsonDatastreamBlock();
 		jblock.setBlockid(block.getBlockId());

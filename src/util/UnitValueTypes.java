@@ -13,10 +13,11 @@ import java.util.Hashtable;
 public class UnitValueTypes {
 
     protected static Hashtable<String, String> accept_list = new Hashtable<String, String>();
-    protected static final String STRING_TYPE = "String";
-    protected static final String FLOAT_TYPE = "float";
-    protected static final String DOUBLE_TYPE = "double";
-    protected static final String INT_TYPE = "int";
+    public static final String STRING_TYPE = "String";
+    public static final String FLOAT_TYPE = "float";
+    public static final String DOUBLE_TYPE = "double";
+    public static final String INT_TYPE = "int";
+    public static final String LONG_TYPE = "long";
 
     public static void initialize() {
         accept_list.put(STRING_TYPE, STRING_TYPE);

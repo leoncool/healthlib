@@ -161,7 +161,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					Put put = new Put(rowKey);
 					List<JsonDataValues> dataValues = dataPoints.get(i)
 							.getValue_list();
-					for (JsonDataValues value : dataValues) {
+					for (JsonDataValues value : dataValues) {					
 						put.add(VALUE_COL, toBytes(value.getUnit_id()),
 								toBytes(value.getVal()));
 						dataCounter = dataCounter + rowKey.length
@@ -210,7 +210,6 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				for (int i = 0; i < dataPoints.size(); i++) {
 					long longAt = 0;
 					try {
-
 						longAt = Long.parseLong(dataPoints.get(i).getAt());
 
 					} catch (NumberFormatException ex) {
