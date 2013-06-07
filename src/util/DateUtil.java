@@ -36,6 +36,7 @@ public class DateUtil {
 		millisecFormat.setTimeZone(UTC);
 		sleepFormat.setTimeZone(UTC);
 		YearMonthDay_DateFormat.setTimeZone(UTC);
+		utcFormat.setTimeZone(UTC);
 
 	}
 	public Long convert_to_long(String source, SimpleDateFormat format) throws ParseException
@@ -48,6 +49,14 @@ public class DateUtil {
 	public Date convert(String source, SimpleDateFormat format)
 			throws ParseException {
 		synchronized (format) {
+			Date d = format.parse(source);
+			return d;
+		}
+	}
+	public Date convert_SetLenient(String source, SimpleDateFormat format)
+			throws ParseException {
+		synchronized (format) {
+			format.setLenient(false); 
 			Date d = format.parse(source);
 			return d;
 		}

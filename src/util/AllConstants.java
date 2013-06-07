@@ -209,6 +209,8 @@ public interface AllConstants {
 		public static final String No_Input_Datapoints = "no_input_datapoints";
 		public static final String Input_file_format_error = "input_file_format_error";
 		public static final String Invalid_Unit_ID = "invalid_unit_id";
+		public static final String Input_data_contains_invalid_unit_id = "input_data_contains_invalid_unit_id";
+		public static final String Input_data_contains_invalid_date_format = "input_data_contains_invalid_date_format";
 		public static final String Invalid_datastream_title = "invalid_stream_title";
 		public static final String Invalid_Datablock_ID = "invalid_datablock_id";
 		public static final String Invalid_LoginID = "invalid_loginid";

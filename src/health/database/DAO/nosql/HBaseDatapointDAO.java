@@ -4,11 +4,11 @@
  */
 package health.database.DAO.nosql;
 
-import health.database.DAO.BaseDAO;
 import health.database.DAO.DatastreamDAO;
 import health.hbase.models.HBaseDataImport;
 import health.input.jsonmodels.JsonDataPoints;
 import health.input.jsonmodels.JsonDataValues;
+import health.input.jsonmodels.JsonDatastreamUnits;
 import health.input.jsonmodels.singleunitstream.JsonSingleDataPoints;
 
 import java.io.IOException;
@@ -28,7 +28,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.MasterNotRunningException;
-import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
@@ -147,11 +146,21 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				List<JsonDataPoints> dataPoints = importData.getData_points();
 				for (int i = 0; i < dataPoints.size(); i++) {
 					long longAt = 0;
+					boolean isNumeric = dataPoints.get(i).getAt().matches("[0-9]+");
 					try {
-						longAt = Long.parseLong(dataPoints.get(i).getAt());
-					} catch (NumberFormatException ex) {
+						if(isNumeric){
+							longAt = Long.parseLong(dataPoints.get(i).getAt());
+							System.out.println("from long:longAt:"+longAt);
+							}else{
+								DateUtil dateUtil=new DateUtil();
+								Date at=dateUtil.convert_SetLenient(dataPoints.get(i).getAt(), dateUtil.utcFormat);
+								longAt=at.getTime();
+								System.out.println("fromUTC:longAt:"+longAt);
+							}
+					} catch (Exception ex) {
 						ex.printStackTrace();
-						throw new NumberFormatException();
+						throw new ErrorCodeException(
+								AllConstants.ErrorDictionary.Input_data_contains_invalid_date_format);
 					}
 					// server.conf.Utils.log(importData.getStreamID() + "/" +
 					// Long.toString(longAt));
@@ -161,7 +170,14 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					Put put = new Put(rowKey);
 					List<JsonDataValues> dataValues = dataPoints.get(i)
 							.getValue_list();
-					for (JsonDataValues value : dataValues) {					
+					for (JsonDataValues value : dataValues) {	
+	
+						if(!check_ExistUnitID(value.getUnit_id(), importData.getDatastream().getUnits_list()))
+						{
+							throw new ErrorCodeException(
+									AllConstants.ErrorDictionary.Input_data_contains_invalid_unit_id);
+						}
+						try{
 						put.add(VALUE_COL, toBytes(value.getUnit_id()),
 								toBytes(value.getVal()));
 						dataCounter = dataCounter + rowKey.length
@@ -177,7 +193,14 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 									+ toBytes(value.getUnit_id()
 											+ value.getVal_tag()).length;
 						}
+						}catch(Exception ex)
+						{
+							ex.printStackTrace();
+							throw new ErrorCodeException(
+									AllConstants.ErrorDictionary.Internal_Fault);
+						}
 					}
+					
 					if (importData.getBlock_id() != null) {
 						put.add(PROP_COL, BLOCK_ID,
 								toBytes(importData.getBlock_id()));
@@ -263,12 +286,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			table.close();
 			// HBaseConfig.putTable(table);
 			return dataCounter;
-		} catch (NumberFormatException ex) {
-			// HBaseConfig.putTable(table);
-			ex.printStackTrace();
-			throw new ErrorCodeException(
-					AllConstants.ErrorDictionary.HBase_Internal_Error);
-		} catch (IOException ex) {
+		}  catch (IOException ex) {
 			// HBaseConfig.putTable(table);
 			// TODO: handle exception
 			ex.printStackTrace();
@@ -378,7 +396,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					date.setTime(Long.parseLong(getTimefromRowKey(res)));
 					try {
 						datapoint.setAt(dateUtil.format(date,
-								dateUtil.millisecFormat));
+								dateUtil.utcFormat));
 					} catch (Exception ex) {
 						throw new ErrorCodeException(
 								AllConstants.ErrorDictionary.HBase_Internal_Error);
@@ -386,8 +404,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				}
 				if (counter <= 1) {
 					// System.out.println(counter+",First Date from Export:"+Long.parseLong(getTimefromRowKey(res)));
-					Date date = new Date();
-					date.setTime(Long.parseLong(getTimefromRowKey(res)));
+//					Date date = new Date();
+//					date.setTime(Long.parseLong(getTimefromRowKey(res)));
 					// System.out.println(counter+",First Date from Export long:"+date.getTime());
 				}
 				if (res.getValue(PROP_COL, TIME_TAG) != null) {
@@ -756,5 +774,20 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 
 	public String toString(byte[] bytes) {
 		return Bytes.toString(bytes);
+	}
+	public boolean check_ExistUnitID(String unitID,List<JsonDatastreamUnits> junitList){
+		boolean exist=false;
+		if(junitList==null||junitList.size()<1)
+		return false;
+		else{
+			for(JsonDatastreamUnits junit:junitList)
+			{
+				if(junit.getUnit_id().equals(unitID))
+				{
+					exist=true;
+				}
+			}
+		}
+		return exist;
 	}
 }
