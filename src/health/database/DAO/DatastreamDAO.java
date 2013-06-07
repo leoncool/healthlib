@@ -373,8 +373,9 @@ public class DatastreamDAO extends BaseDAO {
 			}
 
 		} catch (Exception e) {
-			HibernateUtil.rollBackTransaction();
 			e.printStackTrace();
+			HibernateUtil.rollBackTransaction();
+
 		}
 	}
 
