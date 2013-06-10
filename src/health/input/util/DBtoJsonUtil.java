@@ -98,8 +98,22 @@ public class DBtoJsonUtil {
 	public JsonDatastreamBlock convert_a_Datablock(DatastreamBlocks block) {
 		JsonDatastreamBlock jblock = new JsonDatastreamBlock();
 		jblock.setBlockid(block.getBlockId());
-		jblock.setBlockdesc(block.getBlockDesc());
-		jblock.setBlockname(block.getDisplayName());
+		if (block.getBlockDesc() == null) {
+			jblock.setBlockdesc("");
+		} else {
+			jblock.setBlockdesc(block.getTags());
+		}
+		if (block.getDisplayName()== null) {
+			jblock.setBlockname(block.getDisplayName());
+		} else {
+			jblock.setBlockname(block.getDisplayName());
+		}
+		
+		if (block.getTags() == null) {
+			jblock.setTags("");
+		} else {
+			jblock.setTags(block.getTags());
+		}
 		jblock.setCreated_time(Long.toString(block.getCreated().getTime()));
 		jblock.setUpdate_time(Long.toString(block.getUpdated().getTime()));
 		return jblock;

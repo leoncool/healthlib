@@ -642,7 +642,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		return valueList;
 	}
 
-	public long delete_A_Datapoint(String streamID, long at)
+	public long delete_A_Datapoint(String streamID, long at, List<String> unitIDList)
 			throws ErrorCodeException {
 		HTableInterface table = null;
 		try {
@@ -672,6 +672,12 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				Result res = itr.next();
 				System.out.println("deleting..." + toString(res.getRow()));
 				Delete delete = new Delete(res.getRow());
+				if(unitIDList!=null){
+					for(String unitid:unitIDList)
+					{
+						delete.deleteColumn(VALUE_COL,toBytes(unitid));
+					}			
+				}
 				table.delete(delete);
 				no_deleted++;
 			}
@@ -698,7 +704,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		try {
 			Date timerStart = new Date();
 			System.out.println("starting Deleting....start:" + start + ",end:"
-					+ start);
+					+ end);
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(200000);

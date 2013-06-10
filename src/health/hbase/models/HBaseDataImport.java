@@ -16,6 +16,7 @@ import java.util.List;
 public class HBaseDataImport extends JsonDataImport {
 //a
     protected String datastream_id;
+    protected String stream_title;
     protected List<JsonDatastreamUnits> units_list;
     protected String device_id;
     protected String single_Unit_ID;
@@ -70,6 +71,14 @@ public class HBaseDataImport extends JsonDataImport {
     public void setDeviceid(String deviceid) {
         this.device_id = deviceid;
     }
+
+	public String getStream_title() {
+		return stream_title;
+	}
+
+	public void setStream_title(String stream_title) {
+		this.stream_title = stream_title;
+	}
     
 }
 //

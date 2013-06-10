@@ -23,6 +23,7 @@ public class JsonDataImport implements Serializable {
     protected String block_id;
     protected JsonDatastream datastream;
     protected JsonDevice device;
+    protected JsonDatastreamBlock datablock;
     @SerializedName(value="single_unit_data_points")
     protected List<JsonSingleDataPoints> data_points_single_list; 
     public JsonDatastream getDatastream() {
@@ -65,5 +66,15 @@ public class JsonDataImport implements Serializable {
 			List<JsonSingleDataPoints> data_points_single_list) {
 		this.data_points_single_list = data_points_single_list;
 	}
+
+	public JsonDatastreamBlock getDatablock() {
+		return datablock;
+	}
+
+	public void setDatablock(JsonDatastreamBlock datablock) {
+		this.datablock = datablock;
+	}
+	
+	
     
 }

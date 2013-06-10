@@ -82,6 +82,7 @@ public interface AllConstants {
 		public static final String exportSetting_MAX = "max";
 		public static final String total_points = "total_points";
 		public static final String total_records = "total_records";
+		public static final String total_deleted_records = "total_deleted_records";
 		public static final String follower_status_active = "active";
 		public static final String follower_status_pending = "pending";
 		public static final String follower_status_ignored = "ignored";
@@ -213,6 +214,7 @@ public interface AllConstants {
 		public static final String Input_data_contains_invalid_date_format = "input_data_contains_invalid_date_format";
 		public static final String Invalid_datastream_title = "invalid_stream_title";
 		public static final String Invalid_Datablock_ID = "invalid_datablock_id";
+		public static final String Invalid_Datablock_ID_for_such_stream = "invalid_datablock_id_for_such_stream";
 		public static final String Invalid_LoginID = "invalid_loginid";
 		public static final String Invalid_wrong_password = "invalid_password";
 		public static final String Invalid_login_token_id = "invalid_login_tokenid";

@@ -49,12 +49,14 @@ public class DatastreamBlocks implements Serializable {
     private Date created;
     @Column(name = "displayName")
     private String displayName;
+    @Column(name = "tags")
+    private String tags;
     @Basic(optional = false)
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
     @JoinColumn(name = "streamID", referencedColumnName = "streamId")
-    @ManyToOne(optional = false)
+    @ManyToOne()
     private Datastream streamID;
 
     @Column(name = "startTime")
@@ -140,6 +142,14 @@ public class DatastreamBlocks implements Serializable {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
 	@Override

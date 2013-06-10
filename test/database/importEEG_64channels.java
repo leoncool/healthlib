@@ -53,8 +53,8 @@ public class importEEG_64channels {
 		System.out.println("unitList:" + unitList.size());
 		HBaseDatapointDAO datapointDao = new HBaseDatapointDAO();
 		HBaseDataImport importdata = new HBaseDataImport();
-		DatastreamBlocks block = streamDao.CreateDatastreamBlock(stream,
-				"eeg1", "eeg1");
+//		DatastreamBlocks block = streamDao.CreateDatastreamBlock(stream,
+//				"eeg1", "eeg1");
 		importdata.setBlock_id("2870e4e7-dcd3-4e89-9466-15345af6c95d");
 		List<JsonDataPoints> data_pointsList = new ArrayList<JsonDataPoints>();
 		Date now = new Date();

@@ -12,13 +12,12 @@ import java.io.Serializable;
  */
 public class JsonDatastreamBlock implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private String blockid;
     private String blockname;
     private String blockdesc;
     private String created_time;
     private String update_time;
-
+    private String tags;
     public JsonDatastreamBlock() {
     }
 
@@ -61,4 +60,13 @@ public class JsonDatastreamBlock implements Serializable {
     public void setCreated_time(String created_time) {
         this.created_time = created_time;
     }
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+    
 }

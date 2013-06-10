@@ -168,10 +168,10 @@ public class DatastreamDAO extends BaseDAO {
 		criteria.add(Restrictions.eq("title", streamTitle));
 		criteria.add(Restrictions.eq("subId", subjectID));
 		if (fetchDataUnits) {
-			criteria.setFetchMode("datastreamUnitsList", FetchMode.JOIN);
+			criteria.setFetchMode("datastreamUnitsList", FetchMode.SELECT);
 		}
 		if (fetchDatablocks) {
-			criteria.setFetchMode("datastreamBlocksList", FetchMode.JOIN);
+			criteria.setFetchMode("datastreamBlocksList", FetchMode.SELECT);
 		}
 		stream = (Datastream) criteria.uniqueResult();
 		if (session.isOpen()) {
@@ -262,18 +262,14 @@ public class DatastreamDAO extends BaseDAO {
 		}
 	}
 
-	public DatastreamBlocks CreateDatastreamBlock(Datastream streamID,
-			String blockName, String blockDesc) {
+	public DatastreamBlocks CreateDatastreamBlock(DatastreamBlocks block) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
-			DatastreamBlocks block = new DatastreamBlocks();
 			UUID uuid = UUID.randomUUID();
 			block.setBlockId(uuid.toString());
 			// block.setStreamID(streamID);
 			Date now = new Date();
 			block.setCreated(now);
-			block.setDisplayName(blockName);
-			block.setStreamID(streamID);
 			block.setUpdated(now);
 			session.save(block);
 			HibernateUtil.commitTransaction();
