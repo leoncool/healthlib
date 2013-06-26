@@ -13,8 +13,8 @@ import java.util.List;
 public class JsonDataPoints {
 
     protected String at;
-    protected List<JsonDataValues> value_list;
     protected String timetag;
+    protected List<JsonDataValues> value_list;
     protected String at_str;
     
     public String getTimetag() {
