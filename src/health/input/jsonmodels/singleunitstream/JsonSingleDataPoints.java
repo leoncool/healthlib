@@ -4,8 +4,6 @@
  */
 package health.input.jsonmodels.singleunitstream;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 /**

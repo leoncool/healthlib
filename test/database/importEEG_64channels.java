@@ -3,7 +3,6 @@ package database;
 import health.database.DAO.DatastreamDAO;
 import health.database.DAO.nosql.HBaseDatapointDAO;
 import health.database.models.Datastream;
-import health.database.models.DatastreamBlocks;
 import health.database.models.DatastreamUnits;
 import health.hbase.models.HBaseDataImport;
 import health.input.jsonmodels.JsonDataPoints;

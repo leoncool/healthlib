@@ -8,12 +8,9 @@ import health.input.jsonmodels.JsonDatastream;
 import health.input.jsonmodels.JsonDatastreamUnits;
 
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-
-import util.AllConstants;
 
 import com.google.gson.Gson;
 

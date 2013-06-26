@@ -5,6 +5,7 @@
 package com.lifestyle.models;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;

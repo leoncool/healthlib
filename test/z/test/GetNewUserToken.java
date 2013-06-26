@@ -6,7 +6,6 @@ package z.test;
  */
 
 
-import health.input.jsonmodels.JsonUser;
 import health.input.jsonmodels.JsonUserToken;
 
 import java.io.OutputStreamWriter;

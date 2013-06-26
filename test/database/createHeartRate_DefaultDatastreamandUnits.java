@@ -4,8 +4,6 @@ import health.database.DAO.DatastreamDAO;
 import health.database.models.Datastream;
 import health.database.models.DatastreamUnits;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,9 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import util.AllConstants;
 

@@ -1,12 +1,10 @@
 package database;
 
+import health.database.DAO.nosql.HBaseDatapointDAO;
+
 import java.io.IOException;
 
 import server.exception.ErrorCodeException;
-
-import health.database.DAO.DatastreamDAO;
-import health.database.DAO.nosql.HBaseDatapointDAO;
-import health.database.models.DatastreamBlocks;
 
 /**
  * @author Leon

@@ -1,15 +1,12 @@
 package health.database.DAO;
 
+import health.database.models.DataSummary;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import health.database.models.DataSummary;
-import health.database.models.Datastream;
-import health.database.models.Subject;
-
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;

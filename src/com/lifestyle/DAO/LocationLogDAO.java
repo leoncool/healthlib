@@ -4,14 +4,17 @@
  */
 package com.lifestyle.DAO;
 
-import com.lifestyle.models.Locationlogs;
 import java.util.Date;
 import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+
 import util.HibernateUtil;
+
+import com.lifestyle.models.Locationlogs;
 
 /**
  *

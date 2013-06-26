@@ -16,7 +16,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-import util.DateUtil;
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.google.gson.Gson;

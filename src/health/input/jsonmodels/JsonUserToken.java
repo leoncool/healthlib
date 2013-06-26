@@ -4,7 +4,6 @@
  */
 package health.input.jsonmodels;
 
-import java.util.Date;
 
 /**
  *

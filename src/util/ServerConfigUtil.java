@@ -7,9 +7,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import util.AllConstants;
-import util.HibernateUtil;
-
 public class ServerConfigUtil {
 	public static String getConfigValue(String variable) {
 		Session session = HibernateUtil.beginTransaction();

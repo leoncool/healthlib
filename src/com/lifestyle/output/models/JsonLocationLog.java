@@ -4,7 +4,6 @@
  */
 package com.lifestyle.output.models;
 
-import java.io.Serializable;
 
 /**
  *

@@ -1,8 +1,8 @@
 package database;
 
-import java.io.IOException;
-
 import health.database.DAO.nosql.HBaseDatapointDAO;
+
+import java.io.IOException;
 
 public class HBaseTest {
 public static void main(String args[]) throws IOException

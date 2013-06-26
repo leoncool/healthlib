@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import util.DateUtil;
-
 public class testInputDateFormat {
 public static void main(String args[]) throws ParseException
 {

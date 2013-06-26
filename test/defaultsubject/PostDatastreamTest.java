@@ -13,7 +13,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-import util.AllConstants;
 import util.AllConstants.api_entryPoints;
 
 import com.google.gson.Gson;

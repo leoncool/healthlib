@@ -1,6 +1,5 @@
 package health.database.DAO;
 
-import health.database.models.DataSummary;
 import health.database.models.SleepDataSummary;
 
 import java.util.ArrayList;
