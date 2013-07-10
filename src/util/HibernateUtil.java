@@ -2,6 +2,7 @@ package util;
 
 import health.database.models.Config;
 import health.database.models.CreationTemplate;
+import health.database.models.DataPermission;
 import health.database.models.DataSummary;
 import health.database.models.Datastream;
 import health.database.models.DatastreamBlocks;
@@ -124,7 +125,7 @@ public class HibernateUtil {
             config.addAnnotatedClass(SleepDataSummary.class);
             config.addAnnotatedClass(Locationlogs.class);
             config.addAnnotatedClass(LocationPlaces.class);
-            
+            config.addAnnotatedClass(DataPermission.class);
             
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);

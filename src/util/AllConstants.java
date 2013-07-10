@@ -72,7 +72,9 @@ public interface AllConstants {
 	}
 
 	public interface ProgramConts {
-
+		public static final String data_permission_type_datastream="datastream";
+		public static final String data_permission_type_subject="subject";
+		public static final String VALID="valid";
 		public static final String existWildcardSubject = "exist_wildcard_subject";
 		public static final String existSubjectAndDatastreamID = "exist_datastream_ID";
 		public static final String allow = "allow";
@@ -232,6 +234,7 @@ public interface AllConstants {
 		public static final String SYSTEM_ERROR_NO_DEFAULT_HEALTH_SUBJECT = "sys_error_no_default_subject";
 		public static final String SYSTEM_ERROR_NO_DEFAULT_SUBJECT = "sys_error_no_default_subject";
 		public static final String Cannot_find_request_avatar = "cannot_find_request_avatar";
+		public static final String PERMISSION_DENIED="no_permission_for_such_request";
 	}
 
 	public interface DeviceErrorDictionary {
