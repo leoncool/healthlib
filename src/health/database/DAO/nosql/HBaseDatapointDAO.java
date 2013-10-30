@@ -324,9 +324,13 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				// + Long.toString(start))));
 				// filterList.addFilter(fowFilter_startDate);
 				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
+			}else{
+				scan.setStartRow(toBytes(streamID + "/" + Long.toString(0)));
 			}
 			if (end != null && end != 0) {
 				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
+			}else{
+				scan.setStopRow(toBytes(streamID + "/" + Long.toString(Long.MAX_VALUE)));
 			}
 			// if((start == null || start == 0)&&(end==null ||end == 0))
 			// {
@@ -483,9 +487,14 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				// + Long.toString(start))));
 				// filterList.addFilter(fowFilter_startDate);
 				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
+			}else{
+				scan.setStartRow(toBytes(streamID + "/" + Long.toString(0)));//setup minimum for speeding up requests
 			}
 			if (end != null && end != 0) {
 				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
+			}
+			else{
+				scan.setStopRow(toBytes(streamID + "/" + Long.toString(Long.MAX_VALUE)));//setup maximum for speeding up requests
 			}
 			if ((start == null || start == 0) && (end == null || end == 0)) {
 				RowFilter rowFilterStreamID = new RowFilter(

@@ -50,6 +50,7 @@ public interface AllConstants {
 		public static final String request_api_start = "start";
 		public static final String request_api_startDate = "startdate";
 		public static final String request_api_at = "at";
+		public static final String request_api_timetag = "timetag";
 		public static final String request_devicetemplateID = "devicetemplateid";
 		public static final String request_api_end = "end";
 		public static final String request_api_endDate = "enddate";
