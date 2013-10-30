@@ -18,12 +18,13 @@ public class UnitValueTypes {
     public static final String DOUBLE_TYPE = "double";
     public static final String INT_TYPE = "int";
     public static final String LONG_TYPE = "long";
-
+    public static final String FILE_TYPE = "file";
     public static void initialize() {
         accept_list.put(STRING_TYPE, STRING_TYPE);
         accept_list.put(FLOAT_TYPE, FLOAT_TYPE);
         accept_list.put(DOUBLE_TYPE, DOUBLE_TYPE);
         accept_list.put(INT_TYPE, INT_TYPE);
+        accept_list.put(FILE_TYPE, FILE_TYPE);
     }
 
     public static boolean existValueType(String type) {
