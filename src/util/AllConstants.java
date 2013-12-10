@@ -19,6 +19,7 @@ public interface AllConstants {
 	}
 
 	public static interface api_entryPoints {
+		public static final String api_humanmodel = "hm";
 		public static final String api_subject = "subjects";
 		public static final String api_defaultsubject="defaultsubject";
 		public static final String api_health = "health";
