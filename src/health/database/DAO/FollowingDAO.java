@@ -28,7 +28,7 @@ public class FollowingDAO extends BaseDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             session.save(follower);
-            HibernateUtil.commitTransaction();
+        	session.getTransaction().commit();
             return follower;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -40,7 +40,7 @@ public class FollowingDAO extends BaseDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             session.delete(follower);
-            HibernateUtil.commitTransaction();
+        	session.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -57,9 +57,7 @@ public class FollowingDAO extends BaseDAO {
             criteria.add(Restrictions.eq("followerID", followerID));
         }
         followerList = criteria.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         return followerList;
     }
 
@@ -69,9 +67,7 @@ public class FollowingDAO extends BaseDAO {
         Criteria criteria = session.createCriteria(Follower.class);
         criteria.add(Restrictions.eq("loginID", loginID));
         followerList = criteria.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         return followerList;
     }
 
@@ -81,9 +77,7 @@ public class FollowingDAO extends BaseDAO {
         Criteria criteria = session.createCriteria(Follower.class);
         criteria.add(Restrictions.eq("followerID", loginID));
         followerList = criteria.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         return followerList;
     }
     public Map followerToMap(String loginID) {
@@ -93,9 +87,7 @@ public class FollowingDAO extends BaseDAO {
 //        query.setFirstResult(startFrom * AllConstants.HibernateConsts.UserSearch_maxPageSize);
 //        query.setMaxResults(AllConstants.HibernateConsts.UserSearch_maxPageSize);
         List<Object[]> list = query.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         HashMap<String, String> map=new HashMap<String, String>();
         for (Object[] result : list) {
         	map.put((String)result[1], (String)result[1]);
@@ -108,9 +100,7 @@ public class FollowingDAO extends BaseDAO {
 //        query.setFirstResult(startFrom * AllConstants.HibernateConsts.UserSearch_maxPageSize);
 //        query.setMaxResults(AllConstants.HibernateConsts.UserSearch_maxPageSize);
         List<Object[]> list = query.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         HashMap<String, String> map=new HashMap<String, String>();
         for (Object[] result : list) {
         	map.put((String)result[0], (String)result[0]);

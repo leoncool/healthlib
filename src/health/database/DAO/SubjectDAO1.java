@@ -30,7 +30,7 @@ public class SubjectDAO1 extends BaseDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             session.save(subject);
-            HibernateUtil.commitTransaction();
+        	session.getTransaction().commit();
             if (subject.getId() != null) {
                 return subject.getId();
             } else {

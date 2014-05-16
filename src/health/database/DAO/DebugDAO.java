@@ -21,6 +21,6 @@ public class DebugDAO extends BaseDAO{
         Debug debug=new Debug();
         debug.setLog(str);
         session.save(debug);
-        HibernateUtil.commitTransaction();
+    	session.getTransaction().commit();
     }
 }

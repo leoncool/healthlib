@@ -29,9 +29,7 @@ public class SubjectDAO extends BaseDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             Subject obj = (Subject) session.get(Subject.class, subjectid);
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             if (obj != null) {
                 return obj;
             } else {
@@ -55,7 +53,7 @@ public class SubjectDAO extends BaseDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             session.save(subject);
-            HibernateUtil.commitTransaction();
+        	session.getTransaction().commit();
             if (subject.getId() != null) {
                 return subject;
             } else {
@@ -74,9 +72,7 @@ public class SubjectDAO extends BaseDAO {
                     .add(Restrictions.eq("loginID", loginID))
                     .add(Restrictions.eq("purpose", AllConstants.HealthConts.default_health_subject_purpose));
             Subject subject= (Subject) criteria.uniqueResult();
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return subject;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -91,9 +87,7 @@ public class SubjectDAO extends BaseDAO {
                     .add(Restrictions.eq("loginID", loginID))
                     .add(Restrictions.eq("purpose", AllConstants.HealthConts.System_Default_subject_Name));
             Subject subject= (Subject) criteria.uniqueResult();
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return subject;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -107,9 +101,7 @@ public class SubjectDAO extends BaseDAO {
             Criteria criteria = session.createCriteria(Subject.class)
                     .add(Restrictions.eq("loginID", loginID));
             List<Subject> list = criteria.list();
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return list;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -137,10 +129,7 @@ public class SubjectDAO extends BaseDAO {
         	job.setTargetObjectID(ds.getStreamId());
         	session.save(job);
         }
-    	HibernateUtil.commitTransaction();
-        if (session.isOpen()) {
-            session.close();
-        }
+    	session.getTransaction().commit();
         
     } catch (Exception e) {
     	HibernateUtil.rollBackTransaction();
@@ -155,9 +144,7 @@ public class SubjectDAO extends BaseDAO {
                     .add(Restrictions.eq("loginID", loginID))
                     .add(Restrictions.eq("purpose", AllConstants.ProgramConts.subject_medical_device_purpose));
             Subject subject = (Subject) criteria.uniqueResult();
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return subject;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -173,9 +160,7 @@ public class SubjectDAO extends BaseDAO {
                     .add(Restrictions.eq("loginID", loginID))
                     .add(Restrictions.isNull("parentSub"));
             List<Subject> list = criteria.list();
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return list;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -196,11 +181,7 @@ public class SubjectDAO extends BaseDAO {
     	   subject.setCreatedTime(now);
     	   subject.setUpdated(now);
     	   session.save(subject);
-    	
-    	   HibernateUtil.commitTransaction();
-    	    if (session.isOpen()) {
-                session.close();
-            }
+    		session.getTransaction().commit();
     	    return subject;
     }
 }

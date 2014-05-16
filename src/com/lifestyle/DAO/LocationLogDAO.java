@@ -28,10 +28,7 @@ public class LocationLogDAO {
 //        }
         Session session = HibernateUtil.beginTransaction();
         session.saveOrUpdate(log);
-        HibernateUtil.commitTransaction();
-        if (session.isOpen()) {
-            HibernateUtil.closeSession();
-        }
+    	session.getTransaction().commit();
     }
 
     public void putListLog(List<Locationlogs> logList) {
@@ -48,10 +45,7 @@ public class LocationLogDAO {
             }
             i++;
         }
-        HibernateUtil.commitTransaction();
-        if (session.isOpen()) {
-            HibernateUtil.closeSession();
-        }
+    	session.getTransaction().commit();
     }
 
     public boolean exist(Locationlogs log) {
@@ -60,9 +54,6 @@ public class LocationLogDAO {
         criteria.add(Restrictions.eq("userID", log.getUserID()));
         criteria.add(Restrictions.eq("datetime", log.getDatetime()));
         Locationlogs retrievedLog = (Locationlogs) criteria.uniqueResult();
-        if (session.isOpen()) {
-            session.close();
-        }
         if (retrievedLog == null) {
             return false;
         } else {
@@ -82,9 +73,7 @@ public class LocationLogDAO {
         }
         criteria.addOrder(Order.asc("datetime"));
         List<Locationlogs> list = criteria.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+
         return list;
     }
 

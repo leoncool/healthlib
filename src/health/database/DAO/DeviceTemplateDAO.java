@@ -52,7 +52,7 @@ public class DeviceTemplateDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             session.save(dtemplate);
-            HibernateUtil.commitTransaction();
+        	session.getTransaction().commit();
             return dtemplate;
         } catch (Exception ex) {
             ex.printStackTrace();

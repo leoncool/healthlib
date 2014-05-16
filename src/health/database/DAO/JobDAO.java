@@ -12,10 +12,7 @@ public JobsTable createJob(JobsTable job)
     try {
         Session session = HibernateUtil.beginTransaction();
         session.save(job);
-        HibernateUtil.commitTransaction();
-        if (session.isOpen()) {
-            session.close();
-        }
+    	session.getTransaction().commit();
         if (job.getId()>0) {
             return job;
         } else {

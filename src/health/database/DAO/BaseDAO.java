@@ -24,9 +24,7 @@ public class BaseDAO {
             Object obj = new Object();
             Session session = HibernateUtil.beginTransaction();
             obj = (Object) session.get(clazz, id);
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return obj;
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,9 +38,7 @@ public class BaseDAO {
             Session session = HibernateUtil.beginTransaction();
             Query query = session.createQuery("from " + clazz.getName());
             objects = query.list();
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return objects;
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,13 +61,11 @@ public class BaseDAO {
             Session session = HibernateUtil.beginTransaction();
             Query query = session.createQuery("from " + clazz.getName() + " order by " + propertyName + " " + ordertype);
             objects = query.list();
-            if (session.isOpen()) {
-                session.close();
-            }
+        	session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            HibernateUtil.closeSession();
+//            HibernateUtil.closeSession();
         }
         return objects;
     }
@@ -90,14 +84,12 @@ public class BaseDAO {
             Session session = HibernateUtil.beginTransaction();
             Query query = session.createQuery("from " + clazz.getName() + " where " + propertyName + " = " + propertyValue + " order by " + orderBy + " " + ordertype);
             objects = query.list();
-            if (session.isOpen()) {
-                session.close();
-            }
+        	session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Error in BaseDAO!---   " + e);
             e.printStackTrace();
         } finally {
-            HibernateUtil.closeSession();
+//            HibernateUtil.closeSession();
         }
         return objects;
     }
@@ -108,13 +100,11 @@ public class BaseDAO {
             Session session = HibernateUtil.beginTransaction();
             Query query = session.createQuery("from " + clazz.getName() + " where " + propertyName + " = " + propertyValue);
             objects = query.list();
-            if (session.isOpen()) {
-                session.close();
-            }
+        	session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            HibernateUtil.closeSession();
+//            HibernateUtil.closeSession();
         }
         return objects;
     }

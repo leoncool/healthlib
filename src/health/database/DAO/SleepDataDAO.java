@@ -33,9 +33,7 @@ public class SleepDataDAO {
 			criteria.add(Restrictions.eq("unit_id", unit_id));
 		}
 		dsummaryList = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		   session.getTransaction().commit();
 		return dsummaryList;
 	}
 
@@ -71,7 +69,7 @@ public class SleepDataDAO {
 					}
 				}
 			}
-			HibernateUtil.commitTransaction();
+			session.getTransaction().commit();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -97,9 +95,7 @@ public class SleepDataDAO {
 			criteria.add(Restrictions.eq("unit_id", unit_id));
 		}
 		dsummaryList = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		   session.getTransaction().commit();
 		return dsummaryList;
 	}
 }

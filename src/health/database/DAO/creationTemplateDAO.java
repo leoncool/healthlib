@@ -15,9 +15,7 @@ public class creationTemplateDAO extends BaseDAO {
 		Session session = HibernateUtil.beginTransaction();
 		Criteria criteria = session.createCriteria(CreationTemplate.class);
 		List<CreationTemplate> list = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		   session.getTransaction().commit();
 		return list;
 	}
 }

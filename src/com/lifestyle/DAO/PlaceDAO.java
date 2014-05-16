@@ -50,10 +50,7 @@ public class PlaceDAO {
         for (LocationPlaces place : allPlaces) {
             session.saveOrUpdate(place);
         }
-        HibernateUtil.commitTransaction();
-        if (session.isOpen()) {
-            HibernateUtil.closeSession();
-        }
+    	session.getTransaction().commit();
         return true;
     }
 
@@ -83,9 +80,7 @@ public class PlaceDAO {
         Criteria criteria = session.createCriteria(LocationPlaces.class);
         criteria.add(Restrictions.eq("userID", userID));
         List<LocationPlaces> allPlaces = criteria.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         return allPlaces;
     }
 

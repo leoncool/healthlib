@@ -47,9 +47,7 @@ public class UserDAO extends BaseDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             user = (Users) session.get(Users.class, idLogins);
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             if (user != null) {
                 return true;
             } else {
@@ -67,9 +65,7 @@ public class UserDAO extends BaseDAO {
         try {
             Session session = HibernateUtil.beginTransaction();
             user = (Users) session.get(Users.class, idLogins);
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return user;
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,9 +76,7 @@ public class UserDAO extends BaseDAO {
     public UserInfo getUserInfo(String loginID) {
         Session session = HibernateUtil.beginTransaction();
         Users user = (Users) session.get(Users.class, loginID);
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         UserInfo userinfo = new UserInfo();
         userinfo.setUser(user);
         session = HibernateUtil.beginTransaction();
@@ -103,10 +97,7 @@ public class UserDAO extends BaseDAO {
         	session.saveOrUpdate(detail);
         	
        	}        
-        HibernateUtil.commitTransaction();
-        if (session.isOpen()) {
-            session.close();
-        }
+    	session.getTransaction().commit();
         userinfo.setAvatar(user.getUserAvatar());
         return userinfo;
     }
@@ -118,9 +109,7 @@ public class UserDAO extends BaseDAO {
         query.setFirstResult(startFrom * AllConstants.HibernateConsts.UserList_maxPageSize);
         query.setMaxResults(AllConstants.HibernateConsts.UserList_maxPageSize);
         List<Object[]> list = query.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         List<UserInfo> userInfoList = new ArrayList<UserInfo>();
         if (list.isEmpty()) {
             return userInfoList;
@@ -149,9 +138,7 @@ public class UserDAO extends BaseDAO {
         query.setFirstResult(startFrom * AllConstants.HibernateConsts.UserSearch_maxPageSize);
         query.setMaxResults(AllConstants.HibernateConsts.UserSearch_maxPageSize);
         List<Object[]> list = query.list();
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
         List<UserInfo> userInfoList = new ArrayList<UserInfo>();
         if (list.isEmpty()) {
             return userInfoList;
@@ -189,11 +176,7 @@ public LoginToken requestNewLoginToken(String loginID,String ip,Date expireTime)
 	token.setCreated(new Date());
 	Session session=HibernateUtil.beginTransaction();
 	session.save(token);
-	HibernateUtil.commitTransaction();
-	if(session.isOpen())
-	{
-		session.close();
-	}
+	session.getTransaction().commit();
 	return token;
 }
     public List<Users> searchLogin(String keywords, int startFrom) {
@@ -214,9 +197,7 @@ public LoginToken requestNewLoginToken(String loginID,String ip,Date expireTime)
             criteria.add(orExp2);
             userList = criteria.list();
 
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.getTransaction().commit();
             return userList;
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,9 +213,7 @@ public LoginToken requestNewLoginToken(String loginID,String ip,Date expireTime)
             Users user = (Users) session.get(Users.class, new String(loginID));
             if (user.getPassword()
                     == null ? password == null : user.getPassword().equals(password)) {
-                if (session.isOpen()) {
-                    session.close();
-                }
+            	   session.getTransaction().commit();
                 return true;
             }
         } catch (Exception e) {
@@ -270,9 +249,7 @@ public LoginToken requestNewLoginToken(String loginID,String ip,Date expireTime)
             ex.printStackTrace();
         }
 
-        if (session.isOpen()) {
-            session.close();
-        }
+        session.getTransaction().commit();
 
         if (!objects.isEmpty()) {
             return true;
@@ -284,9 +261,7 @@ public LoginToken requestNewLoginToken(String loginID,String ip,Date expireTime)
     {
     	Session session=HibernateUtil.beginTransaction();
     	  LoginToken token = (LoginToken) session.get(LoginToken.class, tokenID);
-          if (session.isOpen()) {
-              session.close();
-          }
+    	   session.getTransaction().commit();
           return token;
     }
 //    public List<Logins> SearchLogin(String idLogins, boolean fuzzy) {

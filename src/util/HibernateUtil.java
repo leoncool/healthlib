@@ -136,8 +136,8 @@ public class HibernateUtil {
         return session;
     }
 
-    public static void closeSession() {
-        HibernateUtil.getSession().close();
+    public static void closeSession(Session session) {
+    	session.getTransaction().commit();
     }
 
     public static void recreateDatabase() {
@@ -154,15 +154,8 @@ public class HibernateUtil {
         return hibernateSession;
     }
 
-    public static void commitTransaction() {
-    	if(!HibernateUtil.getSession().getTransaction().wasCommitted())
-    	{
-        HibernateUtil.getSession().getTransaction().commit();
-    	}
-        if (HibernateUtil.getSession().isOpen()) {
-            HibernateUtil.getSession().close();
-        }
-
+    public static void commitTransaction(Session session, boolean inuse) {
+    	session.getTransaction().commit();
     }
 
     public static void rollBackTransaction() {

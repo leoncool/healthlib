@@ -30,9 +30,7 @@ public class DataSummaryDAO extends BaseDAO {
 			criteria.add(Restrictions.eq("unit_id", unit_id));
 		}
 		dsummaryList = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		   session.getTransaction().commit();
 		return dsummaryList;
 	}
 	public List<DataSummary> getDataSummariesByStartAndEndTime(String StreamID, String unit_id,
@@ -53,9 +51,7 @@ public class DataSummaryDAO extends BaseDAO {
 			criteria.add(Restrictions.eq("unit_id", unit_id));
 		}
 		dsummaryList = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		   session.getTransaction().commit();
 		return dsummaryList;
 	}
 	public DataSummary create_A_DataSummary(DataSummary ds) {
@@ -83,7 +79,7 @@ public class DataSummaryDAO extends BaseDAO {
 			} else {
 				session.save(DataSummaryToPut);
 			}
-			HibernateUtil.commitTransaction();
+			session.getTransaction().commit();
 			if (ds.getId() == 0) {
 				return null;
 			} else {

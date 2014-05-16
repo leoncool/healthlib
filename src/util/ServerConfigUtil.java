@@ -11,9 +11,7 @@ public class ServerConfigUtil {
 	public static String getConfigValue(String variable) {
 		Session session = HibernateUtil.beginTransaction();
 		Config config = (Config) session.get(Config.class, variable);
-		if (session.isOpen()) {
-			session.close();
-		}
+		   session.getTransaction().commit();
 		if (config != null) {
 			return config.getValue();
 		} else {
@@ -33,7 +31,7 @@ public class ServerConfigUtil {
 		for (Config config : configList) {
 			session.saveOrUpdate(config);
 		}
-		HibernateUtil.commitTransaction();
+		session.getTransaction().commit();
 	}
 
 	public static void main(String args[]) {

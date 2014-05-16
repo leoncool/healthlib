@@ -19,11 +19,8 @@ public class DataPermissionDAO extends BaseDAO {
 		try {
 			Session session = HibernateUtil.beginTransaction();
 			session.save(permission);
-			HibernateUtil.commitTransaction();
-			if(session.isOpen())
-			{
-				session.close();
-			}
+			session.getTransaction().commit();
+
 			if (permission.getRecordId() > 0) {
 				return permission;
 			} else {
@@ -59,9 +56,7 @@ public class DataPermissionDAO extends BaseDAO {
 			}
 
 			List<DataPermission> perList = criteria.list();
-			if(session.isOpen()){
-				session.close();
-			}
+			session.getTransaction().commit();
 			return perList;
 		} catch (Exception ex) {
 			ex.printStackTrace();

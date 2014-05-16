@@ -75,7 +75,6 @@ public class DatastreamUnits implements Serializable {
     @Column(name = "updatedTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
-    @Basic(optional = false)
     @Column(name = "ValueType")
     private String valueType;
     @Id

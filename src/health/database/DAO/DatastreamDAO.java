@@ -41,7 +41,7 @@ public class DatastreamDAO extends BaseDAO {
 		try {
 			Session session = HibernateUtil.beginTransaction();
 			session.save(object);
-			HibernateUtil.commitTransaction();
+			session.getTransaction().commit();
 			if (object.getStreamId() != null) {
 				return object.getStreamId();
 			} else {
@@ -58,7 +58,7 @@ public class DatastreamDAO extends BaseDAO {
 		try {
 			Session session = HibernateUtil.beginTransaction();
 			session.save(unit);
-			HibernateUtil.commitTransaction();			
+			session.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -150,9 +150,7 @@ public class DatastreamDAO extends BaseDAO {
 		}
 		stream = (Datastream) criteria.add(Restrictions.idEq(StreamID))
 				.uniqueResult();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.getTransaction().commit();
 		return stream;
 	}
 
@@ -174,9 +172,7 @@ public class DatastreamDAO extends BaseDAO {
 			criteria.setFetchMode("datastreamBlocksList", FetchMode.SELECT);
 		}
 		stream = (Datastream) criteria.uniqueResult();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.getTransaction().commit();
 		return stream;
 	}
 
@@ -205,9 +201,7 @@ public class DatastreamDAO extends BaseDAO {
 		// criteria.setFetchMode("datastreamBlocksList", FetchMode.JOIN);
 		// }
 		List<Datastream> list = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.getTransaction().commit();
 		return list;
 	}
 
@@ -216,9 +210,7 @@ public class DatastreamDAO extends BaseDAO {
 		Criteria criteria = session.createCriteria(DatastreamUnits.class).add(
 				Restrictions.eq("streamID", datastreamID));
 		List<DatastreamUnits> list = criteria.list();
-		if (session.isOpen()) {
-			session.close();
-		}
+		session.getTransaction().commit();
 		return list;
 	}
 
@@ -229,9 +221,12 @@ public class DatastreamDAO extends BaseDAO {
 
 			session.save(streamObject);
 			for (DatastreamUnits unit : unitList) {
+				if (unit.getValueType() == null) {
+					unit.setValueType("undefined");
+				}
 				session.save(unit);
 			}
-			HibernateUtil.commitTransaction();
+			session.getTransaction().commit();
 			if (streamObject.getStreamId() != null) {
 				return streamObject;
 			} else {
@@ -254,8 +249,7 @@ public class DatastreamDAO extends BaseDAO {
 					session.save(unit);
 				}
 			}
-			HibernateUtil.commitTransaction();
-
+			session.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -272,10 +266,10 @@ public class DatastreamDAO extends BaseDAO {
 			block.setCreated(now);
 			block.setUpdated(now);
 			session.save(block);
-			HibernateUtil.commitTransaction();
+			session.getTransaction().commit();
 			return block;
 		} catch (Exception ex) {
-			HibernateUtil.rollBackTransaction();
+			// HibernateUtil.rollBackTransaction();
 			ex.printStackTrace();
 			return null;
 		}
@@ -287,17 +281,16 @@ public class DatastreamDAO extends BaseDAO {
 		Criteria criteria = session.createCriteria(DatastreamBlocks.class);
 		criteria.add(Restrictions.eq("streamID", streamID)).addOrder(
 				Order.asc("created"));
-		;
+
 		try {
 			objects = criteria.list();
+			session.getTransaction().commit();
 			return (List<DatastreamBlocks>) objects;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
 		} finally {
-			if (session.isOpen()) {
-				session.close();
-			}
+
 		}
 	}
 
@@ -306,14 +299,13 @@ public class DatastreamDAO extends BaseDAO {
 		DatastreamBlocks object = (DatastreamBlocks) session.get(
 				DatastreamBlocks.class, blockID);
 		try {
+			session.getTransaction().commit();
 			return object;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
 		} finally {
-			if (session.isOpen()) {
-				session.close();
-			}
+
 		}
 	}
 
@@ -332,10 +324,8 @@ public class DatastreamDAO extends BaseDAO {
 				job.setTargetObjectID(datastream.getStreamId());
 				session.save(job);
 			}
-			HibernateUtil.commitTransaction();
-			if (session.isOpen()) {
-				session.close();
-			}
+			session.getTransaction().commit();
+			
 
 		} catch (Exception e) {
 			HibernateUtil.rollBackTransaction();
@@ -357,16 +347,18 @@ public class DatastreamDAO extends BaseDAO {
 				job.setTargetObject(AllConstants.ProgramConts.job_targetObject_datastream_unit);
 				if (unit.getShortUnitID() != null
 						&& unit.getShortUnitID().length() > 2) {
-					job.setTargetObjectID("streamID:"+unit.getStreamID().getStreamId()+","+unit.getShortUnitID());
+					job.setTargetObjectID("streamID:"
+							+ unit.getStreamID().getStreamId() + ","
+							+ unit.getShortUnitID());
 				} else {
-					job.setTargetObjectID("streamID:"+unit.getStreamID().getStreamId()+","+unit.getUnitID());
+					job.setTargetObjectID("streamID:"
+							+ unit.getStreamID().getStreamId() + ","
+							+ unit.getUnitID());
 				}
 				session.save(job);
 			}
-			HibernateUtil.commitTransaction();
-			if (session.isOpen()) {
-				session.close();
-			}
+			session.getTransaction().commit();
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -396,10 +388,8 @@ public class DatastreamDAO extends BaseDAO {
 				job.setTargetObjectID(datastream.getStreamId());
 				session.save(job);
 			}
-			HibernateUtil.commitTransaction();
-			if (session.isOpen()) {
-				session.close();
-			}
+			session.getTransaction().commit();
+			
 
 		} catch (Exception e) {
 			HibernateUtil.rollBackTransaction();
@@ -422,10 +412,8 @@ public class DatastreamDAO extends BaseDAO {
 				job.setTargetObjectID(block.getBlockId());
 				session.save(job);
 			}
-			HibernateUtil.commitTransaction();
-			if (session.isOpen()) {
-				session.close();
-			}
+			session.getTransaction().commit();
+			
 
 		} catch (Exception e) {
 			HibernateUtil.rollBackTransaction();

@@ -33,10 +33,7 @@ public class DeviceSerialDAO extends BaseDAO {
             if (!session.isOpen()) {
                 session = HibernateUtil.beginTransaction();
             }
-            HibernateUtil.commitTransaction();
-            if (session.isOpen()) {
-                session.close();
-            }
+        	session.getTransaction().commit(); 
             return "";
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -53,10 +50,7 @@ public class DeviceSerialDAO extends BaseDAO {
             criteria.add(Restrictions.eq("activeBy", loginid));
         }
         List<DeviceBinding> list = criteria.list();
-        HibernateUtil.commitTransaction();
-        if (session.isOpen()) {
-            session.close();
-        }
+    	session.getTransaction().commit();
         if (list == null || list.isEmpty()) {
             return null;
         } else {
@@ -71,7 +65,7 @@ public class DeviceSerialDAO extends BaseDAO {
             device.setActiveBy(loginID);
             device.setActiveTime(new Date());            
             session.update(device);
-            HibernateUtil.commitTransaction();
+        	session.getTransaction().commit();
             if (session.isOpen()) {
                 session.close();
             }
@@ -88,7 +82,7 @@ public class DeviceSerialDAO extends BaseDAO {
             device.setActiveBy(null);
             device.setActiveTime(null);
             session.update(device);
-            HibernateUtil.commitTransaction();
+        	session.getTransaction().commit();
             if (session.isOpen()) {
                 session.close();
             }
