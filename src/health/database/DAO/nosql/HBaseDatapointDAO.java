@@ -227,6 +227,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			} else if (importData.getData_points_single_list() != null
 					&& importData.getData_points_single_list().size() > 0) {
 				String single_unitID = importData.getSingle_Unit_ID();
+				System.out.println("singal unit id:"+single_unitID);
 				// for single datapoints format
 				List<JsonSingleDataPoints> dataPoints = importData
 						.getData_points_single_list();
@@ -246,7 +247,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 							+ Long.toString(longAt));
 					dataCounter = dataCounter + rowKey.length;
 					Put put = new Put(rowKey);
-
+					System.out.println("Single data point import, value:"+dataPoints.get(i).getVal());
 					put.add(VALUE_COL, toBytes(single_unitID),
 							toBytes(dataPoints.get(i).getVal()));
 					dataCounter = dataCounter + rowKey.length
@@ -471,7 +472,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
-			System.out.println("starting Exporting...." + timerStart);
+			System.out.println("single unit export.....starting Exporting...." + timerStart);
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(1000);
@@ -656,7 +657,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
-			System.out.println("starting Exporting...." + at);
+			System.out.println("starting Deleting...." + at);
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(200000);
@@ -712,7 +713,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
-			System.out.println("starting Deleting....start:" + start + ",end:"
+			System.out.println("Range Delete streamID:"+streamID+", starting Deleting....start:" + start + ",end:"
 					+ end);
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
@@ -724,7 +725,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
 							toBytes(streamID)));
 			filterList.addFilter(rowFilterStreamID);
-			if (start > 0) {
+			if (start >= 0) {
 				RowFilter fowFilter_startDate = new RowFilter(
 						CompareFilter.CompareOp.GREATER_OR_EQUAL,
 						new BinaryComparator(toBytes(streamID + "/"
@@ -743,14 +744,16 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			scan.setFilter(filterList);
 			ResultScanner scanner = table.getScanner(scan);
 			Iterator<Result> itr = scanner.iterator();
+			List<Delete> deleteList=new ArrayList<>();
 			long no_deleted = 0;
 			while (itr.hasNext()) {
 				Result res = itr.next();
 				System.out.println("deleting..." + toString(res.getRow()));
 				Delete delete = new Delete(res.getRow());
-				table.delete(delete);
+				deleteList.add(delete);
 				no_deleted++;
 			}
+			table.delete(deleteList);
 			table.close();
 			// HBaseConfig.putTable(table);
 			HBaseDataImport dataexport = null;

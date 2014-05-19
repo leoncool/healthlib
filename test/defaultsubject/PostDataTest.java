@@ -30,7 +30,7 @@ public class PostDataTest {
 			if (i == (input.size() - 1)) {
 				returnV = returnV + input.get(i);
 			} else {
-				returnV = returnV+input.get(i)+",";
+				returnV = returnV + input.get(i) + ",";
 			}
 
 		}
@@ -40,7 +40,7 @@ public class PostDataTest {
 	public static void main(String args[]) {
 		try {
 			URL url = new URL(
-				"http://wikihealth.bigdatapro.org:55555/healthbook/v1/health/title/ecg/datapoints?accesstoken=ef9b6d64b1924d9cb490eddcd871858b&api_key=special-key");
+					"http://wikihealth.bigdatapro.org:55555/healthbook/v1/health/title/ecg/datapoints?accesstoken=8ede656b5a834d0ebcf5233f4e9ff263&api_key=special-key");
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
@@ -48,43 +48,40 @@ public class PostDataTest {
 			connection.setRequestProperty("Cache-Control", "no-cache");
 			OutputStreamWriter out = new OutputStreamWriter(
 					connection.getOutputStream());
-			
-			File fileInput=new File("F:/Dropbox/PhD/Wiki Health/Yang Li/ECG/ecg_data_101.out");
-			
-			Scanner scanner=new Scanner(fileInput);
+
+			File fileInput = new File(
+					"F:/Dropbox/PhD/Wiki Health/Yang Li/ECG/ecg_data_101.out");
+
+			Scanner scanner = new Scanner(fileInput);
 
 			Gson gson = new Gson();
 			BaseDAO dao = new BaseDAO();
 			ArrayList<JsonSingleDataPoints> value_list = new ArrayList<JsonSingleDataPoints>();
-			Date now=new Date();
-			long nowLong=now.getTime();
-			ArrayList<String> blockArray=new ArrayList<String>();
-			while(scanner.hasNextLine())
-			{	String nextLine=scanner.nextLine();
-				if(blockArray.size()>=360)
-				{
-					JsonSingleDataPoints value = new JsonSingleDataPoints();
-					value.setAt(Long.toString(nowLong));
-//					System.out.println(arrayToDelimitedString(blockArray));
-					value.setVal(arrayToDelimitedString(blockArray));
-					value_list.add(value);
-					nowLong=nowLong+1000L;	
-					blockArray=new ArrayList<String>();
-					blockArray.add(nextLine);
-				}
-				else{
-					blockArray.add(nextLine);
-				}
+			Date now = new Date();
+			long nowLong = now.getTime();
+			double nowLongDouble = nowLong;
+			ArrayList<String> blockArray = new ArrayList<String>();
+			int counter = 0;
+			while (scanner.hasNextLine()&&counter<5) {
+				String nextLine = scanner.nextLine();
+				JsonSingleDataPoints value = new JsonSingleDataPoints();
+//				 System.out.println(nextLine);
+				value.setVal(nextLine);
+				value.setAt(Long.toString((long) nowLongDouble));
+				value_list.add(value);
+				nowLongDouble = nowLongDouble + 1000.00 / 360;
+				counter = counter + 1;
 			}
-		
-//
-//			value1.setVal("25");
-//			value1.setAt(Long.toString(new Date().getTime()));
-//			value_list.add(value1);
+
+			//
+			// value1.setVal("25");
+			// value1.setAt(Long.toString(new Date().getTime()));
+			// value_list.add(value1);
 			JsonDataImport importData = new JsonDataImport();
 			importData.setData_points_single_list(value_list);
 			// importData.setBlock_id("8ad4c077-d30d-4a14-b882-0cbfcfb3e4ea");
-//			System.out.println(gson.toJson(importData));
+			// System.out.println(gson.toJson(importData));
+
 			out.write(gson.toJson(importData));
 			out.close();
 			java.io.BufferedReader br = new java.io.BufferedReader(

@@ -63,6 +63,7 @@ public interface AllConstants {
 		public static final String request_api_keywords = "keywords";
 		public static final String request_api_startpage = "startpage";
 		public static final String request_api_dataformat = "dateformat";
+		public static final String request_api_single_unit = "singleunit";
 		public static final String request_max = "max";
 		public static final String header_api_token = "accesstoken";
 		public static final String wildcardsubject_all = "all";
