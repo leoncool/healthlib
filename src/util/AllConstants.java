@@ -20,6 +20,7 @@ public interface AllConstants {
 
 	public static interface api_entryPoints {
 		public static final String api_humanmodel = "hm";
+		public static final String AS_getimage = "getImage";
 		public static final String api_subject = "subjects";
 		public static final String api_defaultsubject="defaultsubject";
 		public static final String api_health = "health";
@@ -43,7 +44,9 @@ public interface AllConstants {
 		public static final String api_search = "search";
 		public static final String api_list = "list";
 		public static final String version1 = "v1";
+		public static final String analysisservice = "/as/";
 		public static final String api_url = "/" + version1 + "/";
+		
 		public static final String api_datablocks = "datablocks";
 		public static final String requset_api_callback = "jsonpCallback";
 		public static final String request_api_loginid = "loginid";

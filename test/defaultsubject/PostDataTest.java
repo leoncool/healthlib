@@ -62,7 +62,7 @@ public class PostDataTest {
 			double nowLongDouble = nowLong;
 			ArrayList<String> blockArray = new ArrayList<String>();
 			int counter = 0;
-			while (scanner.hasNextLine()&&counter<5) {
+			while (scanner.hasNextLine()&&counter<70000) {
 				String nextLine = scanner.nextLine();
 				JsonSingleDataPoints value = new JsonSingleDataPoints();
 //				 System.out.println(nextLine);
