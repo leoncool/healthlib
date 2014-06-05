@@ -209,6 +209,10 @@ public interface AllConstants {
 		public static final String MORE_THAN_ONE_DATASTREAM_UNIT = "more_than_one_datastream_unit_exist";
 			public static final String Unknown_StreamTitle = "unknown_stream_title";
 		public static final String Unknown_SubjectID = "unknown_subject_id";
+		public static final String unknown_analysis_model_name = "unknown_analysis_model_name";
+		public static final String model_zip_is_encrypted = "model_zip_is_encrypted";
+		public static final String model_zip_error = "model_zip_error";
+		public static final String model_main_function_not_found = "model_main_function_not_found";
 		public static final String NO_SLEEP_RECORD = "no_sleep_record_exist";
 
 		public static final String Invalid_ValueType = "invalid_value_type_name";
