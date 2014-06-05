@@ -150,7 +150,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					try {
 						if(isNumeric){
 							longAt = Long.parseLong(dataPoints.get(i).getAt());
-							System.out.println("from long:longAt:"+longAt);
+//							System.out.println("from long:longAt:"+longAt);
 							}else{
 								DateUtil dateUtil=new DateUtil();
 								Date at=dateUtil.convert_SetLenient(dataPoints.get(i).getAt(), dateUtil.utcFormat);

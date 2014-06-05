@@ -37,14 +37,14 @@ public class JsonUtil {
     }
 
     public static String ServletPath(HttpServletRequest req) {
-        return req.getServletPath();
+        return req.getRequestURI();
     }
 
     public static String contextPath(HttpServletRequest req) {
 //        System.out.println(req.getHeader("host").startsWith(HOST));
-        System.out.println(req.getRequestURI());
-        System.out.println(req.getContextPath());
-        System.out.println(req.getServletPath());
+        System.out.println("getRequestURI"+req.getRequestURI());
+        System.out.println("getContextPath"+req.getContextPath());
+        System.out.println("getServletPath:"+req.getServletPath());
 //        if ((req.getHeader("host").startsWith(HOST) || req.getHeader("host").startsWith(HOSTIP))) {
 //            String cleanContext = req.getPathInfo().substring(1, req.getPathInfo().length());
 //            if (cleanContext.contains("/")) {

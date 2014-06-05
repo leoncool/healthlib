@@ -26,6 +26,11 @@ public class JsonDataImport implements Serializable {
     protected JsonDatastreamBlock datablock;
     @SerializedName(value="single_unit_data_points")
     protected List<JsonSingleDataPoints> data_points_single_list; 
+    
+    public JsonDataImport() {
+		// TODO Auto-generated constructor stub
+	}
+    
     public JsonDatastream getDatastream() {
         return datastream;
     }

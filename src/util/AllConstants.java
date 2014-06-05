@@ -46,7 +46,8 @@ public interface AllConstants {
 		public static final String api_list = "list";
 		public static final String version1 = "v1";
 		public static final String analysisservice = "/as/";
-		public static final String api_url = "/" + version1 + "/";
+		public static final String api_container = "healthbook";
+		public static final String api_url = "/"+api_container+"/" + version1 + "/";
 		
 		public static final String api_datablocks = "datablocks";
 		public static final String requset_api_callback = "jsonpCallback";
