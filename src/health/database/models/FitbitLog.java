@@ -31,10 +31,15 @@ public class FitbitLog implements Serializable {
 	private Date fetchTime;
 
 	private String loginID;
+	
+	private boolean isFinished;
 
 	public FitbitLog() {
 	}
-	public boolean isFinished;
+	public boolean checkisFinished()
+	{
+		return isFinished;
+	}
 	public int getId() {
 		return this.id;
 	}

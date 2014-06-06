@@ -21,6 +21,11 @@ import health.database.models.Subject;
 import health.database.models.UserAvatar;
 import health.database.models.UserDetails;
 import health.database.models.Users;
+import health.database.models.as.AnalysisModel;
+import health.database.models.as.AnalysisModelEntry;
+import health.database.models.as.AnalysisModelMapping;
+import health.database.models.as.AnalysisResult;
+import health.database.models.as.AnalysisService;
 
 import java.io.File;
 
@@ -126,7 +131,11 @@ public class HibernateUtil {
             config.addAnnotatedClass(Locationlogs.class);
             config.addAnnotatedClass(LocationPlaces.class);
             config.addAnnotatedClass(DataPermission.class);
-            
+            config.addAnnotatedClass(AnalysisModel.class);
+            config.addAnnotatedClass(AnalysisModelEntry.class);
+            config.addAnnotatedClass(AnalysisModelMapping.class);
+            config.addAnnotatedClass(AnalysisService.class);
+            config.addAnnotatedClass(AnalysisResult.class);
             serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
             factory = config.buildSessionFactory(serviceRegistry);
 

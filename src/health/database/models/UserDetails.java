@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -45,8 +46,9 @@ public class UserDetails implements Serializable {
     @Column(name = "id")
     private Integer id;
     @JoinColumn(name = "loginID", referencedColumnName = "loginID")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Users users;
+    
     @Column(name = "city")
     private String city;
     @Column(name = "country")

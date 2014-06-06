@@ -163,7 +163,7 @@ public class Ext_API_Info_DAO extends BaseDAO {
 			System.out.println("null");
 		} else {
 			System.out.println(log.getId());
-			if (log.isFinished) {
+			if (log.checkisFinished()) {
 				System.out.println("finished");
 			} else {
 				System.out.println("not finished");

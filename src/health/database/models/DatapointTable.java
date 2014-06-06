@@ -1,7 +1,7 @@
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
- */
+ 
 package health.database.models;
 
 import java.io.Serializable;
@@ -18,10 +18,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
+*//**
  *
  * @author Leon
- */
+ *//*
 @Entity
 @Table(name = "datapoint_table")
 @XmlRootElement
@@ -110,3 +110,4 @@ public class DatapointTable implements Serializable {
     }
     
 }
+*/

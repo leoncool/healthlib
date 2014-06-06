@@ -112,7 +112,8 @@ public interface AllConstants {
 		public static final String defaultDS_Name_ecg = "ecg";
 		public static final String defaultDS_Name_eeg="eeg";
 		public static final String defaultDS_Name_heart_rate="heart_rate";
-
+		
+		
 	}
 
 	public interface HealthConts {
@@ -212,7 +213,10 @@ public interface AllConstants {
 		public static final String unknown_analysis_model_name = "unknown_analysis_model_name";
 		public static final String model_zip_is_encrypted = "model_zip_is_encrypted";
 		public static final String model_zip_error = "model_zip_error";
+		public static final String model_metadata_format_error = "model_metadata_format_error";
 		public static final String model_main_function_not_found = "model_main_function_not_found";
+		public static final String model_main_function_format_error = "model_main_function_format_error";
+		public static final String model_main_function_input_or_output_format_error = "model_main_function_input_or_output_format_error";
 		public static final String NO_SLEEP_RECORD = "no_sleep_record_exist";
 
 		public static final String Invalid_ValueType = "invalid_value_type_name";
