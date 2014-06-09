@@ -211,6 +211,8 @@ public interface AllConstants {
 			public static final String Unknown_StreamTitle = "unknown_stream_title";
 		public static final String Unknown_SubjectID = "unknown_subject_id";
 		public static final String unknown_analysis_model_name = "unknown_analysis_model_name";
+		public static final String missing_model_id = "missing_model_id";
+		public static final String model_id_cannot_found = "model_id_can_not_be_found";
 		public static final String model_zip_is_encrypted = "model_zip_is_encrypted";
 		public static final String model_zip_error = "model_zip_error";
 		public static final String model_metadata_format_error = "model_metadata_format_error";
