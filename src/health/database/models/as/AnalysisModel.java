@@ -56,7 +56,9 @@ public class AnalysisModel implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_time")
 	private Date updatedTime;
-
+	@Column(name="thumbnail") 
+	private String thumbnail;
+	
 	public AnalysisModel() {
 	}
 
@@ -178,6 +180,14 @@ public class AnalysisModel implements Serializable {
 
 	public void setUpdatedTime(Date updatedTime) {
 		this.updatedTime = updatedTime;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 
 
