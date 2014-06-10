@@ -3,6 +3,7 @@ package health.database.DAO.as;
 import health.database.models.as.AnalysisModel;
 import health.database.models.as.AnalysisModelEntry;
 import health.database.models.as.AnalysisModelMapping;
+import health.database.models.as.AnalysisResult;
 import health.database.models.as.AnalysisService;
 
 import java.util.ArrayList;
@@ -36,6 +37,23 @@ public class AnalysisServiceDAO {
 		}
 	}
 
+	public AnalysisService getServicebyID(int serviceID) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			AnalysisService obj = (AnalysisService) session.get(
+					AnalysisService.class, serviceID);
+			session.getTransaction().commit();
+			if (obj != null) {
+				return obj;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public List<AnalysisModelEntry> getModelEntriesByModelID(String modelID,
 			String entryType) {
 		try {
@@ -50,6 +68,22 @@ public class AnalysisServiceDAO {
 			List<AnalysisModelEntry> entryList = criteria.list();
 			session.getTransaction().commit();
 			return entryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public AnalysisResult getJobResultByID(String jobI) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			Criteria criteria = session
+					.createCriteria(AnalysisResult.class);
+			criteria.add(Restrictions.eq("jobId", jobI));
+			AnalysisResult object = (AnalysisResult) criteria.uniqueResult();
+			session.getTransaction().commit();
+			return object;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -136,6 +170,22 @@ public class AnalysisServiceDAO {
 		}
 	}
 
+	public AnalysisResult createJobResultBy(AnalysisResult object) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			session.save(object);
+			session.getTransaction().commit();
+			if (object != null) {
+				return object;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public int createModelEntries(List<AnalysisModelEntry> entries) {
 		try {
 			int counter = 0;
@@ -164,7 +214,17 @@ public class AnalysisServiceDAO {
 			return 0;
 		}
 	}
-
+	public int updateJobResult(AnalysisResult result) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			session.update(result);
+			session.getTransaction().commit();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 	public int updateModelEntries(List<AnalysisModelEntry> entries) {
 		try {
 			int counter = 0;

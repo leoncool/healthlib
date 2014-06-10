@@ -23,10 +23,15 @@ public interface AScontants {
 			+ "If-Unmodified-Since,If-Match,If-None-Match,Cache-Control,Content-Disposition,Content-Encoding,"
 			+ "Content-MD5,Expect,Expires,x-amz-acl";
 	public static final String ACCESS_CONTROL_ALLOW_METHODS = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS";
-
+	public static interface ModelJobStatus {
+		public static final String running="running";
+		public static final String finished_with_error="finished_with_error";
+		public static final String finished_succesfully="finished_succesfully";
+	}
 	public static interface RequestParameters {
 		public final String ModelName="model_name";
 		public final String Model_ID="model_id";
+		public final String Service_ID="service_id";
 		public final String ModelPrice="model_price";
 		public final String ModelPriceModel="model_pricing_model";
 		public final String ModelDescription="model_description";

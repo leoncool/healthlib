@@ -213,6 +213,7 @@ public interface AllConstants {
 		public static final String unknown_analysis_model_name = "unknown_analysis_model_name";
 		public static final String unknown_analysis_model_id = "unknown_analysis_model_id";
 		public static final String missing_model_id = "missing_model_id";
+		public static final String service_id_cannot_found = "service_id_can_not_be_found";
 		public static final String model_id_cannot_found = "model_id_can_not_be_found";
 		public static final String model_zip_is_encrypted = "model_zip_is_encrypted";
 		public static final String model_zip_error = "model_zip_error";
@@ -241,6 +242,7 @@ public interface AllConstants {
 		public static final String Invalid_login_token_id = "invalid_login_tokenid";
 		public static final String login_token_expired = "login_token_expired";
 		public static final String Invalid_Login_format = "invalid_login_format";
+		public static final String Invalid_data_format = "invalid_data_format";
 		public static final String Invalid_password_format = "invalid_password_format";
 		public static final String Internal_Fault = "internal_fault";
 		public static final String Invalid_Target_LoginID = "invalid_target_loginid";

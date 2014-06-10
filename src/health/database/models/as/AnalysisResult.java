@@ -16,13 +16,8 @@ public class AnalysisResult implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="job_id")
 	private String jobId;
-
-	@Column(name="analysis_resultscol")
-	private String analysisResultscol;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="job_end_time")
 	private Date jobEndTime;
@@ -39,6 +34,8 @@ public class AnalysisResult implements Serializable {
 
 	@Column(name="model_id")
 	private String modelId;
+	@Column(name="service_id")
+	private int service_id;
 
 	@Column(name="model_log")
 	private String modelLog;
@@ -58,14 +55,6 @@ public class AnalysisResult implements Serializable {
 
 	public void setJobId(String jobId) {
 		this.jobId = jobId;
-	}
-
-	public String getAnalysisResultscol() {
-		return this.analysisResultscol;
-	}
-
-	public void setAnalysisResultscol(String analysisResultscol) {
-		this.analysisResultscol = analysisResultscol;
 	}
 
 	public Date getJobEndTime() {
@@ -131,5 +120,14 @@ public class AnalysisResult implements Serializable {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+	public int getService_id() {
+		return service_id;
+	}
+
+	public void setService_id(int service_id) {
+		this.service_id = service_id;
+	}
+	
 
 }
