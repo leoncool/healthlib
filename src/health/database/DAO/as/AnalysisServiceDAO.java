@@ -78,8 +78,7 @@ public class AnalysisServiceDAO {
 	public AnalysisResult getJobResultByID(String jobI) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
-			Criteria criteria = session
-					.createCriteria(AnalysisResult.class);
+			Criteria criteria = session.createCriteria(AnalysisResult.class);
 			criteria.add(Restrictions.eq("jobId", jobI));
 			AnalysisResult object = (AnalysisResult) criteria.uniqueResult();
 			session.getTransaction().commit();
@@ -102,6 +101,23 @@ public class AnalysisServiceDAO {
 			List<AnalysisModel> entryList = criteria.list();
 			session.getTransaction().commit();
 			return entryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public List<AnalysisResult> getJobResultsList(String loginID) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			Criteria criteria = session.createCriteria(AnalysisResult.class);
+			if (loginID != null) {
+				criteria.add(Restrictions.eq("userId", loginID));
+			}
+			List<AnalysisResult> resultList = criteria.list();
+			session.getTransaction().commit();
+			return resultList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -214,6 +230,7 @@ public class AnalysisServiceDAO {
 			return 0;
 		}
 	}
+
 	public int updateJobResult(AnalysisResult result) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
@@ -225,6 +242,7 @@ public class AnalysisServiceDAO {
 			return 0;
 		}
 	}
+
 	public int updateModelEntries(List<AnalysisModelEntry> entries) {
 		try {
 			int counter = 0;
