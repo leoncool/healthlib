@@ -31,6 +31,7 @@ public interface AScontants {
 	public static interface RequestParameters {
 		public final String ModelName="model_name";
 		public final String Model_ID="model_id";
+		public final String Job_ID="job_id";
 		public final String Service_ID="service_id";
 		public final String ModelPrice="model_price";
 		public final String ModelPriceModel="model_pricing_model";

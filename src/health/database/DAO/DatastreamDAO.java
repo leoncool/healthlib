@@ -175,7 +175,26 @@ public class DatastreamDAO extends BaseDAO {
 		session.getTransaction().commit();
 		return stream;
 	}
-
+	public Datastream getHealthDatastreamByTitle(String streamTitle, String loginID,boolean fetchDataUnits, boolean fetchDatablocks)
+			throws NonUniqueResultException {
+		Datastream stream = null;
+		// stream = (Datastream) session.get(Datastream.class, StreamID);
+		Session session = HibernateUtil.beginTransaction();
+		Criteria criteria = session.createCriteria(Datastream.class);
+		criteria.add(Restrictions.eq("purpose",
+				AllConstants.HealthConts.defaultDatastreamPurpose));
+		criteria.add(Restrictions.eq("title", streamTitle));
+		criteria.add(Restrictions.eq("owner", loginID));
+		if (fetchDataUnits) {
+			criteria.setFetchMode("datastreamUnitsList", FetchMode.SELECT);
+		}
+		if (fetchDatablocks) {
+			criteria.setFetchMode("datastreamBlocksList", FetchMode.SELECT);
+		}
+		stream = (Datastream) criteria.uniqueResult();
+		session.getTransaction().commit();
+		return stream;
+	}
 	public boolean existBlockID_fromDatastream(Datastream stream, String blockID) {
 		List<DatastreamBlocks> blockList = stream.getDatastreamBlocksList();
 		boolean exist = false;

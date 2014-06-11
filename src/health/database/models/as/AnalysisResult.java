@@ -31,7 +31,9 @@ public class AnalysisResult implements Serializable {
 
 	@Column(name="job_status")
 	private String jobStatus;
-
+	@Column(name="model_status")
+	private String model_status;
+	
 	@Column(name="model_id")
 	private String modelId;
 	@Column(name="service_id")
@@ -45,7 +47,9 @@ public class AnalysisResult implements Serializable {
 
 	@Column(name="user_id")
 	private String userId;
-
+	
+	@Column(name="json_results")
+	private String json_results;
 	public AnalysisResult() {
 	}
 
@@ -127,6 +131,22 @@ public class AnalysisResult implements Serializable {
 
 	public void setService_id(int service_id) {
 		this.service_id = service_id;
+	}
+
+	public String getModel_status() {
+		return model_status;
+	}
+
+	public void setModel_status(String model_status) {
+		this.model_status = model_status;
+	}
+
+	public String getJson_results() {
+		return json_results;
+	}
+
+	public void setJson_results(String json_results) {
+		this.json_results = json_results;
 	}
 	
 

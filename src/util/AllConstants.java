@@ -220,6 +220,7 @@ public interface AllConstants {
 		public static final String model_metadata_format_error = "model_metadata_format_error";
 		public static final String model_main_function_not_found = "model_main_function_not_found";
 		public static final String model_main_function_format_error = "model_main_function_format_error";
+		public static final String analysis_invalid_job_id = "invalid_job_id";
 		public static final String model_main_function_input_or_output_format_error = "model_main_function_input_or_output_format_error";
 		public static final String NO_SLEEP_RECORD = "no_sleep_record_exist";
 
