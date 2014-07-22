@@ -16,6 +16,10 @@ public interface AllConstants {
 		public static final String UserAvatarLocation = "UserAvatarLocation";
 		public static final String AvatarAccessPoint ="AvatarAccessPoint";
 		public static final String UndefinedAvatarLocation="UndefinedAvatarLocation";
+		public static final String modelRepository ="modelRepository";
+		public static final String tmpRepository ="tmpRepository";
+		public static final String jobDir ="jobDir";
+		public static final String modelThumbnailDir ="modelThumbnailDir";
 	}
 
 	public static interface api_entryPoints {
@@ -217,6 +221,7 @@ public interface AllConstants {
 		public static final String model_id_cannot_found = "model_id_can_not_be_found";
 		public static final String model_zip_is_encrypted = "model_zip_is_encrypted";
 		public static final String model_zip_error = "model_zip_error";
+		public static final String model_zip_file_missing = "model_zip_file_missing";
 		public static final String model_metadata_format_error = "model_metadata_format_error";
 		public static final String model_main_function_not_found = "model_main_function_not_found";
 		public static final String model_main_function_format_error = "model_main_function_format_error";

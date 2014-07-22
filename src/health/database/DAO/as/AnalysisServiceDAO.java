@@ -53,7 +53,22 @@ public class AnalysisServiceDAO {
 			return null;
 		}
 	}
-
+	public List<AnalysisService> getUserServices(String loginID) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			
+			Criteria criteria = session.createCriteria(AnalysisService.class);
+			if (loginID != null) {
+				criteria.add(Restrictions.eq("userId", loginID));
+			}
+			List<AnalysisService> resultList = criteria.list();
+			session.getTransaction().commit();
+			return resultList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	public List<AnalysisModelEntry> getModelEntriesByModelID(String modelID,
 			String entryType) {
 		try {

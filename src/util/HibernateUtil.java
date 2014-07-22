@@ -69,7 +69,7 @@ public class HibernateUtil {
     }
 
     public static Session getSession() {
-    	
+    	String settingFileName="WH_hibernate.cfg.xml";
         if (factory == null) {
         	Configuration config=null;
         	File configFolder=new File(AllConstants.ServerConfigs.configsFolderPath);
@@ -86,7 +86,7 @@ public class HibernateUtil {
         	}
         	String debugModel="true";
         	if(debugModel.equals("false")){
-        	File configFile=new File(AllConstants.ServerConfigs.configsFolderPath+"hibernate.cfg.xml");
+        	File configFile=new File(AllConstants.ServerConfigs.configsFolderPath+settingFileName);
         	if(!configFile.exists())
         	{
         		System.out.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
@@ -101,7 +101,7 @@ public class HibernateUtil {
         		System.out.println("Loading Hibernate Config File.......................");
         		System.out.println("Loading Hibernate Config File.......................");
         	}
-            config = new Configuration().configure(new File(AllConstants.ServerConfigs.configsFolderPath+"hibernate.cfg.xml"));
+            config = new Configuration().configure(new File(AllConstants.ServerConfigs.configsFolderPath+settingFileName));
         	}
         	else{
         		System.out.println("Loading local File!!!!!!!!!!!!!!");
