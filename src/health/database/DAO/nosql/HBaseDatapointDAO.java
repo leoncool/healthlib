@@ -247,7 +247,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 							+ Long.toString(longAt));
 					dataCounter = dataCounter + rowKey.length;
 					Put put = new Put(rowKey);
-					System.out.println("Single data point import, value:"+dataPoints.get(i).getVal());
+//					System.out.println("Single data point import, value:"+dataPoints.get(i).getVal());
 					put.add(VALUE_COL, toBytes(single_unitID),
 							toBytes(dataPoints.get(i).getVal()));
 					dataCounter = dataCounter + rowKey.length

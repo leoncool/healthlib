@@ -12,7 +12,7 @@ public interface AllConstants {
 
 	public static interface ServerConfigs {
 
-		public static final String configsFolderPath = "AppConfigs/";
+		public static final String configsFolderPath = "/AppConfigs/";
 		public static final String UserAvatarLocation = "UserAvatarLocation";
 		public static final String AvatarAccessPoint ="AvatarAccessPoint";
 		public static final String UndefinedAvatarLocation="UndefinedAvatarLocation";
@@ -34,6 +34,7 @@ public interface AllConstants {
 		public static final String api_title = "title";
 		public static final String api_device = "devices";
 		public static final String api_datapoints = "datapoints";
+		public static final String api_datapoints_benchmarks = "datapoints-benchmarks";
 		public static final String api_datasummaries = "datasummaries";
 		public static final String api_following = "followings";
 		public static final String api_follower = "followers";

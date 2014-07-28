@@ -59,9 +59,9 @@ public class DatastreamUnits implements Serializable {
 	@Column(name = "UnitSymbol")
     private String unitSymbol;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "MinValue")
+    @Column(name = "Min_Value")
     private Float minValue;
-    @Column(name = "MaxValue")
+    @Column(name = "Max_Value")
     private Float maxValue;
     @Column(name = "CurrentValue")
     private Float currentValue;

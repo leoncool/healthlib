@@ -6,6 +6,7 @@ package util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,8 +20,17 @@ public class JsonUtil {
     private static String HOSTIP = "192.168.1.8";
 
     public String readJsonStrFromHttpRequest(HttpServletRequest request) throws IOException {
-        BufferedReader reader = request.getReader();
+//        System.out.println("Content-Encoding: \n" + request.getHeader("Content-Encoding"));
+//        System.out.println("getContentType: \n" + request.getContentType());
+//        System.out.println("getContentLength: \n" + request.getContentLength());
 
+//    	request.setCharacterEncoding("UTF-8");
+    	
+    	 BufferedReader reader = new BufferedReader(
+    		       new InputStreamReader(request.getInputStream(),"UTF-8"));
+    	
+//    	BufferedReader reader = request.getReader();
+        
         StringBuilder sb = new StringBuilder();
         String line = reader.readLine();
         while (line != null) {
@@ -29,10 +39,7 @@ public class JsonUtil {
         }
         reader.close();
         String data = sb.toString();
-//        System.out.println("Content-Encoding: \n" + request.getHeader("Content-Encoding"));
-//        System.out.println("getContentType: \n" + request.getContentType());
-//        System.out.println("getContentLength: \n" + request.getContentLength());
-//        System.out.println("input stream: \n" + data);
+//       System.out.println("input stream: \n" + data);
         return data;
     }
 

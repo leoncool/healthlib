@@ -40,7 +40,7 @@ public class PostDataTest {
 	public static void main(String args[]) {
 		try {
 			URL url = new URL(
-					"http://wikihealth.bigdatapro.org:55555/healthbook/v1/health/title/ecg/datapoints?accesstoken=8ede656b5a834d0ebcf5233f4e9ff263&api_key=special-key");
+					"http://api.wiki-health.org:55555/healthbook/v1/health/title/ecg/datapoints?accesstoken=5b08af23d9f2490cb253fa5d221aa74e&api_key=special-key");
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
@@ -57,12 +57,16 @@ public class PostDataTest {
 			Gson gson = new Gson();
 			BaseDAO dao = new BaseDAO();
 			ArrayList<JsonSingleDataPoints> value_list = new ArrayList<JsonSingleDataPoints>();
-			Date now = new Date();
+			Date now = new Date(1406224391);
 			long nowLong = now.getTime();
 			double nowLongDouble = nowLong;
 			ArrayList<String> blockArray = new ArrayList<String>();
 			int counter = 0;
-			while (scanner.hasNextLine()&&counter<70000) {
+			while (counter<2)
+			{
+				if(!scanner.hasNextLine()){
+					scanner = new Scanner(fileInput);	
+				}
 				String nextLine = scanner.nextLine();
 				JsonSingleDataPoints value = new JsonSingleDataPoints();
 //				 System.out.println(nextLine);
@@ -72,6 +76,16 @@ public class PostDataTest {
 				nowLongDouble = nowLongDouble + 1000.00 / 360;
 				counter = counter + 1;
 			}
+//			while (scanner.hasNextLine()&&counter<70000) {
+//				String nextLine = scanner.nextLine();
+//				JsonSingleDataPoints value = new JsonSingleDataPoints();
+////				 System.out.println(nextLine);
+//				value.setVal(nextLine);
+//				value.setAt(Long.toString((long) nowLongDouble));
+//				value_list.add(value);
+//				nowLongDouble = nowLongDouble + 1000.00 / 360;
+//				counter = counter + 1;
+//			}
 
 			//
 			// value1.setVal("25");
