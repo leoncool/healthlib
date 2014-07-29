@@ -1,6 +1,6 @@
-package siege;
+package benchmarks;
 
-public class createABGetCommands {
+public class createABGetCommandsforSingleSensor {
 
 	/**
 	 * @param args

@@ -1,4 +1,4 @@
-package siege;
+package benchmarks;
 
 import java.io.BufferedWriter;
 import java.io.File;

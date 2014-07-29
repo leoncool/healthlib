@@ -1,4 +1,4 @@
-package siege;
+package benchmarks;
 
 public class createSiegeCommands {
 
