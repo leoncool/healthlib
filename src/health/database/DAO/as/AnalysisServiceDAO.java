@@ -123,12 +123,15 @@ public class AnalysisServiceDAO {
 
 	}
 
-	public List<AnalysisResult> getJobResultsList(String loginID) {
+	public List<AnalysisResult> getJobResultsList(String loginID,int serviceID) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
 			Criteria criteria = session.createCriteria(AnalysisResult.class);
 			if (loginID != null) {
 				criteria.add(Restrictions.eq("userId", loginID));
+			}
+			if (serviceID>0) {
+				criteria.add(Restrictions.eq("service_id", serviceID));
 			}
 			List<AnalysisResult> resultList = criteria.list();
 			session.getTransaction().commit();
