@@ -242,6 +242,7 @@ public interface AllConstants {
 		public static final String Input_data_contains_invalid_unit_id = "input_data_contains_invalid_unit_id";
 		public static final String Input_data_contains_invalid_date_format = "input_data_contains_invalid_date_format";
 		public static final String Invalid_datastream_title = "invalid_stream_title";
+		public static final String Invalid_datastream_id = "invalid_stream_id";
 		public static final String Invalid_Datablock_ID = "invalid_datablock_id";
 		public static final String Invalid_Datablock_ID_for_such_stream = "invalid_datablock_id_for_such_stream";
 		public static final String Invalid_LoginID = "invalid_loginid";

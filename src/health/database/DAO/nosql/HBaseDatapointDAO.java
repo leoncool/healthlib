@@ -146,17 +146,19 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				List<JsonDataPoints> dataPoints = importData.getData_points();
 				for (int i = 0; i < dataPoints.size(); i++) {
 					long longAt = 0;
-					boolean isNumeric = dataPoints.get(i).getAt().matches("[0-9]+");
+					boolean isNumeric = dataPoints.get(i).getAt()
+							.matches("[0-9]+");
 					try {
-						if(isNumeric){
+						if (isNumeric) {
 							longAt = Long.parseLong(dataPoints.get(i).getAt());
-//							System.out.println("from long:longAt:"+longAt);
-							}else{
-								DateUtil dateUtil=new DateUtil();
-								Date at=dateUtil.convert_SetLenient(dataPoints.get(i).getAt(), dateUtil.utcFormat);
-								longAt=at.getTime();
-								System.out.println("fromUTC:longAt:"+longAt);
-							}
+							// System.out.println("from long:longAt:"+longAt);
+						} else {
+							DateUtil dateUtil = new DateUtil();
+							Date at = dateUtil.convert_SetLenient(dataPoints
+									.get(i).getAt(), dateUtil.utcFormat);
+							longAt = at.getTime();
+							System.out.println("fromUTC:longAt:" + longAt);
+						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
 						throw new ErrorCodeException(
@@ -170,37 +172,37 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					Put put = new Put(rowKey);
 					List<JsonDataValues> dataValues = dataPoints.get(i)
 							.getValue_list();
-					for (JsonDataValues value : dataValues) {	
-	
-						if(!check_ExistUnitID(value.getUnit_id(), importData.getDatastream().getUnits_list()))
-						{
+					for (JsonDataValues value : dataValues) {
+
+						if (!check_ExistUnitID(value.getUnit_id(), importData
+								.getDatastream().getUnits_list())) {
 							throw new ErrorCodeException(
 									AllConstants.ErrorDictionary.Input_data_contains_invalid_unit_id);
 						}
-						try{
-						put.add(VALUE_COL, toBytes(value.getUnit_id()),
-								toBytes(value.getVal()));
-						dataCounter = dataCounter + rowKey.length
-								+ VALUE_COL.length
-								+ toBytes(value.getUnit_id()).length
-								+ toBytes(value.getVal()).length;
-						if (value.getVal_tag() != null) {
-							put.add(VALUE_TAG_COL, toBytes(value.getUnit_id()),
-									toBytes(value.getVal_tag()));
-							dataCounter = dataCounter
-									+ rowKey.length
-									+ VALUE_TAG_COL.length
-									+ toBytes(value.getUnit_id()
-											+ value.getVal_tag()).length;
-						}
-						}catch(Exception ex)
-						{
+						try {
+							put.add(VALUE_COL, toBytes(value.getUnit_id()),
+									toBytes(value.getVal()));
+							dataCounter = dataCounter + rowKey.length
+									+ VALUE_COL.length
+									+ toBytes(value.getUnit_id()).length
+									+ toBytes(value.getVal()).length;
+							if (value.getVal_tag() != null) {
+								put.add(VALUE_TAG_COL,
+										toBytes(value.getUnit_id()),
+										toBytes(value.getVal_tag()));
+								dataCounter = dataCounter
+										+ rowKey.length
+										+ VALUE_TAG_COL.length
+										+ toBytes(value.getUnit_id()
+												+ value.getVal_tag()).length;
+							}
+						} catch (Exception ex) {
 							ex.printStackTrace();
 							throw new ErrorCodeException(
 									AllConstants.ErrorDictionary.Internal_Fault);
 						}
 					}
-					
+
 					if (importData.getBlock_id() != null) {
 						put.add(PROP_COL, BLOCK_ID,
 								toBytes(importData.getBlock_id()));
@@ -227,7 +229,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			} else if (importData.getData_points_single_list() != null
 					&& importData.getData_points_single_list().size() > 0) {
 				String single_unitID = importData.getSingle_Unit_ID();
-				System.out.println("singal unit id:"+single_unitID);
+				System.out.println("singal unit id:" + single_unitID);
 				// for single datapoints format
 				List<JsonSingleDataPoints> dataPoints = importData
 						.getData_points_single_list();
@@ -247,7 +249,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 							+ Long.toString(longAt));
 					dataCounter = dataCounter + rowKey.length;
 					Put put = new Put(rowKey);
-//					System.out.println("Single data point import, value:"+dataPoints.get(i).getVal());
+					// System.out.println("Single data point import, value:"+dataPoints.get(i).getVal());
 					put.add(VALUE_COL, toBytes(single_unitID),
 							toBytes(dataPoints.get(i).getVal()));
 					dataCounter = dataCounter + rowKey.length
@@ -287,7 +289,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			table.close();
 			// HBaseConfig.putTable(table);
 			return dataCounter;
-		}  catch (IOException ex) {
+		} catch (IOException ex) {
 			// HBaseConfig.putTable(table);
 			// TODO: handle exception
 			ex.printStackTrace();
@@ -325,13 +327,14 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				// + Long.toString(start))));
 				// filterList.addFilter(fowFilter_startDate);
 				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
-			}else{
+			} else {
 				scan.setStartRow(toBytes(streamID + "/" + Long.toString(0)));
 			}
 			if (end != null && end != 0) {
 				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
-			}else{
-				scan.setStopRow(toBytes(streamID + "/" + Long.toString(Long.MAX_VALUE)));
+			} else {
+				scan.setStopRow(toBytes(streamID + "/"
+						+ Long.toString(Long.MAX_VALUE)));
 			}
 			// if((start == null || start == 0)&&(end==null ||end == 0))
 			// {
@@ -409,8 +412,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				}
 				if (counter <= 1) {
 					// System.out.println(counter+",First Date from Export:"+Long.parseLong(getTimefromRowKey(res)));
-//					Date date = new Date();
-//					date.setTime(Long.parseLong(getTimefromRowKey(res)));
+					// Date date = new Date();
+					// date.setTime(Long.parseLong(getTimefromRowKey(res)));
 					// System.out.println(counter+",First Date from Export long:"+date.getTime());
 				}
 				if (res.getValue(PROP_COL, TIME_TAG) != null) {
@@ -429,7 +432,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					jsonDPList.add(datapoint);
 				}
 			}
-			
+
 			System.out.println("Just After While loop...."
 					+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
@@ -472,7 +475,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
-			System.out.println("single unit export.....starting Exporting...." + timerStart);
+			System.out.println("single unit export.....starting Exporting...."
+					+ timerStart);
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(1000);
@@ -488,14 +492,21 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				// + Long.toString(start))));
 				// filterList.addFilter(fowFilter_startDate);
 				scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
-			}else{
-				scan.setStartRow(toBytes(streamID + "/" + Long.toString(0)));//setup minimum for speeding up requests
+			} else {
+				scan.setStartRow(toBytes(streamID + "/" + Long.toString(0)));// setup
+																				// minimum
+																				// for
+																				// speeding
+																				// up
+																				// requests
 			}
 			if (end != null && end != 0) {
 				scan.setStopRow(toBytes(streamID + "/" + Long.toString(end)));
-			}
-			else{
-				scan.setStopRow(toBytes(streamID + "/" + Long.toString(Long.MAX_VALUE)));//setup maximum for speeding up requests
+			} else {
+				scan.setStopRow(toBytes(streamID + "/"
+						+ Long.toString(Long.MAX_VALUE)));// setup maximum for
+															// speeding up
+															// requests
 			}
 			if ((start == null || start == 0) && (end == null || end == 0)) {
 				RowFilter rowFilterStreamID = new RowFilter(
@@ -652,45 +663,33 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		return valueList;
 	}
 
-	public long delete_A_Datapoint(String streamID, long at, List<String> unitIDList)
-			throws ErrorCodeException {
+	public long delete_A_Datapoint(String streamID, long at,
+			List<String> unitIDList) throws ErrorCodeException {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
 			System.out.println("starting Deleting...." + at);
 			table = HBaseConfig.getTable(health_book);
-			Scan scan = new Scan();
-			scan.setCaching(200000);
+//			Scan scan = new Scan();
+//			scan.setCaching(100);
 			// scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 			// scan.setCacheBlocks(true);
-			FilterList filterList = new FilterList();
-			RowFilter rowFilterStreamID = new RowFilter(
-					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
-							toBytes(streamID)));
-			filterList.addFilter(rowFilterStreamID);
+//			FilterList filterList = new FilterList();
+//			RowFilter rowFilterStreamID = new RowFilter(
+//					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
+//							toBytes(streamID)));
+//			filterList.addFilter(rowFilterStreamID);
+//
+//			RowFilter fowFilter_startDate = new RowFilter(
+//					CompareFilter.CompareOp.EQUAL, new BinaryComparator(
+//							toBytes(streamID + "/" + Long.toString(at))));
+//			filterList.addFilter(fowFilter_startDate);
 
-			RowFilter fowFilter_startDate = new RowFilter(
-					CompareFilter.CompareOp.EQUAL, new BinaryComparator(
-							toBytes(streamID + "/" + Long.toString(at))));
-			filterList.addFilter(fowFilter_startDate);
+			Delete delete = new Delete(toBytes(streamID + "/"
+					+ Long.toString(at)));
+			
+			table.delete(delete);
 
-			scan.setFilter(filterList);
-			ResultScanner scanner = table.getScanner(scan);
-			Iterator<Result> itr = scanner.iterator();
-			long no_deleted = 0;
-			while (itr.hasNext()) {
-				Result res = itr.next();
-				System.out.println("deleting..." + toString(res.getRow()));
-				Delete delete = new Delete(res.getRow());
-				if(unitIDList!=null){
-					for(String unitid:unitIDList)
-					{
-						delete.deleteColumn(VALUE_COL,toBytes(unitid));
-					}			
-				}
-				table.delete(delete);
-				no_deleted++;
-			}
 			table.close();
 			// HBaseConfig.putTable(table);
 			HBaseDataImport dataexport = null;
@@ -699,7 +698,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			System.out.println("Finished Deleting...."
 					+ (timerEnd.getTime() - timerStart.getTime()) / (1000.00)
 					+ "seconds");
-			return no_deleted;
+			return 1;
 		} catch (IOException ex) {
 			// HBaseConfig.putTable(table);
 			ex.printStackTrace();
@@ -713,8 +712,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
-			System.out.println("Range Delete streamID:"+streamID+", starting Deleting....start:" + start + ",end:"
-					+ end);
+			System.out.println("Range Delete streamID:" + streamID
+					+ ", starting Deleting....start:" + start + ",end:" + end);
 			table = HBaseConfig.getTable(health_book);
 			Scan scan = new Scan();
 			scan.setCaching(200000);
@@ -744,7 +743,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			scan.setFilter(filterList);
 			ResultScanner scanner = table.getScanner(scan);
 			Iterator<Result> itr = scanner.iterator();
-			List<Delete> deleteList=new ArrayList<>();
+			List<Delete> deleteList = new ArrayList<>();
 			long no_deleted = 0;
 			while (itr.hasNext()) {
 				Result res = itr.next();
@@ -793,16 +792,16 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 	public String toString(byte[] bytes) {
 		return Bytes.toString(bytes);
 	}
-	public boolean check_ExistUnitID(String unitID,List<JsonDatastreamUnits> junitList){
-		boolean exist=false;
-		if(junitList==null||junitList.size()<1)
-		return false;
-		else{
-			for(JsonDatastreamUnits junit:junitList)
-			{
-				if(junit.getUnit_id().equals(unitID))
-				{
-					exist=true;
+
+	public boolean check_ExistUnitID(String unitID,
+			List<JsonDatastreamUnits> junitList) {
+		boolean exist = false;
+		if (junitList == null || junitList.size() < 1)
+			return false;
+		else {
+			for (JsonDatastreamUnits junit : junitList) {
+				if (junit.getUnit_id().equals(unitID)) {
+					exist = true;
 				}
 			}
 		}

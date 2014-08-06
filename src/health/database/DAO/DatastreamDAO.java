@@ -233,6 +233,33 @@ public class DatastreamDAO extends BaseDAO {
 		return list;
 	}
 
+	public Datastream updateDatastream(Datastream streamObject,
+			List<DatastreamUnits> unitList) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+
+			session.update(streamObject);
+			if(unitList!=null)
+			{
+			for (DatastreamUnits unit : unitList) {
+				if (unit.getValueType() == null) {
+					unit.setValueType("undefined");
+				}
+				session.update(unit);
+			}
+			}
+			session.getTransaction().commit();
+			if (streamObject.getStreamId() != null) {
+				return streamObject;
+			} else {
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+		}
+	}	
 	public Datastream createDatastream(Datastream streamObject,
 			List<DatastreamUnits> unitList) {
 		try {
