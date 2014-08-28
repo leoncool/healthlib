@@ -105,14 +105,17 @@ public class AnalysisServiceDAO {
 
 	}
 
-	public List<AnalysisModel> getModelList(String searchName) {
+	public List<AnalysisModel> getModelList(String searchName,String status) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
 			Criteria criteria = session.createCriteria(AnalysisModel.class);
 			if (searchName != null) {
 				criteria.add(Restrictions.like("name", "%" + searchName + "%"));
 			}
-
+			if(status!=null){
+			criteria.add(Restrictions.eq("status", status));
+			}
+			criteria.addOrder(Order.desc("createdTime"));
 			List<AnalysisModel> entryList = criteria.list();
 			session.getTransaction().commit();
 			return entryList;

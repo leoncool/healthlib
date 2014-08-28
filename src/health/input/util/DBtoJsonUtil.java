@@ -291,8 +291,8 @@ public class DBtoJsonUtil {
 				dateUtil.millisecFormat));
 		jd.setSubject_id(datastream.getSubId());
 		jd.setTitle(datastream.getTitle());
-		System.out
-				.print("title:" + jd.getTitle() + "," + datastream.getTitle());
+//		System.out
+//				.print("title:" + jd.getTitle() + "," + datastream.getTitle());
 		jd.setDesc(datastream.getDescription());
 		jd.setIcon(datastream.getIcon());
 		jd.setPurpose(datastream.getPurpose());

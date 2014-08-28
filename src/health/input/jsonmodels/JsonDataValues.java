@@ -15,6 +15,7 @@ public class JsonDataValues {
     @SerializedName(value="val")
     protected String val;
     protected String val_tag;
+    protected String link;
 
     public String getUnit_id() {
         return unit_id;
@@ -40,4 +41,13 @@ public class JsonDataValues {
         this.val_tag = val_tag;
     }
 
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+    
 }

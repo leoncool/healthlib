@@ -30,6 +30,7 @@ public interface AScontants {
 	}
 	public static interface RequestParameters {
 		public final String ModelName="model_name";
+		public final String ModelStatus="model_status";
 		public final String Model_ID="model_id";
 		public final String Job_ID="job_id";
 		public final String Service_ID="service_id";
@@ -38,7 +39,9 @@ public interface AScontants {
 		public final String ModelDescription="model_description";
 		public final String ModelZipFile="model_zip_file";
 		public final String ModelThumbnail="model_thumbnail";
-		
+
+		public static final String request_api_maxGlobal = "maxglobal";
+		public static final String request_api_livejob = "livejob";
 		public final String ModelTerms="model_terms";
 
 	}

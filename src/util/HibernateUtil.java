@@ -42,141 +42,154 @@ import com.lifestyle.models.Locationlogs;
 
 public class HibernateUtil {
 
-    private static SessionFactory factory;
-    private static ServiceRegistry serviceRegistry;
+	private static SessionFactory factory;
+	private static ServiceRegistry serviceRegistry;
 
-    public static void closeAllConnections() {
-        if (factory != null) {
-            factory.close();
-        }
-    }
+	public static void closeAllConnections() {
+		if (factory != null) {
+			factory.close();
+		}
+	}
 
-    public static Configuration getInitializedConfiguration() {
-        AnnotationConfiguration config = new AnnotationConfiguration();
+	public static Configuration getInitializedConfiguration() {
+		AnnotationConfiguration config = new AnnotationConfiguration();
 
-        config.addAnnotatedClass(Datastream.class);
-        config.addAnnotatedClass(DatastreamTriggers.class);
-        config.addAnnotatedClass(Follower.class);
-        config.addAnnotatedClass(Subject.class);
-        config.addAnnotatedClass(Users.class);
-        config.addAnnotatedClass(DatastreamBlocks.class);
-        config.addAnnotatedClass(DatastreamUnits.class);
-        
-        config.configure();
-//        config.setProperty("hibernate.connection.username", "leoncool");
-//        config.setProperty("hibernate.connection.password", "leoncool");
-        return config;
-    }
+		config.addAnnotatedClass(Datastream.class);
+		config.addAnnotatedClass(DatastreamTriggers.class);
+		config.addAnnotatedClass(Follower.class);
+		config.addAnnotatedClass(Subject.class);
+		config.addAnnotatedClass(Users.class);
+		config.addAnnotatedClass(DatastreamBlocks.class);
+		config.addAnnotatedClass(DatastreamUnits.class);
 
-    public static Session getSession() {
-    	String settingFileName="WH_hibernate.cfg.xml";
-        if (factory == null) {
-        	Configuration config=null;
-        	File configFolder=new File(AllConstants.ServerConfigs.configsFolderPath);
-        	if(!configFolder.exists())
-        	{
-        		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
-        		configFolder.mkdir();
-        	}
-        	String debugModel="true";
-        	if(debugModel.equals("false")){
-        	File configFile=new File(AllConstants.ServerConfigs.configsFolderPath+settingFileName);
-        	if(!configFile.exists())
-        	{
-        		System.out.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
-        		System.out.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
-        	}else{
-        		System.out.println("Loading Hibernate Config File.......................");
-        		System.out.println("Loading Hibernate Config File.......................");
-        		System.out.println("Loading Hibernate Config File.......................");
-        		System.out.println("Loading Hibernate Config File.......................");
-        	}
-            config = new Configuration().configure(new File(AllConstants.ServerConfigs.configsFolderPath+settingFileName));
-        	}
-        	else{
-        		System.out.println("Loading local File!!!!!!!!!!!!!!");
-        		 config = new Configuration().configure("hibernate.cfg.xml");
-        	}
-        	
-            config.addAnnotatedClass(DatastreamTriggers.class);
-            config.addAnnotatedClass(Follower.class);
-            config.addAnnotatedClass(Subject.class);
-            config.addAnnotatedClass(Users.class);
-            config.addAnnotatedClass(DatastreamBlocks.class);
-            config.addAnnotatedClass(DatastreamUnits.class);
-            config.addAnnotatedClass(Datastream.class);
-            config.addAnnotatedClass(DeviceBinding.class);
-            config.addAnnotatedClass(DeviceTemplate.class);
-            config.addAnnotatedClass(Debug.class);
-            config.addAnnotatedClass(UserAvatar.class);
-            config.addAnnotatedClass(JobsTable.class);
-            config.addAnnotatedClass(UserDetails.class);
-            config.addAnnotatedClass(DataSummary.class);
-            config.addAnnotatedClass(CreationTemplate.class);
-            config.addAnnotatedClass(ExternalApiInfo.class);
-            config.addAnnotatedClass(LoginToken.class);
-            config.addAnnotatedClass(Config.class);
-            config.addAnnotatedClass(FitbitLog.class);
-            config.addAnnotatedClass(SleepDataSummary.class);
-            config.addAnnotatedClass(Locationlogs.class);
-            config.addAnnotatedClass(LocationPlaces.class);
-            config.addAnnotatedClass(DataPermission.class);
-            config.addAnnotatedClass(AnalysisModel.class);
-            config.addAnnotatedClass(AnalysisModelEntry.class);
-            config.addAnnotatedClass(AnalysisModelMapping.class);
-            config.addAnnotatedClass(AnalysisService.class);
-            config.addAnnotatedClass(AnalysisResult.class);
-            serviceRegistry = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
-            factory = config.buildSessionFactory(serviceRegistry);
+		config.configure();
+		// config.setProperty("hibernate.connection.username", "leoncool");
+		// config.setProperty("hibernate.connection.password", "leoncool");
+		return config;
+	}
 
-            //       factory=config.buildSessionFactory()
-        }
-        Session session = factory.getCurrentSession();
-        return session;
-    }
+	public static Session getSession() {
+		String settingFileName = "WH_hibernate.cfg.xml";
+		if (factory == null) {
+			Configuration config = null;
+			File configFolder = new File(
+					AllConstants.ServerConfigs.configsFolderPath);
+			if (!configFolder.exists()) {
+				System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
+				System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
+				System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
+				System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
+				System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
+				System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
+				System.out.println("Cannot Find Config folder!!!!!!!!!!!!!!");
+				configFolder.mkdir();
+			}
+			String debugModel = "false";
+			if (debugModel.equals("false")) {
+				File configFile = new File(
+						AllConstants.ServerConfigs.configsFolderPath
+								+ settingFileName);
+				if (!configFile.exists()) {
+					System.out
+							.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
+					System.out
+							.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
+					System.out
+							.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
+					System.out
+							.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
+					System.out
+							.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
+					System.out
+							.println("Cannot Find Hibernate Config File!!!!!!!!!!!!!!");
+				} else {
+					System.out
+							.println("Loading Hibernate Config File.......................");
+					System.out
+							.println("Loading Hibernate Config File.......................");
+					System.out
+							.println("Loading Hibernate Config File.......................");
+					System.out
+							.println("Loading Hibernate Config File.......................");
+				}
+				config = new Configuration().configure(new File(
+						AllConstants.ServerConfigs.configsFolderPath
+								+ settingFileName));
+			} else {
+				System.out.println("Loading local File!!!!!!!!!!!!!!");
+				config = new Configuration().configure("hibernate.cfg.xml");
+			}
 
-    public static void closeSession(Session session) {
-    	session.getTransaction().commit();
-    }
+			config.addAnnotatedClass(DatastreamTriggers.class);
+			config.addAnnotatedClass(Follower.class);
+			config.addAnnotatedClass(Subject.class);
+			config.addAnnotatedClass(Users.class);
+			config.addAnnotatedClass(DatastreamBlocks.class);
+			config.addAnnotatedClass(DatastreamUnits.class);
+			config.addAnnotatedClass(Datastream.class);
+			config.addAnnotatedClass(DeviceBinding.class);
+			config.addAnnotatedClass(DeviceTemplate.class);
+			config.addAnnotatedClass(Debug.class);
+			config.addAnnotatedClass(UserAvatar.class);
+			config.addAnnotatedClass(JobsTable.class);
+			config.addAnnotatedClass(UserDetails.class);
+			config.addAnnotatedClass(DataSummary.class);
+			config.addAnnotatedClass(CreationTemplate.class);
+			config.addAnnotatedClass(ExternalApiInfo.class);
+			config.addAnnotatedClass(LoginToken.class);
+			config.addAnnotatedClass(Config.class);
+			config.addAnnotatedClass(FitbitLog.class);
+			config.addAnnotatedClass(SleepDataSummary.class);
+			config.addAnnotatedClass(Locationlogs.class);
+			config.addAnnotatedClass(LocationPlaces.class);
+			config.addAnnotatedClass(DataPermission.class);
+			config.addAnnotatedClass(AnalysisModel.class);
+			config.addAnnotatedClass(AnalysisModelEntry.class);
+			config.addAnnotatedClass(AnalysisModelMapping.class);
+			config.addAnnotatedClass(AnalysisService.class);
+			config.addAnnotatedClass(AnalysisResult.class);
+			serviceRegistry = new ServiceRegistryBuilder().applySettings(
+					config.getProperties()).buildServiceRegistry();
+			factory = config.buildSessionFactory(serviceRegistry);
 
-    public static void recreateDatabase() {
-        Configuration configuration = HibernateUtil.getInitializedConfiguration();
-        SchemaExport schemaExport = new SchemaExport(configuration);
-        //   schemaExport.setOutputFile("C:/Users/leon/Documents/My Dropbox/SQL.txt");
-        schemaExport.create(true, true);
-    }
+			// factory=config.buildSessionFactory()
+		}
+		Session session = factory.getCurrentSession();
+		return session;
+	}
 
-    public static Session beginTransaction() {
-        Session hibernateSession;
-        hibernateSession = HibernateUtil.getSession();
-        hibernateSession.beginTransaction();
-        return hibernateSession;
-    }
+	public static void closeSession(Session session) {
+		session.getTransaction().commit();
+	}
 
-    public static void commitTransaction(Session session, boolean inuse) {
-    	session.getTransaction().commit();
-    }
+	public static void recreateDatabase() {
+		Configuration configuration = HibernateUtil
+				.getInitializedConfiguration();
+		SchemaExport schemaExport = new SchemaExport(configuration);
+		// schemaExport.setOutputFile("C:/Users/leon/Documents/My Dropbox/SQL.txt");
+		schemaExport.create(true, true);
+	}
 
-    public static void rollBackTransaction() {
-    	if(HibernateUtil.getSession().getTransaction().wasCommitted())
-    	{
-    		System.out.println("rollback");
-    		HibernateUtil.getSession().getTransaction().rollback();
-    	}
-        
-    }
+	public static Session beginTransaction() {
+		Session hibernateSession;
+		hibernateSession = HibernateUtil.getSession();
+		hibernateSession.beginTransaction();
+		return hibernateSession;
+	}
 
-    public static void main(String args[]) {
-//       HibernateUtil.recreateDatabase();
-    }
+	public static void commitTransaction(Session session, boolean inuse) {
+		session.getTransaction().commit();
+	}
+
+	public static void rollBackTransaction() {
+		if (HibernateUtil.getSession().getTransaction().wasCommitted()) {
+			System.out.println("rollback");
+			HibernateUtil.getSession().getTransaction().rollback();
+		}
+
+	}
+
+	public static void main(String args[]) {
+		// HibernateUtil.recreateDatabase();
+	}
 }

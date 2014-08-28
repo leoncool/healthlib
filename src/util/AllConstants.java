@@ -20,6 +20,10 @@ public interface AllConstants {
 		public static final String tmpRepository ="tmpRepository";
 		public static final String jobDir ="jobDir";
 		public static final String modelThumbnailDir ="modelThumbnailDir";
+		public static final String CloudStorageBase="CloudStorageBase";
+		public static final String CloudStorageBucket="CloudStorageBucket";
+		public static final String CloudStorageAccessKey="CloudStorageAccessKey";
+		public static final String CloudStorageSecureKey="CloudStorageSecureKey";
 	}
 
 	public static interface api_entryPoints {
@@ -34,6 +38,7 @@ public interface AllConstants {
 		public static final String api_title = "title";
 		public static final String api_device = "devices";
 		public static final String api_datapoints = "datapoints";
+		public static final String api_files = "files";
 		public static final String api_datapoints_benchmarks = "datapoints-benchmarks";
 		public static final String api_datasummaries = "datasummaries";
 		public static final String api_following = "followings";
