@@ -107,6 +107,9 @@ public interface AllConstants {
 		public static final String total_points = "total_points";
 		public static final String total_records = "total_records";
 		public static final String total_deleted_records = "total_deleted_records";
+		public static final String datastreamStatus_toDelete="toDelete";
+		public static final String datastreamStatus_deleted="deleted";
+		public static final String datastreamStatus_live="live";
 		public static final String follower_status_active = "active";
 		public static final String follower_status_pending = "pending";
 		public static final String follower_status_ignored = "ignored";

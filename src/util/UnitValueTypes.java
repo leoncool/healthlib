@@ -25,6 +25,7 @@ public class UnitValueTypes {
         accept_list.put(DOUBLE_TYPE, DOUBLE_TYPE);
         accept_list.put(INT_TYPE, INT_TYPE);
         accept_list.put(FILE_TYPE, FILE_TYPE);
+        accept_list.put(FILE_TYPE, LONG_TYPE);
     }
 
     public static boolean existValueType(String type) {

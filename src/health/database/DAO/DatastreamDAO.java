@@ -143,10 +143,10 @@ public class DatastreamDAO extends BaseDAO {
 		Session session = HibernateUtil.beginTransaction();
 		Criteria criteria = session.createCriteria(Datastream.class);
 		if (fetchDataUnits) {
-			criteria.setFetchMode("datastreamUnitsList", FetchMode.JOIN);
+			criteria.setFetchMode("datastreamUnitsList", FetchMode.SELECT);
 		}
 		if (fetchDatablocks) {
-			criteria.setFetchMode("datastreamBlocksList", FetchMode.JOIN);
+			criteria.setFetchMode("datastreamBlocksList", FetchMode.SELECT);
 		}
 		stream = (Datastream) criteria.add(Restrictions.idEq(StreamID))
 				.uniqueResult();
@@ -173,9 +173,20 @@ public class DatastreamDAO extends BaseDAO {
 		}
 		stream = (Datastream) criteria.uniqueResult();
 		session.getTransaction().commit();
+		if (stream != null
+				&& stream.getDsStatus() != null
+				&& (stream.getDsStatus().equalsIgnoreCase(
+						AllConstants.ProgramConts.datastreamStatus_toDelete) || stream
+						.getDsStatus()
+						.equalsIgnoreCase(
+								AllConstants.ProgramConts.datastreamStatus_deleted))) {
+			return null;
+		}
 		return stream;
 	}
-	public Datastream getHealthDatastreamByTitle(String streamTitle, String loginID,boolean fetchDataUnits, boolean fetchDatablocks)
+
+	public Datastream getHealthDatastreamByTitle(String streamTitle,
+			String loginID, boolean fetchDataUnits, boolean fetchDatablocks)
 			throws NonUniqueResultException {
 		Datastream stream = null;
 		// stream = (Datastream) session.get(Datastream.class, StreamID);
@@ -195,6 +206,7 @@ public class DatastreamDAO extends BaseDAO {
 		session.getTransaction().commit();
 		return stream;
 	}
+
 	public boolean existBlockID_fromDatastream(Datastream stream, String blockID) {
 		List<DatastreamBlocks> blockList = stream.getDatastreamBlocksList();
 		boolean exist = false;
@@ -213,6 +225,7 @@ public class DatastreamDAO extends BaseDAO {
 		System.out.println(SubjectID);
 		Criteria criteria = session.createCriteria(Datastream.class).add(
 				Restrictions.eq("subId", SubjectID));
+
 		// if (fetchDataUnits) {
 		// criteria.setFetchMode("datastreamUnitsList", FetchMode.JOIN);
 		// }
@@ -220,8 +233,22 @@ public class DatastreamDAO extends BaseDAO {
 		// criteria.setFetchMode("datastreamBlocksList", FetchMode.JOIN);
 		// }
 		List<Datastream> list = criteria.list();
+		List<Datastream> newList = new ArrayList<>();
+		for (Datastream ds : list) {
+			if (ds.getDsStatus() != null
+					&& (ds.getDsStatus()
+							.equalsIgnoreCase(
+									AllConstants.ProgramConts.datastreamStatus_toDelete) || ds
+							.getDsStatus()
+							.equalsIgnoreCase(
+									AllConstants.ProgramConts.datastreamStatus_deleted))) {
+
+			} else {
+				newList.add(ds);
+			}
+		}
 		session.getTransaction().commit();
-		return list;
+		return newList;
 	}
 
 	public List<DatastreamUnits> getDatastreamUnits(String datastreamID) {
@@ -239,14 +266,13 @@ public class DatastreamDAO extends BaseDAO {
 			Session session = HibernateUtil.beginTransaction();
 
 			session.update(streamObject);
-			if(unitList!=null)
-			{
-			for (DatastreamUnits unit : unitList) {
-				if (unit.getValueType() == null) {
-					unit.setValueType("undefined");
+			if (unitList != null) {
+				for (DatastreamUnits unit : unitList) {
+					if (unit.getValueType() == null) {
+						unit.setValueType("undefined");
+					}
+					session.update(unit);
 				}
-				session.update(unit);
-			}
 			}
 			session.getTransaction().commit();
 			if (streamObject.getStreamId() != null) {
@@ -259,12 +285,14 @@ public class DatastreamDAO extends BaseDAO {
 			return null;
 		} finally {
 		}
-	}	
+	}
+
 	public Datastream createDatastream(Datastream streamObject,
 			List<DatastreamUnits> unitList) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
-
+			streamObject
+					.setDsStatus(AllConstants.ProgramConts.datastreamStatus_live);
 			session.save(streamObject);
 			for (DatastreamUnits unit : unitList) {
 				if (unit.getValueType() == null) {
@@ -358,7 +386,9 @@ public class DatastreamDAO extends BaseDAO {
 	public void DeleteDatastream(Datastream datastream) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
-			session.delete(datastream);
+			datastream
+					.setDsStatus(AllConstants.ProgramConts.datastreamStatus_toDelete);
+			session.update(datastream);
 			{
 				Date now = new Date();
 				JobsTable job = new JobsTable();
@@ -371,7 +401,6 @@ public class DatastreamDAO extends BaseDAO {
 				session.save(job);
 			}
 			session.getTransaction().commit();
-			
 
 		} catch (Exception e) {
 			HibernateUtil.rollBackTransaction();
@@ -404,7 +433,6 @@ public class DatastreamDAO extends BaseDAO {
 				session.save(job);
 			}
 			session.getTransaction().commit();
-		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -435,7 +463,6 @@ public class DatastreamDAO extends BaseDAO {
 				session.save(job);
 			}
 			session.getTransaction().commit();
-			
 
 		} catch (Exception e) {
 			HibernateUtil.rollBackTransaction();
@@ -459,7 +486,6 @@ public class DatastreamDAO extends BaseDAO {
 				session.save(job);
 			}
 			session.getTransaction().commit();
-			
 
 		} catch (Exception e) {
 			HibernateUtil.rollBackTransaction();

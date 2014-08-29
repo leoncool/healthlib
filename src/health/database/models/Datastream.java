@@ -81,6 +81,10 @@ public class Datastream implements Serializable {
     private String icon;
     @Column(name = "purpose")
     private String purpose;
+    @Column(name = "ds_status")
+    private String dsStatus;
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "streamID")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<DatastreamUnits> datastreamUnitsList;
@@ -237,7 +241,16 @@ public class Datastream implements Serializable {
         return true;
     }
 
-    @Override
+    
+    public String getDsStatus() {
+		return dsStatus;
+	}
+
+	public void setDsStatus(String dsStatus) {
+		this.dsStatus = dsStatus;
+	}
+
+	@Override
     public String toString() {
         return "health.database.models.Datastream[ streamId=" + streamId + " ]";
     }
