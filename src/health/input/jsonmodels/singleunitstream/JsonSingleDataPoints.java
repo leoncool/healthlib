@@ -16,6 +16,7 @@ public class JsonSingleDataPoints {
     @SerializedName(value="val")
     protected String val;
     protected String val_tag;
+    protected String link;
 	public String getAt() {
 		return at;
 	}
@@ -34,5 +35,12 @@ public class JsonSingleDataPoints {
 	public void setVal_tag(String val_tag) {
 		this.val_tag = val_tag;
 	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
+	}
+	
     
 }

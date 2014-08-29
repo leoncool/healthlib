@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package health.database.DAO.nosql;
 
 import health.database.DAO.DatastreamDAO;
@@ -471,7 +467,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 
 	public HBaseDataImport exportDatapointsForSingleUnit(String streamID,
 			Long start, Long end, String blockID, String unitID,
-			SimpleDateFormat format) throws ErrorCodeException {
+			SimpleDateFormat format,HashMap<String, Object> settings) throws ErrorCodeException {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();

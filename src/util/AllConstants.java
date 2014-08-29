@@ -22,6 +22,7 @@ public interface AllConstants {
 		public static final String modelThumbnailDir ="modelThumbnailDir";
 		public static final String CloudStorageBase="CloudStorageBase";
 		public static final String CloudStorageBucket="CloudStorageBucket";
+		public static final String fileGetBaseURL="fileGetBaseURL";
 		public static final String CloudStorageAccessKey="CloudStorageAccessKey";
 		public static final String CloudStorageSecureKey="CloudStorageSecureKey";
 	}
@@ -76,6 +77,7 @@ public interface AllConstants {
 		public static final String request_api_true = "true";
 		public static final String request_api_unit_id = "unitid";
 		public static final String request_api_keywords = "keywords";
+		public static final String request_api_filekey = "filekey";
 		public static final String request_api_startpage = "startpage";
 		public static final String request_api_dataformat = "dateformat";
 		public static final String request_api_single_unit = "singleunit";
@@ -90,6 +92,8 @@ public interface AllConstants {
 	}
 
 	public interface ProgramConts {
+		public static final String datatreamTitle="dstitle";
+		public static final String fileLinkBaseURL="flURL";
 		public static final String data_permission_type_datastream="datastream";
 		public static final String data_permission_type_subject="subject";
 		public static final String VALID="valid";
@@ -215,6 +219,7 @@ public interface AllConstants {
 		public static final String INPUT_DATE_FORMAT_ERROR = "input_date_format_error";
 		public static final String Unauthorized_Access = "unauthorized_access";
 		public static final String Unknown_StreamID = "unknown_stream_id";
+		public static final String file_not_found = "file_not_found";
 		public static final String NO_STREAM_UNIT_EXIST = "no_datastream_unit_exist";
 		public static final String Such_Stream_title_EXIST = "such_stream_title_exist";
 		public static final String MORE_THAN_ONE_DATASTREAM_UNIT = "more_than_one_datastream_unit_exist";
