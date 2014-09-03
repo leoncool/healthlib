@@ -183,6 +183,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 									+ toBytes(value.getUnit_id()).length
 									+ toBytes(value.getVal()).length;
 							if (value.getVal_tag() != null) {
+//								System.out.println("debug 2:saving:"
+//										+ value.getUnit_id()+","+value.getVal_tag());
 								put.add(VALUE_TAG_COL,
 										toBytes(value.getUnit_id()),
 										toBytes(value.getVal_tag()));
@@ -354,11 +356,13 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				Iterator<String> itr = entrySet.iterator();
 				while (itr.hasNext()) {
 					String id = itr.next();
+//					System.out.println("unitid debug po1:"+id);
 					scan.addColumn(VALUE_COL, toBytes(id));
 					scan.addColumn(VALUE_TAG_COL, toBytes(id));
 				}
 				scan.addFamily(PROP_COL);
 				scan.addFamily(VALUE_TAG_COL);
+				scan.addFamily(VALUE_COL);
 			}
 			scan.setFilter(filterList);
 
@@ -402,6 +406,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 						datapoint.setAt(dateUtil.format(date,
 								dateUtil.utcFormat));
 					} catch (Exception ex) {
+						ex.printStackTrace();
 						throw new ErrorCodeException(
 								AllConstants.ErrorDictionary.HBase_Internal_Error);
 					}
@@ -467,7 +472,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 
 	public HBaseDataImport exportDatapointsForSingleUnit(String streamID,
 			Long start, Long end, String blockID, String unitID,
-			SimpleDateFormat format,HashMap<String, Object> settings) throws ErrorCodeException {
+			SimpleDateFormat format, HashMap<String, Object> settings)
+			throws ErrorCodeException {
 		HTableInterface table = null;
 		try {
 			Date timerStart = new Date();
@@ -566,6 +572,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				if (res.getValue(PROP_COL, TIME_TAG) != null) {
 					datapoint.setVal_tag(toString(res.getValue(PROP_COL,
 							TIME_TAG)));
+//					System.out.println("debug 11:value tag:"
+//							+ toString(res.getValue(PROP_COL, TIME_TAG)));
 				}
 				if (res.getValue(VALUE_TAG_COL, toBytes(unitID)) != null) {
 					datapoint.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
@@ -629,6 +637,19 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				.entrySet();
 		Iterator<Entry<byte[], byte[]>> itrFamily = entries.iterator();
 		List<JsonDataValues> valueList = new ArrayList<JsonDataValues>();
+		
+		/*NavigableMap<byte[], byte[]> familyMapValueTag = res.getFamilyMap(VALUE_TAG_COL);
+		Set<Map.Entry<byte[], byte[]>> entriesValueTag = (Set<Map.Entry<byte[], byte[]>>) (Set<Map.Entry<byte[], byte[]>>) familyMapValueTag
+				.entrySet();
+		Iterator<Entry<byte[], byte[]>> itrFamilyValueTag = entriesValueTag.iterator();
+		while(itrFamilyValueTag.hasNext())
+		{
+			Map.Entry<byte[], byte[]> data = (Map.Entry<byte[], byte[]>) itrFamily
+					.next();
+			System.out.println("finalDebug:"+toString(data.getKey()));
+		}*/
+		
+		
 		while (itrFamily.hasNext()) {
 			Map.Entry<byte[], byte[]> data = (Map.Entry<byte[], byte[]>) itrFamily
 					.next();
@@ -638,13 +659,21 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			JsonDataValues value = new JsonDataValues();
 			value.setUnit_id(toString(data.getKey()));
 			value.setVal(toString(data.getValue()));
-			if (res.getValue(VALUE_TAG_COL, data.getKey()) != null) {
-				value.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
-						data.getKey())));
-			}
+//			System.out.println("debug 33: data.getKey():"+data.getKey()+",resGetValue:"+res.getValue(VALUE_TAG_COL, data.getKey()));
+//			System.out.println("debug 44: Unit ID:"+toString(data.getKey())+",Unit Value:"+toString(data.getValue()));
+//			if (res.getValue(VALUE_TAG_COL, data.getKey()) != null) {
+//				value.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
+//						data.getKey())));
+//			}
+			
 			if (dsUnitsList != null && dsUnitsList.size() > 0) {
 				if (dsUnitsList.containsKey(value.getUnit_id())) {
 					// System.out.println("adding:"+dsUnitsList.get(toString(data.getKey())));
+//					if(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))!=null)
+//					{
+//						}
+					value.setVal_tag(toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
+//					System.out.println("debug 45:value tag:"+toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
 					valueList.add(value);
 				} else {
 					// System.out.println("not included" +
@@ -652,6 +681,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				}
 			} else {
 				// System.out.println("is null and -----------");
+				value.setVal_tag(toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
+//				System.out.println("debug 46:value tag:"+toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
 				valueList.add(value);
 			}
 		}
@@ -666,24 +697,24 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			Date timerStart = new Date();
 			System.out.println("starting Deleting...." + at);
 			table = HBaseConfig.getTable(health_book);
-//			Scan scan = new Scan();
-//			scan.setCaching(100);
+			// Scan scan = new Scan();
+			// scan.setCaching(100);
 			// scan.setStartRow(toBytes(streamID + "/" + Long.toString(start)));
 			// scan.setCacheBlocks(true);
-//			FilterList filterList = new FilterList();
-//			RowFilter rowFilterStreamID = new RowFilter(
-//					CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
-//							toBytes(streamID)));
-//			filterList.addFilter(rowFilterStreamID);
-//
-//			RowFilter fowFilter_startDate = new RowFilter(
-//					CompareFilter.CompareOp.EQUAL, new BinaryComparator(
-//							toBytes(streamID + "/" + Long.toString(at))));
-//			filterList.addFilter(fowFilter_startDate);
+			// FilterList filterList = new FilterList();
+			// RowFilter rowFilterStreamID = new RowFilter(
+			// CompareFilter.CompareOp.EQUAL, new BinaryPrefixComparator(
+			// toBytes(streamID)));
+			// filterList.addFilter(rowFilterStreamID);
+			//
+			// RowFilter fowFilter_startDate = new RowFilter(
+			// CompareFilter.CompareOp.EQUAL, new BinaryComparator(
+			// toBytes(streamID + "/" + Long.toString(at))));
+			// filterList.addFilter(fowFilter_startDate);
 
 			Delete delete = new Delete(toBytes(streamID + "/"
 					+ Long.toString(at)));
-			
+
 			table.delete(delete);
 
 			table.close();

@@ -243,7 +243,7 @@ public class DatastreamDAO extends BaseDAO {
 							.equalsIgnoreCase(
 									AllConstants.ProgramConts.datastreamStatus_deleted))) {
 
-			} else {
+			} else if(ds.getDsStatus()==null||!ds.getDsStatus().equalsIgnoreCase(AllConstants.ProgramConts.datastreamStatus_pending)) {
 				newList.add(ds);
 			}
 		}
