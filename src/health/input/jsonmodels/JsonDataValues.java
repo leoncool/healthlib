@@ -16,6 +16,7 @@ public class JsonDataValues {
     protected String val;
     protected String val_tag;
     protected String link;
+    protected String filekey;
 
     public String getUnit_id() {
         return unit_id;
@@ -47,6 +48,14 @@ public class JsonDataValues {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public String getFilekey() {
+		return filekey;
+	}
+
+	public void setFilekey(String filekey) {
+		this.filekey = filekey;
 	}
 
     
