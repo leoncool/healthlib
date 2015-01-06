@@ -195,7 +195,9 @@ public class DatastreamDAO extends BaseDAO {
 		criteria.add(Restrictions.eq("purpose",
 				AllConstants.HealthConts.defaultDatastreamPurpose));
 		criteria.add(Restrictions.eq("title", streamTitle));
+		if(loginID!=null){
 		criteria.add(Restrictions.eq("owner", loginID));
+		}
 		if (fetchDataUnits) {
 			criteria.setFetchMode("datastreamUnitsList", FetchMode.SELECT);
 		}
