@@ -33,6 +33,11 @@ public interface AllConstants {
 		public static final String AS_getfile = "getFile";
 		public static final String api_subject = "subjects";
 		public static final String api_defaultsubject="defaultsubject";
+		public static final String api_cloud_storage = "cloudstorage";
+		public static final String api_cloud_storage_get = "get";
+		public static final String api_cloud_storage_delete = "delete";
+		public static final String api_cloud_storage_upload = "upload";
+		public static final String api_cloud_storage_list = "list";
 		public static final String api_health = "health";
 		public static final String api_datastream = "datastreams";
 		public static final String api_unit = "unit";

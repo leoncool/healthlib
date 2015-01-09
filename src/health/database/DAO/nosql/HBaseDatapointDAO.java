@@ -2,6 +2,7 @@ package health.database.DAO.nosql;
 
 import health.database.DAO.DatastreamDAO;
 import health.hbase.models.HBaseDataImport;
+import health.input.jsonmodels.JsonCloudStorageFile;
 import health.input.jsonmodels.JsonDataPoints;
 import health.input.jsonmodels.JsonDataValues;
 import health.input.jsonmodels.JsonDatastreamUnits;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,10 @@ import server.exception.ErrorCodeException;
 import util.AllConstants;
 import util.DateUtil;
 import util.HBaseConfig;
+import util.ServerConfigUtil;
+import cloudstorage.cacss.S3Engine;
+
+import com.zhumulangma.cloudstorage.server.entity.CloudFile;
 
 /**
  * 
@@ -183,8 +189,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 									+ toBytes(value.getUnit_id()).length
 									+ toBytes(value.getVal()).length;
 							if (value.getVal_tag() != null) {
-//								System.out.println("debug 2:saving:"
-//										+ value.getUnit_id()+","+value.getVal_tag());
+								// System.out.println("debug 2:saving:"
+								// + value.getUnit_id()+","+value.getVal_tag());
 								put.add(VALUE_TAG_COL,
 										toBytes(value.getUnit_id()),
 										toBytes(value.getVal_tag()));
@@ -356,7 +362,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				Iterator<String> itr = entrySet.iterator();
 				while (itr.hasNext()) {
 					String id = itr.next();
-//					System.out.println("unitid debug po1:"+id);
+					// System.out.println("unitid debug po1:"+id);
 					scan.addColumn(VALUE_COL, toBytes(id));
 					scan.addColumn(VALUE_TAG_COL, toBytes(id));
 				}
@@ -572,8 +578,8 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				if (res.getValue(PROP_COL, TIME_TAG) != null) {
 					datapoint.setVal_tag(toString(res.getValue(PROP_COL,
 							TIME_TAG)));
-//					System.out.println("debug 11:value tag:"
-//							+ toString(res.getValue(PROP_COL, TIME_TAG)));
+					// System.out.println("debug 11:value tag:"
+					// + toString(res.getValue(PROP_COL, TIME_TAG)));
 				}
 				if (res.getValue(VALUE_TAG_COL, toBytes(unitID)) != null) {
 					datapoint.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
@@ -637,19 +643,19 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				.entrySet();
 		Iterator<Entry<byte[], byte[]>> itrFamily = entries.iterator();
 		List<JsonDataValues> valueList = new ArrayList<JsonDataValues>();
-		
-		/*NavigableMap<byte[], byte[]> familyMapValueTag = res.getFamilyMap(VALUE_TAG_COL);
-		Set<Map.Entry<byte[], byte[]>> entriesValueTag = (Set<Map.Entry<byte[], byte[]>>) (Set<Map.Entry<byte[], byte[]>>) familyMapValueTag
-				.entrySet();
-		Iterator<Entry<byte[], byte[]>> itrFamilyValueTag = entriesValueTag.iterator();
-		while(itrFamilyValueTag.hasNext())
-		{
-			Map.Entry<byte[], byte[]> data = (Map.Entry<byte[], byte[]>) itrFamily
-					.next();
-			System.out.println("finalDebug:"+toString(data.getKey()));
-		}*/
-		
-		
+
+		/*
+		 * NavigableMap<byte[], byte[]> familyMapValueTag =
+		 * res.getFamilyMap(VALUE_TAG_COL); Set<Map.Entry<byte[], byte[]>>
+		 * entriesValueTag = (Set<Map.Entry<byte[], byte[]>>)
+		 * (Set<Map.Entry<byte[], byte[]>>) familyMapValueTag .entrySet();
+		 * Iterator<Entry<byte[], byte[]>> itrFamilyValueTag =
+		 * entriesValueTag.iterator(); while(itrFamilyValueTag.hasNext()) {
+		 * Map.Entry<byte[], byte[]> data = (Map.Entry<byte[], byte[]>)
+		 * itrFamily .next();
+		 * System.out.println("finalDebug:"+toString(data.getKey())); }
+		 */
+
 		while (itrFamily.hasNext()) {
 			Map.Entry<byte[], byte[]> data = (Map.Entry<byte[], byte[]>) itrFamily
 					.next();
@@ -659,21 +665,25 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			JsonDataValues value = new JsonDataValues();
 			value.setUnit_id(toString(data.getKey()));
 			value.setVal(toString(data.getValue()));
-//			System.out.println("debug 33: data.getKey():"+data.getKey()+",resGetValue:"+res.getValue(VALUE_TAG_COL, data.getKey()));
-//			System.out.println("debug 44: Unit ID:"+toString(data.getKey())+",Unit Value:"+toString(data.getValue()));
-//			if (res.getValue(VALUE_TAG_COL, data.getKey()) != null) {
-//				value.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
-//						data.getKey())));
-//			}
-			
+			// System.out.println("debug 33: data.getKey():"+data.getKey()+",resGetValue:"+res.getValue(VALUE_TAG_COL,
+			// data.getKey()));
+			// System.out.println("debug 44: Unit ID:"+toString(data.getKey())+",Unit Value:"+toString(data.getValue()));
+			// if (res.getValue(VALUE_TAG_COL, data.getKey()) != null) {
+			// value.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
+			// data.getKey())));
+			// }
+
 			if (dsUnitsList != null && dsUnitsList.size() > 0) {
 				if (dsUnitsList.containsKey(value.getUnit_id())) {
 					// System.out.println("adding:"+dsUnitsList.get(toString(data.getKey())));
-//					if(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))!=null)
-//					{
-//						}
-					value.setVal_tag(toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
-//					System.out.println("debug 45:value tag:"+toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
+					// if(res.getValue(VALUE_TAG_COL,
+					// toBytes(value.getUnit_id()))!=null)
+					// {
+					// }
+					value.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
+							toBytes(value.getUnit_id()))));
+					// System.out.println("debug 45:value tag:"+toString(res.getValue(VALUE_TAG_COL,
+					// toBytes(value.getUnit_id()))));
 					valueList.add(value);
 				} else {
 					// System.out.println("not included" +
@@ -681,13 +691,39 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 				}
 			} else {
 				// System.out.println("is null and -----------");
-				value.setVal_tag(toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
-//				System.out.println("debug 46:value tag:"+toString(res.getValue(VALUE_TAG_COL, toBytes(value.getUnit_id()))));
+				value.setVal_tag(toString(res.getValue(VALUE_TAG_COL,
+						toBytes(value.getUnit_id()))));
+				// System.out.println("debug 46:value tag:"+toString(res.getValue(VALUE_TAG_COL,
+				// toBytes(value.getUnit_id()))));
 				valueList.add(value);
 			}
 		}
 		// System.out.println("valueList size:" + valueList.size());
 		return valueList;
+	}
+
+	public long delete_A_Datapoint(String streamID, long at,
+			List<String> unitIDList, String loginID) throws ErrorCodeException {
+		
+		try {
+			Hashtable<String, Object> returnValues = null;
+			String bucketName = ServerConfigUtil
+					.getConfigValue(AllConstants.ServerConfigs.CloudStorageBucket);
+			returnValues = (Hashtable<String, Object>) S3Engine.s3.GetBucket(
+					bucketName, "leoncool", null, null, 100000, loginID + "/"
+							+ streamID + "/" + at);
+			List<CloudFile> list = (List<CloudFile>) returnValues.get("data");
+			List<JsonCloudStorageFile> csFiles = new ArrayList<JsonCloudStorageFile>();
+			for (CloudFile file : list) {
+				JsonCloudStorageFile csFile = new JsonCloudStorageFile();
+				String absKey = (String) file.get(CloudFile.NAME);
+				S3Engine.s3.DeleteObject(bucketName, "leoncool", absKey, null);
+			}
+			delete_A_Datapoint(streamID,at,unitIDList);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return 1;
 	}
 
 	public long delete_A_Datapoint(String streamID, long at,
