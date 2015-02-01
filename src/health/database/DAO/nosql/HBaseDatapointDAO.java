@@ -178,8 +178,9 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 
 						if (!check_ExistUnitID(value.getUnit_id(), importData
 								.getDatastream().getUnits_list())) {
+							System.out.println("-----value.getUnit_id():"+value.getUnit_id()+"-------");
 							throw new ErrorCodeException(
-									AllConstants.ErrorDictionary.Input_data_contains_invalid_unit_id);
+														AllConstants.ErrorDictionary.Input_data_contains_invalid_unit_id);
 						}
 						try {
 							put.add(VALUE_COL, toBytes(value.getUnit_id()),

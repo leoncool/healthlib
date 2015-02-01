@@ -13,6 +13,8 @@ public interface AScontants {
 	public static final String dataaction_ignore = "ignore";
 	public static final String dataaction_alert = "alert";
 	public static final String fileType = "file";
+	public static final String cloudfile="cloudfile";
+	public static final String healthfile="healthfile";
 	public static final String nullEntry = "null";
 	public static final String as_input="input";
 	public static final String as_output="output";
