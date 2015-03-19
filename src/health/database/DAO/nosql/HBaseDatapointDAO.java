@@ -805,19 +805,24 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 			}
 
 			scan.setFilter(filterList);
+			
 			ResultScanner scanner = table.getScanner(scan);
 			Iterator<Result> itr = scanner.iterator();
 			List<Delete> deleteList = new ArrayList<>();
 			long no_deleted = 0;
 			while (itr.hasNext()) {
 				Result res = itr.next();
-				System.out.println("deleting..." + toString(res.getRow()));
+				if(no_deleted<10){
+				System.out.println("scanning..." + toString(res.getRow()));
+				}
 				Delete delete = new Delete(res.getRow());
 				deleteList.add(delete);
 				no_deleted++;
 			}
+			System.out.println("scanning deleting finished..."+new Date());
 			table.delete(deleteList);
 			table.close();
+			System.out.println("deleting finished..."+new Date());
 			// HBaseConfig.putTable(table);
 			HBaseDataImport dataexport = null;
 			Date timerEnd = new Date();
