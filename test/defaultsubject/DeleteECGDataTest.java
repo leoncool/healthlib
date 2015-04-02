@@ -21,7 +21,7 @@ public class DeleteECGDataTest {
 		try {
 			String titleID="604";
 			URL url = new URL(
-					"http://api.wiki-health.org:55555/healthbook/v1/health/title/"+"ecg"+titleID+"?accesstoken=26e370d5a6df4917840a91458f4fce72");
+					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"ecg"+titleID+"?accesstoken=26e370d5a6df4917840a91458f4fce72");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setDoOutput(false);
 			connection.setRequestMethod("DELETE");

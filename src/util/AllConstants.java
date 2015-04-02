@@ -25,6 +25,8 @@ public interface AllConstants {
 		public static final String fileGetBaseURL="fileGetBaseURL";
 		public static final String CloudStorageAccessKey="CloudStorageAccessKey";
 		public static final String CloudStorageSecureKey="CloudStorageSecureKey";
+		
+		public static final String outputFolderURLPath="outputFolderURLPath";
 	}
 
 	public static interface api_entryPoints {

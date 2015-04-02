@@ -165,7 +165,8 @@ public class DatastreamDAO extends BaseDAO {
 				AllConstants.HealthConts.defaultDatastreamPurpose));
 		criteria.add(Restrictions.eq("title", streamTitle));
 		criteria.add(Restrictions.eq("subId", subjectID));
-		if (fetchDataUnits) {
+		criteria.add(Restrictions.or(Restrictions.isNull("dsStatus"),Restrictions.eq("dsStatus", "live")));
+			if (fetchDataUnits) {
 			criteria.setFetchMode("datastreamUnitsList", FetchMode.SELECT);
 		}
 		if (fetchDatablocks) {
@@ -195,6 +196,7 @@ public class DatastreamDAO extends BaseDAO {
 		criteria.add(Restrictions.eq("purpose",
 				AllConstants.HealthConts.defaultDatastreamPurpose));
 		criteria.add(Restrictions.eq("title", streamTitle));
+		criteria.add(Restrictions.or(Restrictions.isNull("dsStatus"),Restrictions.eq("dsStatus", "live")));
 		if(loginID!=null){
 		criteria.add(Restrictions.eq("owner", loginID));
 		}

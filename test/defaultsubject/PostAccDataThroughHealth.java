@@ -51,7 +51,7 @@ public class PostAccDataThroughHealth {
 		         
 		        //Get all tokens and store them in some data structure
 		        //I am just printing them
-			  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+			  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 //			  System.out.println(sdf.format(new Date()));
 			 
 		  
@@ -72,20 +72,23 @@ public class PostAccDataThroughHealth {
 //		    		  break;
 		    	  }
 		        	String[] strValues=scannerCSV.nextLine().split(",");
-		        	Date rDate=sdf.parse(strValues[0]);
+		        	String dateString=strValues[0].substring(0,(strValues[0].length()-3));
+		        	System.out.println(dateString);
+		       
+		        	Date rDate=sdf.parse(dateString);
 		        	String x=strValues[1];
 		        	String y =strValues[2];
 		        	String z= strValues[3];
 		        	
 		        	List<JsonDataValues> datavaluesList=new ArrayList<JsonDataValues>();
 		        	JsonDataValues valueX=new JsonDataValues();
-		        	valueX.setUnit_id("T04EC");
+		        	valueX.setUnit_id("TwNAq");
 		        	valueX.setVal(x);
 		        	JsonDataValues valueY=new JsonDataValues();
-		        	valueY.setUnit_id("g0utX");
+		        	valueY.setUnit_id("TcYPX");
 		        	valueY.setVal(y);
 		        	JsonDataValues valueZ=new JsonDataValues();
-		        	valueZ.setUnit_id("24wP8");
+		        	valueZ.setUnit_id("ouYMl");
 		        	valueZ.setVal(z);
 		        	datavaluesList.add(valueX);
 		        	datavaluesList.add(valueY);

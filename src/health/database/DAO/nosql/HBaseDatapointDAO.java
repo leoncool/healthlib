@@ -443,7 +443,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 
 			System.out.println("Just After While loop...."
 					+ (new Date().getTime() - timerStart.getTime()) / (1000.00)
-					+ "seconds");
+					+ "seconds"+",counter:"+counter);
 			HBaseDataImport dataexport = null;
 			if (jsonDPList.size() > 0) {
 				dataexport = new HBaseDataImport();
