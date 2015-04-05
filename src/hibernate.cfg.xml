@@ -4,7 +4,10 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://146.169.32.153:55557/healthbook?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8</property>
+  <!--     <property name="hibernate.connection.url">jdbc:mysql://146.169.32.153:55557/healthbook?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8</property>
+       
+        -->  
+          <property name="hibernate.connection.url">jdbc:mysql://api2.wiki-health.org:55557/healthbook?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">leoncool</property>
        <property name="hibernate.show_sql">false</property>

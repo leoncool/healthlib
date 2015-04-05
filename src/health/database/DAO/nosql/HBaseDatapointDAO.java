@@ -366,6 +366,7 @@ public class HBaseDatapointDAO implements DatapointDAOInterface {
 					// System.out.println("unitid debug po1:"+id);
 					scan.addColumn(VALUE_COL, toBytes(id));
 					scan.addColumn(VALUE_TAG_COL, toBytes(id));
+					System.out.println("adding unitID for scanning:"+id);
 				}
 				scan.addFamily(PROP_COL);
 				scan.addFamily(VALUE_TAG_COL);

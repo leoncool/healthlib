@@ -16,7 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import util.AScontants;
+import util.MarketplaceContants;
 import util.HibernateUtil;
 
 public class AnalysisServiceDAO {

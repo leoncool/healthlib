@@ -1,5 +1,7 @@
 package util;
 
+import health.database.datamarket.DataMarket;
+import health.database.datamarket.DataSharing;
 import health.database.models.Config;
 import health.database.models.CreationTemplate;
 import health.database.models.DataPermission;
@@ -148,6 +150,8 @@ public class HibernateUtil {
 			config.addAnnotatedClass(AnalysisModelMapping.class);
 			config.addAnnotatedClass(AnalysisService.class);
 			config.addAnnotatedClass(AnalysisResult.class);
+			config.addAnnotatedClass(DataMarket.class);
+			config.addAnnotatedClass(DataSharing.class);
 			serviceRegistry = new ServiceRegistryBuilder().applySettings(
 					config.getProperties()).buildServiceRegistry();
 			factory = config.buildSessionFactory(serviceRegistry);
