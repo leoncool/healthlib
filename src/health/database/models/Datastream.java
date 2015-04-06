@@ -84,6 +84,7 @@ public class Datastream implements Serializable {
     @Column(name = "ds_status")
     private String dsStatus;
     
+//    private int totalUnits;//for json data exporting only
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "streamID")
     @LazyCollection(LazyCollectionOption.FALSE)

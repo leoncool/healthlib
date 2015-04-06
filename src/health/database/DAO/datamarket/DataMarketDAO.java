@@ -5,6 +5,7 @@ import health.database.datamarket.DataMarket;
 import health.database.datamarket.DataSharing;
 import health.database.models.Datastream;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -29,6 +30,27 @@ public class DataMarketDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	public boolean existDataMarketItem(String loginID,String streamID)
+	{
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			Criteria criteria = session.createCriteria(DataMarket.class);
+			criteria.createAlias("datastream", "stream");
+			criteria.add(Restrictions.eq("stream.streamId", streamID));
+			criteria.add(Restrictions.eq("loginID", loginID));
+			List<DataMarket> entryList = criteria.list();
+			session.getTransaction().commit();
+			if(entryList!=null&&entryList.size()>=1)
+			{
+				return true;
+			}else{
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
@@ -113,12 +135,13 @@ public class DataMarketDAO {
 	public static void main(String args[])
 	{
 		DatastreamDAO dsDao=new DatastreamDAO();
-		Datastream stream=dsDao.getHealthDatastreamByTitle("ecg", "testtest4", false, false);
+//		Datastream stream=dsDao.getHealthDatastreamByTitle("ecg", "testtest4", false, false);
 //		DataMarket dm=new DataMarket();
 //		dm.setLoginID("testtest");
 //		dm.setStreamID(stream);
 //		dm.setPrice(0);
 //		dm.setCreatedTime(new Date());
+//		dm.setDescription("Data Description");
 		DataMarketDAO dmDao=new DataMarketDAO();
 //		dmDao.addToMarket(dm);
 //		DataSharing dsharing=new DataSharing();
@@ -129,6 +152,9 @@ public class DataMarketDAO {
 //		dmDao.addDataSharing(dsharing);
 //		System.out.println(dmDao.getDataSharingList(null,"testtest4","e").get(0).getLoginID());
 //		System.out.println(dmDao.getDataMarketListing("e").get(0).getLoginID());
+		
+		
+	System.out.println(dmDao.existDataMarketItem("testtest","4f9d86f4-80e3-4a22-9b16-523a582bd192"));
 		
 	}
 }

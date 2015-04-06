@@ -257,8 +257,9 @@ public class DatastreamDAO extends BaseDAO {
 
 	public List<DatastreamUnits> getDatastreamUnits(String datastreamID) {
 		Session session = HibernateUtil.beginTransaction();
+		Datastream stream=new Datastream(datastreamID);
 		Criteria criteria = session.createCriteria(DatastreamUnits.class).add(
-				Restrictions.eq("streamID", datastreamID));
+				Restrictions.eq("streamID", stream));
 		List<DatastreamUnits> list = criteria.list();
 		session.getTransaction().commit();
 		return list;
