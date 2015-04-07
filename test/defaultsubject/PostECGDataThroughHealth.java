@@ -32,7 +32,7 @@ public class PostECGDataThroughHealth {
 		try {
 
 			URL url = new URL(
-					"http://api.wiki-health.org:55555/healthbook/v1/health/title/"+"ecg1"+"/datapoints-benchmarks?accesstoken=5b08af23d9f2490cb253fa5d221aa74e&api_key=special-key");
+					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"ecg"+"/datapoints-benchmarks?accesstoken=d2912c8973694249938d2effd7f2205f&api_key=special-key");
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);

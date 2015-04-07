@@ -61,6 +61,7 @@ public class AnalysisServiceDAO {
 			if (loginID != null) {
 				criteria.add(Restrictions.eq("userId", loginID));
 			}
+			criteria.addOrder(Order.desc("createdTime"));
 			List<AnalysisService> resultList = criteria.list();
 			session.getTransaction().commit();
 			return resultList;

@@ -229,7 +229,8 @@ public class DatastreamDAO extends BaseDAO {
 		System.out.println(SubjectID);
 		Criteria criteria = session.createCriteria(Datastream.class).add(
 				Restrictions.eq("subId", SubjectID));
-
+		criteria.addOrder(
+				Order.asc("title"));
 		// if (fetchDataUnits) {
 		// criteria.setFetchMode("datastreamUnitsList", FetchMode.JOIN);
 		// }
@@ -251,6 +252,7 @@ public class DatastreamDAO extends BaseDAO {
 				newList.add(ds);
 			}
 		}
+		
 		session.getTransaction().commit();
 		return newList;
 	}
