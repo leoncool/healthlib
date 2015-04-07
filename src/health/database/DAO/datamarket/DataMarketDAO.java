@@ -54,6 +54,28 @@ public class DataMarketDAO {
 		}
 	}
 	
+	public boolean existDataSharingItem(String loginID,String streamID)
+	{
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			Criteria criteria = session.createCriteria(DataMarket.class);
+			criteria.createAlias("datastream", "stream");
+			criteria.add(Restrictions.eq("stream.streamId", streamID));
+			criteria.add(Restrictions.eq("loginID", loginID));
+			List<DataMarket> entryList = criteria.list();
+			session.getTransaction().commit();
+			if(entryList!=null&&entryList.size()>=1)
+			{
+				return true;
+			}else{
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public List<DataMarket> getDataMarketListing(String streamTitle) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
@@ -116,6 +138,24 @@ public class DataMarketDAO {
 		}
 
 	}
+	public List<DataSharing> getDataSharingListByStreamID(String loginID,String targetLoginID,String streamID) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			Criteria criteria = session.createCriteria(DataSharing.class,"datasharing");
+				criteria.createAlias("datasharing.datastream", "stream");
+				criteria.add(Restrictions.eq("stream.streamId", streamID));
+				criteria.add(Restrictions.eq("loginID", loginID));
+				criteria.add(Restrictions.eq("targetLoginID", targetLoginID));
+			criteria.addOrder(Order.desc("createdTime"));
+			List<DataSharing> entryList = criteria.list();
+			session.getTransaction().commit();
+			return entryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 	public DataSharing addDataSharing(DataSharing object)
 	{
 		try {
@@ -153,8 +193,8 @@ public class DataMarketDAO {
 //		System.out.println(dmDao.getDataSharingList(null,"testtest4","e").get(0).getLoginID());
 //		System.out.println(dmDao.getDataMarketListing("e").get(0).getLoginID());
 		
-		
-	System.out.println(dmDao.existDataMarketItem("testtest","4f9d86f4-80e3-4a22-9b16-523a582bd192"));
+		System.out.println(dmDao.getDataSharingListByStreamID("testtest3", "testtest4", "88fd7646-332e-4378-a911-77de47f38f1b").get(0).getCreatedTime());
+//	System.out.println(dmDao.existDataMarketItem("testtest","4f9d86f4-80e3-4a22-9b16-523a582bd192"));
 		
 	}
 }

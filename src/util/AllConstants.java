@@ -286,6 +286,7 @@ public interface AllConstants {
 		public static final String Cannot_find_request_avatar = "cannot_find_request_avatar";
 		public static final String PERMISSION_DENIED="no_permission_for_such_request";
 		public static final String data_market_item_exist = "data_market_item_exist";
+		public static final String data_sharing_item_exist = "selected_datastream_already_purchased";
 	}
 
 	public interface DeviceErrorDictionary {
