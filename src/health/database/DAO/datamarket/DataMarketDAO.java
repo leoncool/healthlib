@@ -75,7 +75,29 @@ public class DataMarketDAO {
 			return false;
 		}
 	}
-	
+	public List<DataMarket> getDataMarketListingByLoginAndTitle(String loginID,String streamTitle) {
+		try {
+			Session session = HibernateUtil.beginTransaction();
+			Criteria criteria = session.createCriteria(DataMarket.class,"datamarket");
+			if (streamTitle != null) {
+				//join search test
+				criteria.createAlias("datamarket.datastream", "stream");
+				criteria.add(Restrictions.like("stream.title", "%" + streamTitle + "%"));
+			}
+			if(loginID!=null)
+			{
+				criteria.add(Restrictions.eq("loginID",loginID));
+			}
+			criteria.addOrder(Order.desc("createdTime"));
+			List<DataMarket> entryList = criteria.list();
+			session.getTransaction().commit();
+			return entryList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 	public List<DataMarket> getDataMarketListing(String streamTitle) {
 		try {
 			Session session = HibernateUtil.beginTransaction();
