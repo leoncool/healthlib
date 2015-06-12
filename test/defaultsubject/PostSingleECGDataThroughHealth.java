@@ -34,7 +34,7 @@ public class PostSingleECGDataThroughHealth {
 		try {
 
 			URL url = new URL(
-					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"ecg"+"/datapoints?accesstoken=38f12036abdf4e3aac1890e1ca519de7&api_key=special-key");
+					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"ecg_demo"+"/datapoints?accesstoken=c8f1c0f935d94726ba3d16b590b5a7d8&api_key=special-key");
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
@@ -67,10 +67,10 @@ public class PostSingleECGDataThroughHealth {
 		        	String x=strValues[3];
 //		        	String y =strValues[2];
 //		        	String z= strValues[3];
-		        	System.out.println(at+","+x);
+//		        	System.out.println(at+","+x);
 		        	List<JsonDataValues> datavaluesList=new ArrayList<JsonDataValues>();
 		        	JsonDataValues valueX=new JsonDataValues();
-		        	valueX.setUnit_id("CdjSd");
+		        	valueX.setUnit_id("F7dea");
 		        	valueX.setVal(x);
 //		        	JsonDataValues valueY=new JsonDataValues();
 //		        	valueY.setUnit_id("TcYPX");

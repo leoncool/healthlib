@@ -31,7 +31,7 @@ public class PostDatastreamTest {
 			// "d98eb956-7236-45ab-ac15-dec9c370bca7";
 			String parameter = "";
 			URL url = new URL(
-					"http://146.169.35.28:55555/healthbook/v1/"+api_entryPoints.api_defaultsubject+
+					"http://api2.wiki-health.org:55555/healthbook/v1/"+api_entryPoints.api_defaultsubject+
 					"/datastreams");
 							//+ "?" + parameter);
 			URLConnection connection = url.openConnection();

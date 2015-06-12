@@ -1,4 +1,4 @@
-package defaultsubject;
+package defaultsubject.humanbody;
 
 /*
  * To change this template, choose Tools | Templates
@@ -8,10 +8,7 @@ import health.database.DAO.BaseDAO;
 import health.input.jsonmodels.JsonDataImport;
 import health.input.jsonmodels.singleunitstream.JsonSingleDataPoints;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -26,13 +23,24 @@ import com.google.gson.Gson;
  * 
  * @author Leon
  */
-public class PostECGDataThroughHealth {
-	public static void sendPostRequest(int MaxK)
-	{
-		try {
+public class PostHeartRateData {
+	public static String arrayToDelimitedString(ArrayList<String> input) {
+		String returnV = "";
+		for (int i = 0; i < input.size(); i++) {
+			if (i == (input.size() - 1)) {
+				returnV = returnV + input.get(i);
+			} else {
+				returnV = returnV + input.get(i) + ",";
+			}
 
+		}
+		return returnV;
+	}
+
+	public static void main(String args[]) {
+		try {
 			URL url = new URL(
-					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"ecg"+"/datapoints-benchmarks?accesstoken=c8f1c0f935d94726ba3d16b590b5a7d8&api_key=special-key");
+					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/ecg/datapoints?accesstoken=e8f40d9cddb6471488786c10dc167169&api_key=special-key");
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
@@ -43,13 +51,9 @@ public class PostECGDataThroughHealth {
 
 			File fileInput = new File(
 					"F:/Dropbox/PhD/Wiki Health/Yang Li/ECG/ecg_data_101.out");
-			String fileOutputFolder = "F:/Dropbox/PhD/Wiki Health/Yang Li/ECG/For Benchmarks/";
+
 			Scanner scanner = new Scanner(fileInput);
-			File fileOutput=new File(fileOutputFolder+MaxK+".json");
-//			FileWriter fileWriter=new FileWriter(fileOutput);
-			BufferedWriter fileWriter = new BufferedWriter(new OutputStreamWriter(
-				    new FileOutputStream(fileOutput), "UTF-8"
-				));
+
 			Gson gson = new Gson();
 			BaseDAO dao = new BaseDAO();
 			ArrayList<JsonSingleDataPoints> value_list = new ArrayList<JsonSingleDataPoints>();
@@ -58,7 +62,7 @@ public class PostECGDataThroughHealth {
 			double nowLongDouble = nowLong;
 			ArrayList<String> blockArray = new ArrayList<String>();
 			int counter = 0;
-			while (counter<MaxK)
+			while (counter<2)
 			{
 				if(!scanner.hasNextLine()){
 					scanner = new Scanner(fileInput);	
@@ -72,15 +76,28 @@ public class PostECGDataThroughHealth {
 				nowLongDouble = nowLongDouble + 1000.00 / 360;
 				counter = counter + 1;
 			}
-			scanner.close();
+//			while (scanner.hasNextLine()&&counter<70000) {
+//				String nextLine = scanner.nextLine();
+//				JsonSingleDataPoints value = new JsonSingleDataPoints();
+////				 System.out.println(nextLine);
+//				value.setVal(nextLine);
+//				value.setAt(Long.toString((long) nowLongDouble));
+//				value_list.add(value);
+//				nowLongDouble = nowLongDouble + 1000.00 / 360;
+//				counter = counter + 1;
+//			}
+
+			//
+			// value1.setVal("25");
+			// value1.setAt(Long.toString(new Date().getTime()));
+			// value_list.add(value1);
 			JsonDataImport importData = new JsonDataImport();
 			importData.setData_points_single_list(value_list);
-			String fileoutputString=gson.toJson(importData);
-//			System.out.println(fileoutputString);
-//			fileWriter.write(fileoutputString);
-			out.write(fileoutputString);
+			// importData.setBlock_id("8ad4c077-d30d-4a14-b882-0cbfcfb3e4ea");
+			// System.out.println(gson.toJson(importData));
+
+			out.write(gson.toJson(importData));
 			out.close();
-			fileWriter.close();
 			java.io.BufferedReader br = new java.io.BufferedReader(
 					new java.io.InputStreamReader(connection.getInputStream()));
 			java.lang.StringBuffer sb = new java.lang.StringBuffer();
@@ -103,12 +120,5 @@ public class PostECGDataThroughHealth {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	}
-	public static void main(String args[]) {
-		for(int p=10;p<=10;p=p*10)
-		{
-			sendPostRequest(p);
-		}
-		
 	}
 }
