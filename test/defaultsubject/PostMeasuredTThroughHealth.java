@@ -34,7 +34,7 @@ public class PostMeasuredTThroughHealth {
 		try {
 
 			URL url = new URL(
-					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"environment"+"/datapoints?accesstoken=8fba9f939d7b4d03b2f3cb1b828b1173&api_key=special-key");
+					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"environment"+"/datapoints?accesstoken=d62fcd7b7bd2444fa5010b6fac363a98&api_key=special-key");
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
@@ -79,13 +79,13 @@ public class PostMeasuredTThroughHealth {
 		        	System.out.println(at+","+x+","+y+","+z);
 		        	List<JsonDataValues> datavaluesList=new ArrayList<JsonDataValues>();
 		        	JsonDataValues valueX=new JsonDataValues();
-		        	valueX.setUnit_id("LFgjs");
+		        	valueX.setUnit_id("EGcIU");
 		        	valueX.setVal(x);
 		        	JsonDataValues valueY=new JsonDataValues();
-		        	valueY.setUnit_id("jv9mG");
+		        	valueY.setUnit_id("isjAR");
 		        	valueY.setVal(y);
 		        	JsonDataValues valueZ=new JsonDataValues();
-		        	valueZ.setUnit_id("Z9D2W");
+		        	valueZ.setUnit_id("QsWOo");
 		        	valueZ.setVal(z);
 		        	datavaluesList.add(valueX);
 		        	datavaluesList.add(valueY);

@@ -34,7 +34,7 @@ public class PostAccDataThroughHealth {
 		try {
 
 			URL url = new URL(
-					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"accelerometer"+"/datapoints?accesstoken=bed28bbdabbd4a0992b3d9c15bdc263e&api_key=special-key");
+					"http://api2.wiki-health.org:55555/healthbook/v1/health/title/"+"accelerometer"+"/datapoints?accesstoken=d62fcd7b7bd2444fa5010b6fac363a98&api_key=special-key");
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			connection.setDoInput(true);
@@ -82,13 +82,13 @@ public class PostAccDataThroughHealth {
 		        	
 		        	List<JsonDataValues> datavaluesList=new ArrayList<JsonDataValues>();
 		        	JsonDataValues valueX=new JsonDataValues();
-		        	valueX.setUnit_id("TwNAq");
+		        	valueX.setUnit_id("U9tEZ");
 		        	valueX.setVal(x);
 		        	JsonDataValues valueY=new JsonDataValues();
-		        	valueY.setUnit_id("TcYPX");
+		        	valueY.setUnit_id("iXrak");
 		        	valueY.setVal(y);
 		        	JsonDataValues valueZ=new JsonDataValues();
-		        	valueZ.setUnit_id("ouYMl");
+		        	valueZ.setUnit_id("dh6vT");
 		        	valueZ.setVal(z);
 		        	datavaluesList.add(valueX);
 		        	datavaluesList.add(valueY);
